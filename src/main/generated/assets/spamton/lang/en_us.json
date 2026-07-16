@@ -1,0 +1,14 @@
+{
+  "block.spamton.package": "Package",
+  "hud.spamton.receiver": "Recipient",
+  "hud.spamton.sender": "Sender",
+  "item.spamton.box_cutter": "Box Cutter",
+  "item.spamton.stamp": "Stamp",
+  "item.spamton.tape": "Tape",
+  "stamp.spamton.moon": "Moon Stamp",
+  "stamp.spamton.pickaxe": "Pickaxe Stamp",
+  "stamp.spamton.sun": "Sun Stamp",
+  "tag.item.spamton.box_cutter": "Box Cutter",
+  "tag.item.spamton.stamp": "Stamps",
+  "tag.item.spamton.tape": "Tape"
+}

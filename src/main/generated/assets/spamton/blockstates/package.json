@@ -1,0 +1,350 @@
+{
+  "variants": {
+    "facing=east,taped=false": [
+      {
+        "model": "spamton:block/variant_0_package",
+        "y": 90
+      },
+      {
+        "model": "spamton:block/variant_1_package",
+        "y": 90
+      },
+      {
+        "model": "spamton:block/variant_2_package",
+        "y": 90
+      },
+      {
+        "model": "spamton:block/variant_3_package",
+        "y": 90
+      },
+      {
+        "model": "spamton:block/variant_4_package",
+        "y": 90
+      },
+      {
+        "model": "spamton:block/variant_5_package",
+        "y": 90
+      },
+      {
+        "model": "spamton:block/variant_6_package",
+        "y": 90
+      },
+      {
+        "model": "spamton:block/variant_7_package",
+        "y": 90
+      },
+      {
+        "model": "spamton:block/variant_8_package",
+        "y": 90
+      },
+      {
+        "model": "spamton:block/variant_9_package",
+        "y": 90
+      },
+      {
+        "model": "spamton:block/variant_10_package",
+        "y": 90
+      }
+    ],
+    "facing=north,taped=false": [
+      {
+        "model": "spamton:block/variant_0_package"
+      },
+      {
+        "model": "spamton:block/variant_1_package"
+      },
+      {
+        "model": "spamton:block/variant_2_package"
+      },
+      {
+        "model": "spamton:block/variant_3_package"
+      },
+      {
+        "model": "spamton:block/variant_4_package"
+      },
+      {
+        "model": "spamton:block/variant_5_package"
+      },
+      {
+        "model": "spamton:block/variant_6_package"
+      },
+      {
+        "model": "spamton:block/variant_7_package"
+      },
+      {
+        "model": "spamton:block/variant_8_package"
+      },
+      {
+        "model": "spamton:block/variant_9_package"
+      },
+      {
+        "model": "spamton:block/variant_10_package"
+      }
+    ],
+    "facing=south,taped=false": [
+      {
+        "model": "spamton:block/variant_0_package",
+        "y": 180
+      },
+      {
+        "model": "spamton:block/variant_1_package",
+        "y": 180
+      },
+      {
+        "model": "spamton:block/variant_2_package",
+        "y": 180
+      },
+      {
+        "model": "spamton:block/variant_3_package",
+        "y": 180
+      },
+      {
+        "model": "spamton:block/variant_4_package",
+        "y": 180
+      },
+      {
+        "model": "spamton:block/variant_5_package",
+        "y": 180
+      },
+      {
+        "model": "spamton:block/variant_6_package",
+        "y": 180
+      },
+      {
+        "model": "spamton:block/variant_7_package",
+        "y": 180
+      },
+      {
+        "model": "spamton:block/variant_8_package",
+        "y": 180
+      },
+      {
+        "model": "spamton:block/variant_9_package",
+        "y": 180
+      },
+      {
+        "model": "spamton:block/variant_10_package",
+        "y": 180
+      }
+    ],
+    "facing=west,taped=false": [
+      {
+        "model": "spamton:block/variant_0_package",
+        "y": 270
+      },
+      {
+        "model": "spamton:block/variant_1_package",
+        "y": 270
+      },
+      {
+        "model": "spamton:block/variant_2_package",
+        "y": 270
+      },
+      {
+        "model": "spamton:block/variant_3_package",
+        "y": 270
+      },
+      {
+        "model": "spamton:block/variant_4_package",
+        "y": 270
+      },
+      {
+        "model": "spamton:block/variant_5_package",
+        "y": 270
+      },
+      {
+        "model": "spamton:block/variant_6_package",
+        "y": 270
+      },
+      {
+        "model": "spamton:block/variant_7_package",
+        "y": 270
+      },
+      {
+        "model": "spamton:block/variant_8_package",
+        "y": 270
+      },
+      {
+        "model": "spamton:block/variant_9_package",
+        "y": 270
+      },
+      {
+        "model": "spamton:block/variant_10_package",
+        "y": 270
+      }
+    ],
+    "facing=east,taped=true": [
+      {
+        "model": "spamton:block/variant_0_package_taped",
+        "y": 90
+      },
+      {
+        "model": "spamton:block/variant_1_package_taped",
+        "y": 90
+      },
+      {
+        "model": "spamton:block/variant_2_package_taped",
+        "y": 90
+      },
+      {
+        "model": "spamton:block/variant_3_package_taped",
+        "y": 90
+      },
+      {
+        "model": "spamton:block/variant_4_package_taped",
+        "y": 90
+      },
+      {
+        "model": "spamton:block/variant_5_package_taped",
+        "y": 90
+      },
+      {
+        "model": "spamton:block/variant_6_package_taped",
+        "y": 90
+      },
+      {
+        "model": "spamton:block/variant_7_package_taped",
+        "y": 90
+      },
+      {
+        "model": "spamton:block/variant_8_package_taped",
+        "y": 90
+      },
+      {
+        "model": "spamton:block/variant_9_package_taped",
+        "y": 90
+      },
+      {
+        "model": "spamton:block/variant_10_package_taped",
+        "y": 90
+      }
+    ],
+    "facing=north,taped=true": [
+      {
+        "model": "spamton:block/variant_0_package_taped"
+      },
+      {
+        "model": "spamton:block/variant_1_package_taped"
+      },
+      {
+        "model": "spamton:block/variant_2_package_taped"
+      },
+      {
+        "model": "spamton:block/variant_3_package_taped"
+      },
+      {
+        "model": "spamton:block/variant_4_package_taped"
+      },
+      {
+        "model": "spamton:block/variant_5_package_taped"
+      },
+      {
+        "model": "spamton:block/variant_6_package_taped"
+      },
+      {
+        "model": "spamton:block/variant_7_package_taped"
+      },
+      {
+        "model": "spamton:block/variant_8_package_taped"
+      },
+      {
+        "model": "spamton:block/variant_9_package_taped"
+      },
+      {
+        "model": "spamton:block/variant_10_package_taped"
+      }
+    ],
+    "facing=south,taped=true": [
+      {
+        "model": "spamton:block/variant_0_package_taped",
+        "y": 180
+      },
+      {
+        "model": "spamton:block/variant_1_package_taped",
+        "y": 180
+      },
+      {
+        "model": "spamton:block/variant_2_package_taped",
+        "y": 180
+      },
+      {
+        "model": "spamton:block/variant_3_package_taped",
+        "y": 180
+      },
+      {
+        "model": "spamton:block/variant_4_package_taped",
+        "y": 180
+      },
+      {
+        "model": "spamton:block/variant_5_package_taped",
+        "y": 180
+      },
+      {
+        "model": "spamton:block/variant_6_package_taped",
+        "y": 180
+      },
+      {
+        "model": "spamton:block/variant_7_package_taped",
+        "y": 180
+      },
+      {
+        "model": "spamton:block/variant_8_package_taped",
+        "y": 180
+      },
+      {
+        "model": "spamton:block/variant_9_package_taped",
+        "y": 180
+      },
+      {
+        "model": "spamton:block/variant_10_package_taped",
+        "y": 180
+      }
+    ],
+    "facing=west,taped=true": [
+      {
+        "model": "spamton:block/variant_0_package_taped",
+        "y": 270
+      },
+      {
+        "model": "spamton:block/variant_1_package_taped",
+        "y": 270
+      },
+      {
+        "model": "spamton:block/variant_2_package_taped",
+        "y": 270
+      },
+      {
+        "model": "spamton:block/variant_3_package_taped",
+        "y": 270
+      },
+      {
+        "model": "spamton:block/variant_4_package_taped",
+        "y": 270
+      },
+      {
+        "model": "spamton:block/variant_5_package_taped",
+        "y": 270
+      },
+      {
+        "model": "spamton:block/variant_6_package_taped",
+        "y": 270
+      },
+      {
+        "model": "spamton:block/variant_7_package_taped",
+        "y": 270
+      },
+      {
+        "model": "spamton:block/variant_8_package_taped",
+        "y": 270
+      },
+      {
+        "model": "spamton:block/variant_9_package_taped",
+        "y": 270
+      },
+      {
+        "model": "spamton:block/variant_10_package_taped",
+        "y": 270
+      }
+    ]
+  }
+}

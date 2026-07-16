@@ -1,0 +1,63 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        },
+        {
+          "block": "spamton:package",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "taped": "true"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "include": [
+                "minecraft:custom_name",
+                "minecraft:container",
+                "minecraft:lock",
+                "spamton:damaged",
+                "spamton:stamps",
+                "spamton:taped"
+              ],
+              "source": "block_entity"
+            }
+          ],
+          "name": "spamton:package"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        },
+        {
+          "block": "spamton:package",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "taped": "false"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "spamton:cardboard"
+        }
+      ],
+      "rolls": 4.0
+    }
+  ]
+}
