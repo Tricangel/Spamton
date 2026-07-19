@@ -1,11 +1,12 @@
 {
+  "parent": "minecraft:block/cube_all",
   "textures": {
-    "particle": "spamton:block/box_bottom",
-    "top": "spamton:block/box_top",
-    "bottom": "spamton:block/box_bottom",
-    "side_1": "spamton:block/box_side_2",
-    "side_2": "spamton:block/box_side_1",
-    "side_3": "spamton:block/box_side_3"
+    "particle": "spamton:block/box/box_bottom",
+    "top": "spamton:block/box/rope_box_top",
+    "bottom": "spamton:block/box/rope_box_bottom",
+    "side_1": "spamton:block/box/rope_box_side_2",
+    "side_2": "spamton:block/box/rope_box_side_1",
+    "side_3": "spamton:block/box/rope_box_side_3"
   },
   "elements": [
     {

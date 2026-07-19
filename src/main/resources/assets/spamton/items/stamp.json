@@ -1,40 +1,64 @@
 {
   "model": {
     "type": "minecraft:condition",
-    "property": "minecraft:component",
-    "predicate": "spamton:stamp",
-    "value": {
-      "stamp": "moon"
-    },
+    "property": "minecraft:has_component",
+    "component": "minecraft:profile",
     "on_true": {
-        "type": "minecraft:model",
-        "model": "spamton:item/moon_stamp"
+      "type": "minecraft:special",
+      "model": {
+        "type": "spamton:player_stamp"
+      },
+      "base": "spamton:item/moon_stamp"
     },
     "on_false": {
       "type": "minecraft:condition",
       "property": "minecraft:component",
       "predicate": "spamton:stamp",
       "value": {
-        "stamp": "sun"
+        "stamp": "moon"
       },
       "on_true": {
         "type": "minecraft:model",
-        "model": "spamton:item/sun_stamp"
+        "model": "spamton:item/moon_stamp"
       },
       "on_false": {
         "type": "minecraft:condition",
         "property": "minecraft:component",
         "predicate": "spamton:stamp",
         "value": {
-          "stamp": "pickaxe"
+          "stamp": "sun"
         },
         "on_true": {
           "type": "minecraft:model",
-          "model": "spamton:item/pickaxe_stamp"
+          "model": "spamton:item/sun_stamp"
         },
         "on_false": {
-          "type": "minecraft:model",
-          "model": "spamton:item/pickaxe_stamp"
+          "type": "minecraft:condition",
+          "property": "minecraft:component",
+          "predicate": "spamton:stamp",
+          "value": {
+            "stamp": "pickaxe"
+          },
+          "on_true": {
+            "type": "minecraft:model",
+            "model": "spamton:item/pickaxe_stamp"
+          },
+          "on_false": {
+            "type": "minecraft:condition",
+            "property": "minecraft:component",
+            "predicate": "spamton:stamp",
+            "value": {
+              "stamp": "apple"
+            },
+            "on_true": {
+              "type": "minecraft:model",
+              "model": "spamton:item/apple_stamp"
+            },
+            "on_false": {
+              "type": "minecraft:model",
+              "model": "spamton:item/pickaxe_stamp"
+            }
+          }
         }
       }
     }

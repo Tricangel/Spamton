@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "particle": "minecraft:block/chiseled_bookshelf_side",
+    "up": "minecraft:block/chiseled_bookshelf_top",
+    "front": "spamton:block/parcel_shelf",
+    "side": "minecraft:block/chiseled_bookshelf_side"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#up"
+        },
+        "up": {
+          "texture": "#up"
+        },
+        "north": {
+          "texture": "#front"
+        },
+        "east": {
+          "texture": "#side"
+        },
+        "south": {
+          "texture": "#side"
+        },
+        "west": {
+          "texture": "#side"
+        }
+      }
+    }
+  ]
+}

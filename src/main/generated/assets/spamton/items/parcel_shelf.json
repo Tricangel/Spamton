@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "spamton:block/package"
+    "model": "spamton:block/parcel_shelf"
   }
 }

@@ -9,7 +9,8 @@ import org.jspecify.annotations.NonNull;
 public enum StampType implements StringRepresentable {
     SUN("sun", Component.translatable("stamp.spamton.sun")),
     MOON("moon", Component.translatable("stamp.spamton.moon")),
-    PICKAXE("pickaxe", Component.translatable("stamp.spamton.pickaxe"));
+    PICKAXE("pickaxe", Component.translatable("stamp.spamton.pickaxe")),
+    APPLE("apple",  Component.translatable("stamp.spamton.apple"));
 
     final String serializedName;
     final MutableComponent displayName;

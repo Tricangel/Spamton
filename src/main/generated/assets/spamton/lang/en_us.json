@@ -1,14 +1,18 @@
 {
   "block.spamton.package": "Package",
-  "hud.spamton.receiver": "Recipient",
-  "hud.spamton.sender": "Sender",
   "item.spamton.box_cutter": "Box Cutter",
   "item.spamton.stamp": "Stamp",
   "item.spamton.tape": "Tape",
+  "letter.editAuthor": "Enter Letter Author",
+  "letter.editTitle": "Enter Letter Title",
+  "letter.finalizeWarning": "Note! When you sign the letter, it will no longer be editable.",
+  "letter.sign.author": "Author",
+  "letter.sign.title": "Title",
   "stamp.spamton.moon": "Moon Stamp",
   "stamp.spamton.pickaxe": "Pickaxe Stamp",
   "stamp.spamton.sun": "Sun Stamp",
-  "tag.item.spamton.box_cutter": "Box Cutter",
+  "tag.item.spamton.box_cutter": "Box Cutters",
+  "tag.item.spamton.safe_box_cutter": "Safe Box Cutters",
   "tag.item.spamton.stamp": "Stamps",
   "tag.item.spamton.tape": "Tape"
 }

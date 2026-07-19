@@ -69,7 +69,6 @@ public class PackageBlock extends BaseEntityBlock {
     @Override
     protected InteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
 
-
         if (!blockState.getValue(TAPED)) {
             if (itemStack.is(MailTags.TAPE)) {
                 level.setBlock(blockPos, blockState.setValue(TAPED, true), 0);
@@ -122,6 +121,7 @@ public class PackageBlock extends BaseEntityBlock {
         if (packageBlockEntity.addStamp(new Stamp(dist, blockHitResult.getDirection(), RandomSource.create().nextInt(180), itemStack.getOrDefault(MailItemComponents.STAMP_TYPE, StampType.MOON), profile))) {
             level.addParticle(ParticleTypes.DUST_PLUME, pos.x, pos.y, pos.z, 0, 0, 0);
             player.playSound(SoundEvents.HONEY_BLOCK_PLACE);
+            itemStack.consume(1, player);
 
             return InteractionResult.SUCCESS;
         }
@@ -132,9 +132,28 @@ public class PackageBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult) {
-        if (level instanceof ServerLevel && level.getBlockEntity(blockPos) instanceof PackageBlockEntity packageBlockEntity && !blockState.getValue(TAPED)) {
+        if (!player.isCrouching() && level instanceof ServerLevel && level.getBlockEntity(blockPos) instanceof PackageBlockEntity packageBlockEntity && !blockState.getValue(TAPED)) {
             player.openMenu(packageBlockEntity);
             return InteractionResult.SUCCESS;
+        }
+
+        if (player.isCrouching() && level.getBlockEntity(blockPos) instanceof PackageBlockEntity packageBlockEntity) {
+            List<Stamp> stamps = packageBlockEntity.getStamps();
+            Vec3 dist = blockHitResult.getLocation().subtract(blockHitResult.getBlockPos().getCenter());
+
+            if (stamps.removeIf(stamp -> {
+                if (stamp.pos.distanceTo(dist) < 0.15f) {
+                    ItemStack stack = MailItems.STAMP.getDefaultInstance();
+                    stack.set(MailItemComponents.STAMP_TYPE, stamp.stampType);
+                    stamp.profile.ifPresent(resolvableProfile -> stack.set(DataComponents.PROFILE, resolvableProfile));
+                    player.addItem(stack);
+                    return true;
+                }
+                return false;
+            })) {
+                return InteractionResult.SUCCESS;
+            }
+
         }
 
         return super.useWithoutItem(blockState, level, blockPos, player, blockHitResult);

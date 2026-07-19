@@ -4,6 +4,7 @@ import bee.post.Spamton;
 import bee.post.block.PackageBlock;
 import bee.post.registry.MailBlockEntities;
 import bee.post.registry.MailItemComponents;
+import bee.post.registry.MailItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -14,6 +15,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.Containers;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.DispenserMenu;
@@ -131,6 +133,19 @@ public class PackageBlockEntity extends BaseContainerBlockEntity {
 
     @Override
     public void preRemoveSideEffects(BlockPos blockPos, BlockState blockState) {
-        if (!blockState.getValue(PackageBlock.TAPED)) super.preRemoveSideEffects(blockPos, blockState);
+        if (!blockState.getValue(PackageBlock.TAPED)) {
+            super.preRemoveSideEffects(blockPos, blockState);
+            for (PackageBlock.Stamp stamp : stamps) {
+
+                ItemStack stack = MailItems.STAMP.getDefaultInstance();
+
+                stack.set(MailItemComponents.STAMP_TYPE, stamp.stampType());
+
+                stamp.profile().ifPresent(profile -> stack.set(DataComponents.PROFILE, profile));
+
+                Containers.dropItemStack(level, blockPos.getX(), blockPos.getY(), blockPos.getZ(), stack);
+
+            }
+        }
     }
 }

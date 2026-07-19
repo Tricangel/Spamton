@@ -18,8 +18,10 @@ public class MailTagGen extends FabricTagProvider.ItemTagProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         valueLookupBuilder(MailTags.STAMP)
-                .add(MailItems.PLAYER_STAMP)
                 .add(MailItems.STAMP);
+
+        valueLookupBuilder(MailTags.LETTERS)
+                .add(MailItems.BLUE_LETTER);
 
         valueLookupBuilder(MailTags.TAPE)
                 .add(Items.HONEYCOMB)

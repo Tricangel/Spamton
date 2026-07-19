@@ -1,5 +1,6 @@
 package bee.post.datagen;
 
+import bee.post.client.renderer.PlayerStampSpecialRenderer;
 import bee.post.registry.MailBlocks;
 import bee.post.registry.MailItems;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
@@ -15,7 +16,7 @@ public class MailModelGen extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockModelGenerators blockModelGenerators) {
-        blockModelGenerators.createNonTemplateHorizontalBlock(MailBlocks.PACKAGE);
+        blockModelGenerators.createNonTemplateHorizontalBlock(MailBlocks.PARCEL_SHELF);
     }
 
     @Override
@@ -23,5 +24,9 @@ public class MailModelGen extends FabricModelProvider {
 
         itemModelGenerators.generateFlatItem(MailItems.BOX_CUTTER, ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(MailItems.TAPE, ModelTemplates.FLAT_ITEM);
+
+
     }
+
+
 }

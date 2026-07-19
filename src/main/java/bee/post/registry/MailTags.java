@@ -11,6 +11,8 @@ public class MailTags {
 
     public static final TagKey<Item> STAMP = TagKey.create(Registries.ITEM, Spamton.id("stamp"));
 
+    public static final TagKey<Item> LETTERS = TagKey.create(Registries.ITEM, Spamton.id("letters"));
+
     public static final TagKey<Item> TAPE = TagKey.create(Registries.ITEM, Spamton.id("tape"));
 
     public static final TagKey<Item> BOX_CUTTER = TagKey.create(Registries.ITEM, Spamton.id("box_cutter"));

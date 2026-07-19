@@ -2,6 +2,7 @@ package bee.post.registry;
 
 import bee.post.Spamton;
 import bee.post.block.entity.PackageBlockEntity;
+import bee.post.block.entity.ParcelShelfBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -15,6 +16,8 @@ public class MailBlockEntities {
     public static void init() {}
 
     public static final BlockEntityType<PackageBlockEntity> PACKAGE_BLOCK_ENTITY = register("package_block_entity", PackageBlockEntity::new, MailBlocks.PACKAGE);
+
+    public static final BlockEntityType<ParcelShelfBlockEntity> PARCEL_SHELF_BLOCK_ENTITY = register("parcel_shelf_block_entity", ParcelShelfBlockEntity::new, MailBlocks.PARCEL_SHELF);
 
     private static <T extends BlockEntity> BlockEntityType<T> register(
             String name,

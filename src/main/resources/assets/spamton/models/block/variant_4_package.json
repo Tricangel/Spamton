@@ -1,0 +1,45 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "particle": "spamton:block/box/box_bottom",
+    "top": "spamton:block/box/lid_box_top",
+    "bottom": "spamton:block/box/lid_box_bottom",
+    "side_1": "spamton:block/box/lid_box_side_2",
+    "side_2": "spamton:block/box/lid_box_side_1",
+    "side_3": "spamton:block/box/lid_box_side_3"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "up": {
+          "texture": "#top"
+        },
+        "down": {
+          "texture": "#bottom"
+        },
+        "east": {
+          "texture": "#side_3"
+        },
+        "south": {
+          "texture": "#side_1"
+        },
+        "north": {
+          "texture": "#side_2"
+        },
+        "west": {
+          "texture": "#side_3"
+        }
+      }
+    }
+  ]
+}
