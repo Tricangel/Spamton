@@ -8,7 +8,7 @@ import bee.post.item.ClientParcelContentsTooltip;
 import bee.post.item.ParcelContents;
 import bee.post.registry.MailBlockEntities;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.ClientTooltipComponentCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.special.SpecialModelRenderers;
@@ -24,7 +24,7 @@ public class SpamtonClient implements ClientModInitializer {
 
         SpecialModelRenderers.ID_MAPPER.put(Spamton.id("player_stamp"), PlayerStampSpecialRenderer.Unbaked.MAP_CODEC);
 
-        TooltipComponentCallback.EVENT.register(component -> {
+        ClientTooltipComponentCallback.EVENT.register(component -> {
             if (component instanceof ParcelContents contents) {
                 return new ClientParcelContentsTooltip(contents);
             }

@@ -2,16 +2,12 @@ package bee.post.item;
 
 import bee.post.block.Stamp;
 import bee.post.registry.MailItemComponents;
-import bee.post.registry.MailLootFunctions;
-import bee.post.registry.MailLootTables;
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
-import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import org.jspecify.annotations.NonNull;
 
@@ -31,9 +27,10 @@ public class StampFunction extends LootItemConditionalFunction {
         return simpleBuilder((list) -> new StampFunction(list, types));
     }
 
+
     @Override
-    public @NonNull LootItemFunctionType<? extends LootItemConditionalFunction> getType() {
-        return MailLootFunctions.STAMP_FUNCTION;
+    public MapCodec<? extends LootItemConditionalFunction> codec() {
+        return CODEC;
     }
 
     @Override

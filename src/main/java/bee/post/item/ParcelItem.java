@@ -1,6 +1,7 @@
 package bee.post.item;
 
 import bee.post.registry.MailItemComponents;
+import bee.post.registry.MailItems;
 import bee.post.registry.MailTags;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvents;
@@ -32,29 +33,29 @@ public class ParcelItem extends Item {
         ItemStack stack = player.getItemInHand(interactionHand);
 
         if (player.isCrouching()) {
-            ParcelContents contents = loadContents(stack);
+            ParcelContents contents = stack.getOrDefault(MailItemComponents.PARCEL_CONTENTS, ParcelContents.EMPTY);
 
             if (contents.ownerName().isEmpty() || !contents.ownerName().get().equals(player.getDisplayName().getString())) {
                 contents = new ParcelContents(contents.letter(), contents.gift(), Optional.of(player.getDisplayName().getString()), contents.targetName());
 
-                saveContents(stack, contents);
+                stack.set(MailItemComponents.PARCEL_CONTENTS, contents);
 
                 player.playSound(SoundEvents.UI_CARTOGRAPHY_TABLE_TAKE_RESULT);
                 return InteractionResult.SUCCESS;
             }
         } else {
-            ParcelContents contents = loadContents(stack);
+            ParcelContents contents = stack.getOrDefault(MailItemComponents.PARCEL_CONTENTS, ParcelContents.EMPTY);
 
-            if (!contents.gift().isEmpty()) {
-                player.drop(contents.gift(), true);
-                ParcelContents newContents = new ParcelContents(contents.letter(), ItemStack.EMPTY, contents.ownerName(), contents.targetName());
-                saveContents(stack, newContents);
+            if (contents.gift().isPresent()) {
+                player.drop(contents.gift().get(), true);
+                ParcelContents newContents = new ParcelContents(contents.letter(), Optional.empty(), contents.ownerName(), contents.targetName());
+                stack.set(MailItemComponents.PARCEL_CONTENTS, newContents);
                 player.playSound(SoundEvents.BUNDLE_DROP_CONTENTS);
                 return InteractionResult.SUCCESS;
             } else if (!contents.letter().isEmpty()) {
-                player.drop(contents.letter(), true);
-                ParcelContents newContents = new ParcelContents(ItemStack.EMPTY, ItemStack.EMPTY, contents.ownerName(), contents.targetName());
-                saveContents(stack, newContents);
+                player.drop(contents.letter().get(), true);
+                ParcelContents newContents = new ParcelContents(Optional.empty(), Optional.empty(), contents.ownerName(), contents.targetName());
+                stack.set(MailItemComponents.PARCEL_CONTENTS, newContents);
                 player.playSound(SoundEvents.BUNDLE_DROP_CONTENTS);
                 return InteractionResult.SUCCESS;
             }
@@ -66,25 +67,25 @@ public class ParcelItem extends Item {
     @Override
     public boolean overrideStackedOnOther(@NonNull ItemStack itemStack, Slot slot, @NonNull ClickAction clickAction, @NonNull Player player) {
         if (!slot.hasItem() && clickAction.equals(ClickAction.SECONDARY)) {
-            ParcelContents contents = loadContents(itemStack);
+            ParcelContents contents = itemStack.getOrDefault(MailItemComponents.PARCEL_CONTENTS, ParcelContents.EMPTY);
 
-            if (!contents.gift().isEmpty()) {
-                saveContents(itemStack, new ParcelContents(contents.letter(), ItemStack.EMPTY, contents.ownerName(), contents.targetName()));
-                slot.set(contents.gift());
+            if (contents.gift().isPresent()) {
+                itemStack.set(MailItemComponents.PARCEL_CONTENTS, new ParcelContents(contents.letter(), Optional.empty(), contents.ownerName(), contents.targetName()));
+                slot.set(contents.gift().get());
                 player.playSound(SoundEvents.BUNDLE_INSERT);
                 return true;
             }
 
-            if (!contents.letter().isEmpty()) {
-                saveContents(itemStack, new ParcelContents(ItemStack.EMPTY, ItemStack.EMPTY, contents.ownerName(), contents.targetName()));
-                slot.set(contents.letter());
+            if (contents.letter().isPresent()) {
+                itemStack.set(MailItemComponents.PARCEL_CONTENTS, new ParcelContents(Optional.empty(), Optional.empty(), contents.ownerName(), contents.targetName()));
+                slot.set(contents.letter().get());
                 player.playSound(SoundEvents.BUNDLE_INSERT);
                 return true;
             }
         }
 
         if (slot.hasItem() && clickAction.equals(ClickAction.PRIMARY)) {
-            ParcelContents contents = loadContents(itemStack);
+            ParcelContents contents = itemStack.getOrDefault(MailItemComponents.PARCEL_CONTENTS, ParcelContents.EMPTY);
 
             if (slot.getItem().is(MailTags.CANNOT_FIT_IN_PARCELS)) {
                 player.playSound(SoundEvents.BUNDLE_INSERT_FAIL);
@@ -92,14 +93,14 @@ public class ParcelItem extends Item {
             }
 
             if (contents.letter().isEmpty() && slot.getItem().is(MailTags.LETTERS)) {
-                saveContents(itemStack, new ParcelContents(slot.getItem(), ItemStack.EMPTY, contents.ownerName(), contents.targetName()));
+                itemStack.set(MailItemComponents.PARCEL_CONTENTS, new ParcelContents(Optional.of(slot.getItem()), Optional.empty(), contents.ownerName(), contents.targetName()));
                 slot.set(ItemStack.EMPTY);
                 player.playSound(SoundEvents.BUNDLE_REMOVE_ONE);
                 return true;
             }
 
-            if (contents.gift().isEmpty() && !contents.letter().isEmpty()) {
-                saveContents(itemStack, new ParcelContents(contents.letter(), slot.getItem(), contents.ownerName(), contents.targetName()));
+            if (contents.gift().isEmpty() && contents.letter().isPresent()) {
+                itemStack.set(MailItemComponents.PARCEL_CONTENTS, new ParcelContents(contents.letter(), Optional.of(slot.getItem()), contents.ownerName(), contents.targetName()));
                 slot.set(ItemStack.EMPTY);
                 player.playSound(SoundEvents.BUNDLE_REMOVE_ONE);
                 return true;
@@ -110,7 +111,7 @@ public class ParcelItem extends Item {
 
     @Override
     public boolean overrideOtherStackedOnMe(@NonNull ItemStack itemStack, @NonNull ItemStack itemStack2, @NonNull Slot slot, ClickAction clickAction, @NonNull Player player, @NonNull SlotAccess slotAccess) {
-        ParcelContents contents = loadContents(itemStack);
+        ParcelContents contents = itemStack.getOrDefault(MailItemComponents.PARCEL_CONTENTS, ParcelContents.EMPTY);
 
         if (clickAction.equals(ClickAction.SECONDARY) && itemStack2.is(Items.PAPER) && itemStack2.has(DataComponents.CUSTOM_NAME)) {
 
@@ -118,23 +119,23 @@ public class ParcelItem extends Item {
             itemStack2.shrink(1);
             player.playSound(SoundEvents.UI_CARTOGRAPHY_TABLE_TAKE_RESULT);
 
-            saveContents(itemStack, contents);
+            itemStack.set(MailItemComponents.PARCEL_CONTENTS, contents);
             return true;
         }
 
         if (clickAction.equals(ClickAction.SECONDARY) && itemStack2.isEmpty()) {
 
-            if (!contents.gift().isEmpty()) {
-                itemStack2 = contents.gift().copy();
-                ParcelContents newContents = new ParcelContents(contents.letter(), ItemStack.EMPTY, contents.ownerName(), contents.targetName());
-                saveContents(itemStack, newContents);
+            if (contents.gift().isPresent()) {
+                itemStack2 = contents.gift().get().copy();
+                ParcelContents newContents = new ParcelContents(contents.letter(), Optional.empty(), contents.ownerName(), contents.targetName());
+                itemStack.set(MailItemComponents.PARCEL_CONTENTS, newContents);
                 player.playSound(SoundEvents.BUNDLE_REMOVE_ONE);
                 slotAccess.set(itemStack2);
                 return true;
-            } else if (!contents.letter().isEmpty()) {
-                itemStack2 = contents.letter().copy();
-                ParcelContents newContents = new ParcelContents(ItemStack.EMPTY, ItemStack.EMPTY, contents.ownerName(), contents.targetName());
-                saveContents(itemStack, newContents);
+            } else if (contents.letter().isPresent()) {
+                itemStack2 = contents.letter().get().copy();
+                ParcelContents newContents = new ParcelContents(Optional.empty(), contents.gift(), contents.ownerName(), contents.targetName());
+                itemStack.set(MailItemComponents.PARCEL_CONTENTS, newContents);
                 player.playSound(SoundEvents.BUNDLE_REMOVE_ONE);
                 slotAccess.set(itemStack2);
                 return true;
@@ -148,14 +149,14 @@ public class ParcelItem extends Item {
             }
 
             if (contents.letter().isEmpty() && itemStack2.is(MailTags.LETTERS)) {
-                ParcelContents newContents = new ParcelContents(itemStack2.copyWithCount(1), contents.gift(), contents.ownerName(), contents.targetName());
-                saveContents(itemStack, newContents);
+                ParcelContents newContents = new ParcelContents(Optional.of(itemStack2.copyWithCount(1)), contents.gift(), contents.ownerName(), contents.targetName());
+                itemStack.set(MailItemComponents.PARCEL_CONTENTS, newContents);
                 itemStack2.shrink(1);
                 player.playSound(SoundEvents.BUNDLE_INSERT);
                 return true;
             } else if (!contents.letter().isEmpty() && contents.gift().isEmpty() && !itemStack2.is(MailTags.LETTERS)) {
-                ParcelContents newContents = new ParcelContents(contents.letter(), itemStack2.copyWithCount(1), contents.ownerName(), contents.targetName());
-                saveContents(itemStack, newContents);
+                ParcelContents newContents = new ParcelContents(contents.letter(), Optional.of(itemStack2.copyWithCount(1)), contents.ownerName(), contents.targetName());
+                itemStack.set(MailItemComponents.PARCEL_CONTENTS, newContents);
 
                 itemStack2.shrink(1);
                 player.playSound(SoundEvents.BUNDLE_INSERT);
@@ -165,19 +166,6 @@ public class ParcelItem extends Item {
         }
 
         return super.overrideOtherStackedOnMe(itemStack, itemStack2, slot, clickAction, player, slotAccess);
-    }
-
-    public static ParcelContents loadContents(ItemStack stack) {
-        ParcelContents contents = stack.getOrDefault(MailItemComponents.PARCEL_CONTENTS, new ParcelContents(ItemStack.EMPTY, ItemStack.EMPTY, Optional.empty(), Optional.empty()));
-        if (contents.gift().is(Items.BEDROCK)) contents = new ParcelContents(contents.letter(), ItemStack.EMPTY, contents.ownerName(), contents.targetName());
-        if (contents.letter().is(Items.BEDROCK)) contents = new ParcelContents(ItemStack.EMPTY, ItemStack.EMPTY, contents.ownerName(), contents.targetName());
-        return contents;
-    }
-
-    public static void saveContents(ItemStack stack, ParcelContents contents) {
-        if (contents.gift().isEmpty()) contents = new ParcelContents(contents.letter(), Items.BEDROCK.getDefaultInstance(), contents.ownerName(), contents.targetName());
-        if (contents.letter().isEmpty()) contents = new ParcelContents(Items.BEDROCK.getDefaultInstance(), Items.BEDROCK.getDefaultInstance(), contents.ownerName(), contents.targetName());
-        stack.set(MailItemComponents.PARCEL_CONTENTS, contents);
     }
 
     @Override

@@ -10,10 +10,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.ToolMaterial;
+import net.minecraft.world.item.*;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -30,7 +27,7 @@ public class MailItems {
 
     public static final Item LETTER = register("letter", LetterItem::new, new Item.Properties().stacksTo(1));
 
-    private static final ParcelContents DEFAULT_CONTENTS = new ParcelContents(Items.BEDROCK.getDefaultInstance(), Items.BEDROCK.getDefaultInstance(), Optional.empty(), Optional.empty());
+    private static final ParcelContents DEFAULT_CONTENTS = new ParcelContents(Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
     
     public static final Item WHITE_PARCEL = register("white_parcel", properties -> new ParcelItem(properties, DyeColor.WHITE), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
     public static final Item ORANGE_PARCEL = register("orange_parcel", properties -> new ParcelItem(properties, DyeColor.ORANGE), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));

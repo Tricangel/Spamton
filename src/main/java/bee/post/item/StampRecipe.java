@@ -2,18 +2,25 @@ package bee.post.item;
 
 import bee.post.registry.MailItems;
 import bee.post.registry.MailTags;
-import net.minecraft.core.HolderLookup;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.CustomRecipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import org.jspecify.annotations.NonNull;
 
 public class StampRecipe extends CustomRecipe {
-    public StampRecipe(CraftingBookCategory craftingBookCategory) {
-        super(craftingBookCategory);
-    }
+    public static final StampRecipe INSTANCE = new StampRecipe();
+    public static final MapCodec<StampRecipe> MAP_CODEC = MapCodec.unit(INSTANCE);
+    public static final StreamCodec<RegistryFriendlyByteBuf, StampRecipe> STREAM_CODEC = StreamCodec.unit(INSTANCE);
+    public static final RecipeSerializer<StampRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
+
 
     @Override
     public boolean matches(CraftingInput recipeInput, Level level) {
@@ -30,7 +37,7 @@ public class StampRecipe extends CustomRecipe {
     }
 
     @Override
-    public @NonNull ItemStack assemble(CraftingInput recipeInput, HolderLookup.Provider provider) {
+    public @NonNull ItemStack assemble(CraftingInput recipeInput) {
         ItemStack stamp = MailItems.STAMP.getDefaultInstance();
         for (ItemStack stack : recipeInput.items()) {
             if (stack.is(MailTags.STAMP)) stamp = stack.copyWithCount(2);
@@ -50,6 +57,6 @@ public class StampRecipe extends CustomRecipe {
 
     @Override
     public RecipeSerializer<? extends CustomRecipe> getSerializer() {
-        return new CustomRecipe.Serializer<StampRecipe>(StampRecipe::new);
+        return SERIALIZER;
     }
 }

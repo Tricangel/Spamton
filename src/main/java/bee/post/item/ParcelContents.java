@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.Options;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -18,10 +17,11 @@ import org.jspecify.annotations.NonNull;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public record ParcelContents(ItemStack letter, ItemStack gift, Optional<String> ownerName, Optional<String> targetName) implements TooltipProvider, TooltipComponent {
+public record ParcelContents(Optional<ItemStack> letter, Optional<ItemStack> gift, Optional<String> ownerName, Optional<String> targetName) implements TooltipProvider, TooltipComponent {
+    public static final ParcelContents EMPTY = new ParcelContents(Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
     public static final Codec<ParcelContents> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ItemStack.CODEC.fieldOf("letter").forGetter(ParcelContents::letter),
-            ItemStack.CODEC.fieldOf("gift").forGetter(ParcelContents::gift),
+            ItemStack.CODEC.optionalFieldOf("letter").forGetter(ParcelContents::letter),
+            ItemStack.CODEC.optionalFieldOf("gift").forGetter(ParcelContents::gift),
             Codec.STRING.optionalFieldOf("owner_name").forGetter(ParcelContents::ownerName),
             Codec.STRING.optionalFieldOf("target_name").forGetter(ParcelContents::targetName)
     ).apply(instance, ParcelContents::new));

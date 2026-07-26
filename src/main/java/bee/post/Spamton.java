@@ -7,8 +7,8 @@ import bee.post.item.StampPredicate;
 import bee.post.item.StampRecipe;
 import bee.post.registry.*;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
-import net.fabricmc.fabric.api.item.v1.ComponentTooltipAppenderRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
+import net.fabricmc.fabric.api.item.v1.ItemComponentTooltipProviderRegistry;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.Registry;
@@ -21,7 +21,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.network.Filterable;
 import net.minecraft.server.network.FilteredText;
 import net.minecraft.world.item.component.WrittenBookContent;
-import net.minecraft.world.item.crafting.CustomRecipe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Spamton implements ModInitializer {
+public class 	Spamton implements ModInitializer {
 	public static final String MOD_ID = "spamton";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
@@ -43,9 +42,9 @@ public class Spamton implements ModInitializer {
 		MailLootFunctions.init();
 		MailLootTables.insertIntoTables();
 
-		ComponentTooltipAppenderRegistry.addFirst(MailItemComponents.PARCEL_CONTENTS);
+		ItemComponentTooltipProviderRegistry.addFirst(MailItemComponents.PARCEL_CONTENTS);
 
-		PayloadTypeRegistry.playC2S().register(ServerboundSignLetterPacket.TYPE, ServerboundSignLetterPacket.STREAM_CODEC);
+		PayloadTypeRegistry.serverboundPlay().register(ServerboundSignLetterPacket.TYPE, ServerboundSignLetterPacket.STREAM_CODEC);
 
 		ServerPlayNetworking.registerGlobalReceiver(ServerboundSignLetterPacket.TYPE, ((packet, context) -> {
 
@@ -69,12 +68,12 @@ public class Spamton implements ModInitializer {
 
 
 		Registry.register(BuiltInRegistries.DATA_COMPONENT_PREDICATE_TYPE, id("stamp"), new DataComponentPredicate.ConcreteType<StampPredicate>(StampPredicate.CODEC));
-		EntityModelLayerRegistry.registerModelLayer(PlayerStampModel.STAMP, PlayerStampModel::createBodyLayer);
-		EntityModelLayerRegistry.registerModelLayer(PlayerStampModel.STAMP_ITEM, PlayerStampModel::createItemLayer);
-		EntityModelLayerRegistry.registerModelLayer(ParcelModel.PARCEL, ParcelModel::createBodyLayer);
+		ModelLayerRegistry.registerModelLayer(PlayerStampModel.STAMP, PlayerStampModel::createBodyLayer);
+		ModelLayerRegistry.registerModelLayer(PlayerStampModel.STAMP_ITEM, PlayerStampModel::createItemLayer);
+		ModelLayerRegistry.registerModelLayer(ParcelModel.PARCEL, ParcelModel::createBodyLayer);
 
 		Registry.register(BuiltInRegistries.RECIPE_TYPE, id("stamp_duplicating"), StampRecipe.StampRecipeType.INSTANCE);
-		Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, id("stamp_duplicating"), new CustomRecipe.Serializer<StampRecipe>(StampRecipe::new));
+		Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, id("stamp_duplicating"), StampRecipe.SERIALIZER);
 
 	}
 
