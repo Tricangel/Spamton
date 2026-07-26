@@ -3,15 +3,15 @@
 	"id": "spamton",
 	"version": "${version}",
 	"name": "spamton",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Adds items to help run a post office.",
 	"authors": [
-		"Me!"
+		"Bee"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://discord.gg/YCm5DBF8dx",
+		"sources": "https://github.com/Tricangel/Spamton/"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/spamton/icon.png",
 	"environment": "*",
 	"entrypoints": {
