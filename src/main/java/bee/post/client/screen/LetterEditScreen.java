@@ -23,23 +23,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.WritableBookContent;
 import org.jspecify.annotations.NonNull;
 
-import java.util.*;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class LetterEditScreen extends Screen {
-    /*public static final int TEXT_WIDTH = 114;
-    public static final int TEXT_HEIGHT = 126;
-    public static final int IMAGE_WIDTH = 192;
-    public static final int IMAGE_HEIGHT = 192;
-    public static final int BACKGROUND_TEXTURE_WIDTH = 256;
-    public static final int BACKGROUND_TEXTURE_HEIGHT = 256;
-    private static final int MENU_BUTTON_MARGIN = 4;
-    private static final int MENU_BUTTON_SIZE = 98;
-    private static final int PAGE_BUTTON_Y = 157;
-    private static final int PAGE_BACK_BUTTON_X = 43;
-    private static final int PAGE_FORWARD_BUTTON_X = 116;
-    private static final int PAGE_INDICATOR_TEXT_Y_OFFSET = 16;
-    private static final int PAGE_INDICATOR_X_OFFSET = 148;*/
     private static final Component SIGN_LETTER_LABEL = Component.translatable("book.signButton");
     private static final Component TITLE = Component.translatable("book.edit.title");
     private final Player owner;
@@ -223,6 +213,6 @@ public class LetterEditScreen extends Screen {
     @Override
     public void renderBackground(@NonNull GuiGraphics guiGraphics, int i, int j, float f) {
         super.renderBackground(guiGraphics, i, j, f);
-        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BookViewScreen.BOOK_LOCATION, this.backgroundLeft(), this.backgroundTop(), 0.0F, 0.0F, 192, 192, 256, 256);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, LetterViewScreen.BOOK_LOCATION, this.backgroundLeft(), this.backgroundTop(), 0.0F, 0.0F, 192, 192, 256, 256);
     }
 }

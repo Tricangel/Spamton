@@ -1,13 +1,10 @@
 package bee.post.block;
 
 import bee.post.block.entity.PackageBlockEntity;
-import bee.post.block.entity.StampType;
 import bee.post.registry.MailItemComponents;
 import bee.post.registry.MailItems;
 import bee.post.registry.MailTags;
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -21,7 +18,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ResolvableProfile;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
@@ -85,12 +81,12 @@ public class PackageBlock extends BaseEntityBlock {
             level.setBlock(blockPos, blockState, 0);
 
 
-            if (!itemStack.is(MailTags.SAFE_BOX_CUTTER) && RandomSource.create().nextInt(10) == 0) {
+            if (!itemStack.is(MailTags.SAFE_BOX_CUTTER) && RandomSource.create().nextInt(10) == 0 && !level.isClientSide()) {
                 level.destroyBlock(blockPos, true);
                 return InteractionResult.SUCCESS;
             }
 
-            if (blockState.getValue(DAMAGED) && RandomSource.create().nextInt(3) == 0) {
+            if (blockState.getValue(DAMAGED) && RandomSource.create().nextInt(3) == 0 && !level.isClientSide()) {
                 level.destroyBlock(blockPos, true);
                 return InteractionResult.SUCCESS;
             }
@@ -113,13 +109,15 @@ public class PackageBlock extends BaseEntityBlock {
         List<Stamp> stamps = packageBlockEntity.getStamps();
 
         for (Stamp stamp : stamps) {
-            if (stamp.pos.distanceTo(dist) < 0.20) return InteractionResult.FAIL;
+            if (stamp.pos().distanceTo(dist) < 0.20) return InteractionResult.FAIL;
         }
 
         Optional<ResolvableProfile> profile = itemStack.has(DataComponents.PROFILE) ? Optional.of(itemStack.get(DataComponents.PROFILE)) :Optional.empty();
 
-        if (packageBlockEntity.addStamp(new Stamp(dist, blockHitResult.getDirection(), RandomSource.create().nextInt(180), itemStack.getOrDefault(MailItemComponents.STAMP_TYPE, StampType.MOON), profile))) {
-            level.addParticle(ParticleTypes.DUST_PLUME, pos.x, pos.y, pos.z, 0, 0, 0);
+        if (packageBlockEntity.addStamp(new Stamp(dist, blockHitResult.getDirection(), RandomSource.create().nextInt(180), itemStack.getOrDefault(MailItemComponents.STAMP_TYPE, Stamp.StampType.MOON), profile))) {
+            for (int i = 0; i < 5; i++) {
+                level.addParticle(ParticleTypes.DUST_PLUME, pos.x, pos.y, pos.z, 0, 0, 0);
+            }
             player.playSound(SoundEvents.HONEY_BLOCK_PLACE);
             itemStack.consume(1, player);
 
@@ -132,8 +130,10 @@ public class PackageBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult) {
-        if (!player.isCrouching() && level instanceof ServerLevel && level.getBlockEntity(blockPos) instanceof PackageBlockEntity packageBlockEntity && !blockState.getValue(TAPED)) {
-            player.openMenu(packageBlockEntity);
+        if (!player.isCrouching() && level.getBlockEntity(blockPos) instanceof PackageBlockEntity packageBlockEntity && !blockState.getValue(TAPED)) {
+            if (level instanceof ServerLevel) {
+                player.openMenu(packageBlockEntity);
+            }
             return InteractionResult.SUCCESS;
         }
 
@@ -142,11 +142,12 @@ public class PackageBlock extends BaseEntityBlock {
             Vec3 dist = blockHitResult.getLocation().subtract(blockHitResult.getBlockPos().getCenter());
 
             if (stamps.removeIf(stamp -> {
-                if (stamp.pos.distanceTo(dist) < 0.15f) {
+                if (stamp.pos().distanceTo(dist) < 0.15f) {
                     ItemStack stack = MailItems.STAMP.getDefaultInstance();
-                    stack.set(MailItemComponents.STAMP_TYPE, stamp.stampType);
-                    stamp.profile.ifPresent(resolvableProfile -> stack.set(DataComponents.PROFILE, resolvableProfile));
+                    stack.set(MailItemComponents.STAMP_TYPE, stamp.stampType());
+                    stamp.profile().ifPresent(resolvableProfile -> stack.set(DataComponents.PROFILE, resolvableProfile));
                     player.addItem(stack);
+                    player.playSound(SoundEvents.HONEY_BLOCK_BREAK);
                     return true;
                 }
                 return false;
@@ -201,17 +202,6 @@ public class PackageBlock extends BaseEntityBlock {
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         return new PackageBlockEntity(blockPos, blockState);
-    }
-
-
-    public record Stamp(Vec3 pos, Direction direction, double rotation, StampType stampType, Optional<ResolvableProfile> profile) {
-        public static final Codec<Stamp> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                Vec3.CODEC.fieldOf("pos").forGetter(Stamp::pos),
-                Direction.CODEC.fieldOf("direction").forGetter(Stamp::direction),
-                Codec.DOUBLE.fieldOf("rotation").forGetter(Stamp::rotation),
-                StampType.CODEC.fieldOf("stamp").forGetter(Stamp::stampType),
-                ResolvableProfile.CODEC.optionalFieldOf("profile").forGetter(Stamp::profile)
-        ).apply(instance, Stamp::new));
     }
 
 }

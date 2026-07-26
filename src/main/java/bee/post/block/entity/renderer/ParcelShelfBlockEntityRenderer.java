@@ -4,31 +4,19 @@ import bee.post.block.entity.ParcelShelfBlockEntity;
 import bee.post.client.renderer.ParcelShelfSpecialRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.model.Model;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
-import net.minecraft.client.renderer.item.ItemModelResolver;
-import net.minecraft.client.renderer.item.ItemStackRenderState;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.ModelManager;
-import net.minecraft.client.resources.model.QuadCollection;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
-
-import java.util.Map;
 
 public class ParcelShelfBlockEntityRenderer implements BlockEntityRenderer<ParcelShelfBlockEntity, ParcelShelfBlockEntityRenderState> {
     BlockEntityRendererProvider.Context context;
@@ -42,17 +30,18 @@ public class ParcelShelfBlockEntityRenderer implements BlockEntityRenderer<Parce
     }
 
     @Override
-    public void extractRenderState(ParcelShelfBlockEntity blockEntity, ParcelShelfBlockEntityRenderState renderState, float f, Vec3 vec3, ModelFeatureRenderer.@Nullable CrumblingOverlay crumblingOverlay) {
+    public void extractRenderState(ParcelShelfBlockEntity blockEntity, ParcelShelfBlockEntityRenderState renderState, float f, @NonNull Vec3 vec3, ModelFeatureRenderer.@Nullable CrumblingOverlay crumblingOverlay) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, renderState, f, vec3, crumblingOverlay);
 
         renderState.stacks = blockEntity.getItems();
         renderState.rotation = blockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
 
+        renderState.lightCoordsInFront = blockEntity.getLevel() != null ? LevelRenderer.getLightColor(blockEntity.getLevel(), blockEntity.getBlockPos().relative(renderState.rotation)) : 15728880;
 
     }
 
     @Override
-    public void submit(ParcelShelfBlockEntityRenderState blockEntityRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+    public void submit(ParcelShelfBlockEntityRenderState blockEntityRenderState, @NonNull PoseStack poseStack, @NonNull SubmitNodeCollector submitNodeCollector, @NonNull CameraRenderState cameraRenderState) {
 
 
         for (int i = 0; i < blockEntityRenderState.stacks.size(); i++) {
@@ -68,7 +57,7 @@ public class ParcelShelfBlockEntityRenderer implements BlockEntityRenderer<Parce
 
                 poseStack.translate(getTranslation(i + 1));
 
-                shelfSpecialRenderer.submit(shelfSpecialRenderer.extractArgument(stack), ItemDisplayContext.ON_SHELF, poseStack, submitNodeCollector, blockEntityRenderState.lightCoords, OverlayTexture.NO_OVERLAY, false, 0);
+                shelfSpecialRenderer.submit(shelfSpecialRenderer.extractArgument(stack), ItemDisplayContext.ON_SHELF, poseStack, submitNodeCollector, blockEntityRenderState.lightCoordsInFront, OverlayTexture.NO_OVERLAY, false, 0);
                 poseStack.popPose();
             }
         }

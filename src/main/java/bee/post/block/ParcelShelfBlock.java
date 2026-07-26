@@ -33,9 +33,9 @@ public class ParcelShelfBlock extends BaseEntityBlock implements SelectableSlotC
 
 
     @Override
-    protected InteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+    protected @NonNull InteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
 
-        if (level.getBlockEntity(blockPos) instanceof ParcelShelfBlockEntity blockEntity && !itemStack.isEmpty() && itemStack.is(MailTags.LETTERS)) {
+        if (level.getBlockEntity(blockPos) instanceof ParcelShelfBlockEntity blockEntity && !itemStack.isEmpty() && itemStack.is(MailTags.PARCELS)) {
             OptionalInt optionalInt = this.getHitSlot(blockHitResult, blockState.getValue(FACING));
             if (optionalInt.isPresent()) return addItem(blockEntity, itemStack, optionalInt.getAsInt(), player);
 
@@ -112,4 +112,5 @@ public class ParcelShelfBlock extends BaseEntityBlock implements SelectableSlotC
     protected @NonNull BlockState mirror(BlockState blockState, Mirror mirror) {
         return blockState.rotate(mirror.getRotation(blockState.getValue(FACING)));
     }
+
 }

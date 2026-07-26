@@ -55,8 +55,44 @@
               "model": "spamton:item/apple_stamp"
             },
             "on_false": {
-              "type": "minecraft:model",
-              "model": "spamton:item/pickaxe_stamp"
+              "type": "minecraft:condition",
+              "property": "minecraft:component",
+              "predicate": "spamton:stamp",
+              "value": {
+                "stamp": "ink"
+              },
+              "on_true": {
+                "type": "minecraft:model",
+                "model": "spamton:item/ink_stamp"
+              },
+              "on_false": {
+                "type": "minecraft:condition",
+                "property": "minecraft:component",
+                "predicate": "spamton:stamp",
+                "value": {
+                  "stamp": "horse"
+                },
+                "on_true": {
+                  "type": "minecraft:model",
+                  "model": "spamton:item/horse_stamp"
+                },
+                "on_false": {
+                  "type": "minecraft:condition",
+                  "property": "minecraft:component",
+                  "predicate": "spamton:stamp",
+                  "value": {
+                    "stamp": "alien"
+                  },
+                  "on_true": {
+                    "type": "minecraft:model",
+                    "model": "spamton:item/alien_stamp"
+                  },
+                  "on_false": {
+                    "type": "minecraft:model",
+                    "model": "spamton:item/pickaxe_stamp"
+                  }
+                }
+              }
             }
           }
         }

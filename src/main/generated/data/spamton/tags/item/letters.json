@@ -1,5 +1,8 @@
 {
   "values": [
-    "spamton:blue_letter"
+    "minecraft:filled_map",
+    "minecraft:written_book",
+    "minecraft:writable_book",
+    "spamton:letter"
   ]
 }

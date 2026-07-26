@@ -1,11 +1,10 @@
 package bee.post.item;
 
-import bee.post.block.entity.StampType;
+import bee.post.block.Stamp;
 import bee.post.registry.MailItemComponents;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.component.DataComponentGetter;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.component.predicates.DataComponentPredicate;
 
 public record StampPredicate(String name) implements DataComponentPredicate {
@@ -16,7 +15,7 @@ public record StampPredicate(String name) implements DataComponentPredicate {
 
     @Override
     public boolean matches(DataComponentGetter dataComponentGetter) {
-        String name = dataComponentGetter.getOrDefault(MailItemComponents.STAMP_TYPE, StampType.MOON).getSerializedName();
+        String name = dataComponentGetter.getOrDefault(MailItemComponents.STAMP_TYPE, Stamp.StampType.MOON).getSerializedName();
 
         return name.equals(this.name);
     }

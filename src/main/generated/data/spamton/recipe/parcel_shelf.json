@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "x": "#minecraft:planks",
+    "y": "#minecraft:wooden_slabs"
+  },
+  "pattern": [
+    "xxx",
+    "yyy",
+    "xxx"
+  ],
+  "result": {
+    "count": 1,
+    "id": "spamton:parcel_shelf"
+  }
+}

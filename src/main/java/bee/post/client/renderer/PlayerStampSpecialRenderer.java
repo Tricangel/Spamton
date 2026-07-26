@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.client.renderer.PlayerSkinRenderCache;
 import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -34,7 +33,7 @@ public class PlayerStampSpecialRenderer implements SpecialModelRenderer<PlayerSk
     }
 
     @Override
-    public void getExtents(Consumer<Vector3fc> consumer) {
+    public void getExtents(@NonNull Consumer<Vector3fc> consumer) {
         PoseStack poseStack = new PoseStack();
         this.modelBase.root().getExtentsForGui(poseStack, consumer);
     }

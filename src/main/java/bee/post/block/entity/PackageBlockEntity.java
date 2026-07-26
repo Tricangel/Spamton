@@ -2,6 +2,7 @@ package bee.post.block.entity;
 
 import bee.post.Spamton;
 import bee.post.block.PackageBlock;
+import bee.post.block.Stamp;
 import bee.post.registry.MailBlockEntities;
 import bee.post.registry.MailItemComponents;
 import bee.post.registry.MailItems;
@@ -37,12 +38,12 @@ public class PackageBlockEntity extends BaseContainerBlockEntity {
         this.itemStacks = NonNullList.withSize(9, ItemStack.EMPTY);
     }
 
-    private List<PackageBlock.Stamp> stamps = new ArrayList<>(50);
+    private final List<Stamp> stamps = new ArrayList<>(50);
     public NonNullList<ItemStack> itemStacks;
 
 
 
-    public boolean addStamp(PackageBlock.Stamp stamp) {
+    public boolean addStamp(Stamp stamp) {
         setChanged();
         if (stamps.size() < 50) {
             stamps.add(stamp);
@@ -51,7 +52,7 @@ public class PackageBlockEntity extends BaseContainerBlockEntity {
         return false;
     }
 
-    public List<PackageBlock.Stamp> getStamps() {
+    public List<Stamp> getStamps() {
         return stamps;
     }
 
@@ -66,12 +67,12 @@ public class PackageBlockEntity extends BaseContainerBlockEntity {
     }
 
     @Override
-    protected void setItems(NonNullList<ItemStack> nonNullList) {
+    protected void setItems(@NonNull NonNullList<ItemStack> nonNullList) {
         itemStacks = nonNullList;
     }
 
     @Override
-    protected AbstractContainerMenu createMenu(int i, Inventory inventory) {
+    protected @NonNull AbstractContainerMenu createMenu(int i, @NonNull Inventory inventory) {
         return new DispenserMenu(i, inventory, this);
     }
 
@@ -81,10 +82,10 @@ public class PackageBlockEntity extends BaseContainerBlockEntity {
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentGetter dataComponentGetter) {
+    protected void applyImplicitComponents(@NonNull DataComponentGetter dataComponentGetter) {
         super.applyImplicitComponents(dataComponentGetter);
 
-        List<PackageBlock.Stamp> stamps1 = dataComponentGetter.get(MailItemComponents.STAMPS);
+        List<Stamp> stamps1 = dataComponentGetter.get(MailItemComponents.STAMPS);
         if (stamps1 != null) {
             stamps.addAll(stamps1);
         }
@@ -93,17 +94,17 @@ public class PackageBlockEntity extends BaseContainerBlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+    public @NonNull CompoundTag getUpdateTag(HolderLookup.@NonNull Provider provider) {
         try (ProblemReporter.ScopedCollector scopedCollector = new ProblemReporter.ScopedCollector(this.problemPath(), Spamton.LOGGER)) {
             TagValueOutput tagValueOutput = TagValueOutput.createWithContext(scopedCollector, provider);
-            tagValueOutput.store("stamps", PackageBlock.Stamp.CODEC.listOf(), stamps);
+            tagValueOutput.store("stamps", Stamp.CODEC.listOf(), stamps);
             return tagValueOutput.buildResult();
         }
 
     }
 
     @Override
-    protected void collectImplicitComponents(DataComponentMap.Builder builder) {
+    protected void collectImplicitComponents(DataComponentMap.@NonNull Builder builder) {
         super.collectImplicitComponents(builder);
         if (!this.getBlockState().getValue(PackageBlock.TAPED)) {
             builder.set(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
@@ -115,27 +116,28 @@ public class PackageBlockEntity extends BaseContainerBlockEntity {
     }
 
     @Override
-    protected void loadAdditional(ValueInput valueInput) {
+    protected void loadAdditional(@NonNull ValueInput valueInput) {
         super.loadAdditional(valueInput);
-        valueInput.read("stamps", PackageBlock.Stamp.CODEC.listOf()).ifPresent(stamps::addAll);
+        valueInput.read("stamps", Stamp.CODEC.listOf()).ifPresent(stamps::addAll);
         this.itemStacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         ContainerHelper.loadAllItems(valueInput, itemStacks);
     }
 
     @Override
-    protected void saveAdditional(ValueOutput valueOutput) {
+    protected void saveAdditional(@NonNull ValueOutput valueOutput) {
         super.saveAdditional(valueOutput);
-        valueOutput.store("stamps", PackageBlock.Stamp.CODEC.listOf(), stamps);
+        valueOutput.store("stamps", Stamp.CODEC.listOf(), stamps);
         ContainerHelper.saveAllItems(valueOutput, itemStacks);
     }
 
 
 
     @Override
-    public void preRemoveSideEffects(BlockPos blockPos, BlockState blockState) {
+    public void preRemoveSideEffects(@NonNull BlockPos blockPos, @NonNull BlockState blockState) {
+        if (level == null) return;
         if (!blockState.getValue(PackageBlock.TAPED)) {
             super.preRemoveSideEffects(blockPos, blockState);
-            for (PackageBlock.Stamp stamp : stamps) {
+            for (Stamp stamp : stamps) {
 
                 ItemStack stack = MailItems.STAMP.getDefaultInstance();
 

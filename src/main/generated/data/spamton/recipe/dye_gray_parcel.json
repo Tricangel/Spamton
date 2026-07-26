@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "parcel",
+  "ingredients": [
+    "minecraft:gray_dye",
+    [
+      "spamton:white_parcel",
+      "spamton:orange_parcel",
+      "spamton:magenta_parcel",
+      "spamton:light_blue_parcel",
+      "spamton:yellow_parcel",
+      "spamton:lime_parcel",
+      "spamton:pink_parcel",
+      "spamton:light_gray_parcel",
+      "spamton:cyan_parcel",
+      "spamton:purple_parcel",
+      "spamton:blue_parcel",
+      "spamton:brown_parcel",
+      "spamton:green_parcel",
+      "spamton:red_parcel",
+      "spamton:black_parcel"
+    ]
+  ],
+  "result": {
+    "count": 1,
+    "id": "spamton:gray_parcel"
+  }
+}

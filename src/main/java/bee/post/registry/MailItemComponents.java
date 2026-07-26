@@ -1,8 +1,7 @@
 package bee.post.registry;
 
 import bee.post.Spamton;
-import bee.post.block.PackageBlock;
-import bee.post.block.entity.StampType;
+import bee.post.block.Stamp;
 import bee.post.item.ParcelContents;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Registry;
@@ -18,16 +17,16 @@ public class MailItemComponents {
 
 
 
-    public static final DataComponentType<StampType> STAMP_TYPE = Registry.register(
+    public static final DataComponentType<Stamp.StampType> STAMP_TYPE = Registry.register(
             BuiltInRegistries.DATA_COMPONENT_TYPE,
             Spamton.id("stamp_type"),
-            DataComponentType.<StampType>builder().persistent(StampType.CODEC).build()
+            DataComponentType.<Stamp.StampType>builder().persistent(Stamp.StampType.CODEC).build()
     );
 
-    public static final DataComponentType<List<PackageBlock.Stamp>> STAMPS = Registry.register(
+    public static final DataComponentType<List<Stamp>> STAMPS = Registry.register(
             BuiltInRegistries.DATA_COMPONENT_TYPE,
             Spamton.id("stamps"),
-            DataComponentType.<List<PackageBlock.Stamp>>builder().persistent(PackageBlock.Stamp.CODEC.listOf()).build()
+            DataComponentType.<List<Stamp>>builder().persistent(Stamp.CODEC.listOf()).build()
     );
 
     public static final DataComponentType<Boolean> DAMAGED = Registry.register(

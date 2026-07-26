@@ -1,0 +1,15 @@
+{
+  "model": {
+    "type": "minecraft:condition",
+    "property": "minecraft:has_component",
+    "component": "spamton:taped",
+    "on_true": {
+      "type": "minecraft:model",
+      "model": "spamton:block/variant_0_package_taped"
+    },
+    "on_false": {
+      "type": "minecraft:model",
+      "model": "spamton:block/variant_0_package"
+    }
+  }
+}

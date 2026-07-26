@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "spamton:cardboard",
+    "minecraft:paper",
+    "spamton:cardboard",
+    "minecraft:purple_dye"
+  ],
+  "result": {
+    "count": 1,
+    "id": "spamton:purple_parcel"
+  }
+}

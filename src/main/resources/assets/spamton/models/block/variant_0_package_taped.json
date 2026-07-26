@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "spamton:block/package_template",
 
   "textures": {
     "particle": "spamton:block/box/box_bottom",
@@ -8,39 +8,5 @@
     "side_1": "spamton:block/box/old_box_side_2_tape",
     "side_2": "spamton:block/box/old_box_side_1_tape",
     "side_3": "spamton:block/box/old_box_side_3"
-  },
-  "elements": [
-    {
-      "from": [
-        0,
-        0,
-        0
-      ],
-      "to": [
-        16,
-        16,
-        16
-      ],
-      "faces": {
-        "up": {
-          "texture": "#top"
-        },
-        "down": {
-          "texture": "#bottom"
-        },
-        "east": {
-          "texture": "#side_3"
-        },
-        "south": {
-          "texture": "#side_1"
-        },
-        "north": {
-          "texture": "#side_2"
-        },
-        "west": {
-          "texture": "#side_3"
-        }
-      }
-    }
-  ]
+  }
 }

@@ -1,6 +1,7 @@
 package bee.post.block.entity.renderer;
 
 import bee.post.block.PackageBlock;
+import bee.post.block.Stamp;
 import bee.post.block.entity.PackageBlockEntity;
 import bee.post.client.model.PlayerStampModel;
 import bee.post.registry.MailItemComponents;
@@ -52,14 +53,11 @@ public class PackageBlockEntityRenderer implements BlockEntityRenderer<PackageBl
     public void submit(PackageBlockEntityRenderState blockEntityRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
 
 
-        for (PackageBlock.Stamp stamp : blockEntityRenderState.stamps) {
+        for (Stamp stamp : blockEntityRenderState.stamps) {
             poseStack.pushPose();
             poseStack.translate(.5, .5, .5);
             poseStack.translate(stamp.pos());
-
-
             poseStack.mulPose(stamp.direction().getRotation());
-
 
             if (stamp.profile().isEmpty()) {
                 poseStack.scale(.25f, .25f, .25f);

@@ -8,6 +8,7 @@ import bee.post.item.StampRecipe;
 import bee.post.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.item.v1.ComponentTooltipAppenderRegistry;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.Registry;
@@ -30,9 +31,6 @@ import java.util.Optional;
 
 public class Spamton implements ModInitializer {
 	public static final String MOD_ID = "spamton";
-	// This logger is used to write text to the console and the log file.
-	// It is considered best practice to use your mod id as the logger's name.
-	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	@Override
@@ -42,6 +40,10 @@ public class Spamton implements ModInitializer {
 		MailItemComponents.init();
 		MailItems.init();
 		MailTags.init();
+		MailLootFunctions.init();
+		MailLootTables.insertIntoTables();
+
+		ComponentTooltipAppenderRegistry.addFirst(MailItemComponents.PARCEL_CONTENTS);
 
 		PayloadTypeRegistry.playC2S().register(ServerboundSignLetterPacket.TYPE, ServerboundSignLetterPacket.STREAM_CODEC);
 
@@ -62,6 +64,7 @@ public class Spamton implements ModInitializer {
 			context.player().getInventory().getItem(packet.slot()).set(DataComponents.WRITTEN_BOOK_CONTENT, content);
 
 		}));
+
 
 
 

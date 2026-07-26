@@ -8,7 +8,6 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 
 import java.util.List;
-import java.util.Optional;
 
 public record ServerboundSignLetterPacket(int slot, List<String> pages, String title, String author) implements CustomPacketPayload {
     public static final Identifier IDENTIFIER = Spamton.id("serverbound_edit_letter");

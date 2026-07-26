@@ -13,6 +13,10 @@ public class MailTags {
 
     public static final TagKey<Item> LETTERS = TagKey.create(Registries.ITEM, Spamton.id("letters"));
 
+    public static final TagKey<Item> PARCELS = TagKey.create(Registries.ITEM, Spamton.id("parcels"));
+
+    public static final TagKey<Item> CANNOT_FIT_IN_PARCELS = TagKey.create(Registries.ITEM, Spamton.id("cannot_fit_in_parcels"));
+
     public static final TagKey<Item> TAPE = TagKey.create(Registries.ITEM, Spamton.id("tape"));
 
     public static final TagKey<Item> BOX_CUTTER = TagKey.create(Registries.ITEM, Spamton.id("box_cutter"));

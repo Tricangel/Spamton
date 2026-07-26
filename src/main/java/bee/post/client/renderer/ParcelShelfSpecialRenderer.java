@@ -2,21 +2,16 @@ package bee.post.client.renderer;
 
 import bee.post.Spamton;
 import bee.post.client.model.ParcelModel;
-import bee.post.client.model.PlayerStampModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.serialization.MapCodec;
-import net.fabricmc.fabric.impl.client.indigo.renderer.render.BlockRenderInfo;
-import net.minecraft.client.renderer.PlayerSkinRenderCache;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.ResolvableProfile;
 import org.joml.Vector3fc;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -46,7 +41,12 @@ public class ParcelShelfSpecialRenderer implements SpecialModelRenderer<RenderTy
     @Override
     public @Nullable RenderType extractArgument(ItemStack itemStack) {
 
-        return RenderTypes.armorTranslucent(Spamton.id("textures/block/red_parcel.png"));
+        String name = itemStack.getItem().getName().getString();
+
+        name = name.replace(" ", "_");
+        name = name.toLowerCase();
+
+        return RenderTypes.armorTranslucent(Spamton.id("textures/shelf/" + name + ".png"));
     }
 
 

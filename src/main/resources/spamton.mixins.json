@@ -3,6 +3,7 @@
   "package": "bee.post.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "HorseMixin",
     "ShulkerSlotMixin",
     "SlotMixin"
   ],

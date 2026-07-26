@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/block",
   "textures": {
     "particle": "minecraft:block/chiseled_bookshelf_side",
     "up": "minecraft:block/chiseled_bookshelf_top",

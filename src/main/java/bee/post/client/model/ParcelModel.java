@@ -8,8 +8,6 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 
-import java.util.function.Function;
-
 public class ParcelModel extends Model<ParcelModel.State> {
     public static final ModelLayerLocation PARCEL = new ModelLayerLocation(Spamton.id("parcel"), "main");
     public ParcelModel(ModelPart modelPart) {

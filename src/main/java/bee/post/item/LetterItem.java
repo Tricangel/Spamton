@@ -4,29 +4,21 @@ import bee.post.client.screen.LetterEditScreen;
 import bee.post.client.screen.LetterViewScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.WritableBookContent;
 import net.minecraft.world.item.component.WrittenBookContent;
 import net.minecraft.world.level.Level;
 import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
 public class LetterItem extends Item {
-    public final DyeColor color;
-    public LetterItem(Properties properties, DyeColor dyeColor) {
+    public LetterItem(Properties properties) {
         super(properties);
-        this.color = dyeColor;
     }
 
     @Override

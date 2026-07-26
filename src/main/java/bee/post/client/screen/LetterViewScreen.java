@@ -1,5 +1,6 @@
 package bee.post.client.screen;
 
+import bee.post.Spamton;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -8,7 +9,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.TextAlignment;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.inventory.BookViewScreen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -16,7 +16,6 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.*;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
-import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.WritableBookContent;
 import net.minecraft.world.item.component.WrittenBookContent;
@@ -32,7 +31,7 @@ public class LetterViewScreen extends Screen {
     private static final Component TITLE = Component.translatable("book.view.title");
     private static final Style PAGE_TEXT_STYLE = Style.EMPTY.withoutShadow().withColor(-16777216);
     public static final LetterAccess EMPTY_ACCESS = new LetterAccess(List.of());
-    public static final Identifier BOOK_LOCATION = Identifier.withDefaultNamespace("textures/gui/book.png");
+    public static final Identifier BOOK_LOCATION = Spamton.id("textures/gui/letter.png");
     private LetterAccess letterAccess;
     private int currentPage;
     private List<FormattedCharSequence> cachedPageComponents;

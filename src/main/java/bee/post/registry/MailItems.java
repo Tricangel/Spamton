@@ -1,8 +1,9 @@
 package bee.post.registry;
 
 import bee.post.Spamton;
-import bee.post.block.entity.StampType;
+import bee.post.block.Stamp;
 import bee.post.item.LetterItem;
+import bee.post.item.ParcelContents;
 import bee.post.item.ParcelItem;
 import bee.post.item.StampItem;
 import net.minecraft.core.Registry;
@@ -11,23 +12,42 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ToolMaterial;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 public class MailItems {
 
 
-    public static final Item STAMP = register("stamp", StampItem::new, new Item.Properties().component(MailItemComponents.STAMP_TYPE, StampType.SUN));
+    public static final Item STAMP = register("stamp", StampItem::new, new Item.Properties().component(MailItemComponents.STAMP_TYPE, Stamp.StampType.SUN));
 
     public static final Item TAPE = register("tape", Item::new, new Item.Properties().durability(128));
-    public static final Item BOX_CUTTER = register("box_cutter", Item::new, new Item.Properties().durability(128));
+    public static final Item BOX_CUTTER = register("box_cutter", Item::new, new Item.Properties().durability(128).sword(ToolMaterial.COPPER, 2.0F, -2.4F));
 
     public static final Item CARDBOARD = register("cardboard", Item::new, new Item.Properties());
 
-    public static final Item BLUE_LETTER = register("blue_letter", properties -> new LetterItem(properties, DyeColor.BLUE), new Item.Properties());
+    public static final Item LETTER = register("letter", LetterItem::new, new Item.Properties().stacksTo(1));
 
-    public static final Item BLUE_PARCEL = register("blue_parcel", properties -> new ParcelItem(properties, DyeColor.BLUE), new Item.Properties());
-
+    private static final ParcelContents DEFAULT_CONTENTS = new ParcelContents(Items.BEDROCK.getDefaultInstance(), Items.BEDROCK.getDefaultInstance(), Optional.empty(), Optional.empty());
+    
+    public static final Item WHITE_PARCEL = register("white_parcel", properties -> new ParcelItem(properties, DyeColor.WHITE), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
+    public static final Item ORANGE_PARCEL = register("orange_parcel", properties -> new ParcelItem(properties, DyeColor.ORANGE), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
+    public static final Item MAGENTA_PARCEL = register("magenta_parcel", properties -> new ParcelItem(properties, DyeColor.MAGENTA), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
+    public static final Item LIGHT_BLUE_PARCEL = register("light_blue_parcel", properties -> new ParcelItem(properties, DyeColor.LIGHT_BLUE ), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
+    public static final Item YELLOW_PARCEL = register("yellow_parcel", properties -> new ParcelItem(properties, DyeColor.YELLOW), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
+    public static final Item LIME_PARCEL = register("lime_parcel", properties -> new ParcelItem(properties, DyeColor.LIME), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
+    public static final Item PINK_PARCEL = register("pink_parcel", properties -> new ParcelItem(properties, DyeColor.PINK), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
+    public static final Item GRAY_PARCEL = register("gray_parcel", properties -> new ParcelItem(properties, DyeColor.GRAY), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
+    public static final Item LIGHT_GRAY_PARCEL = register("light_gray_parcel", properties -> new ParcelItem(properties, DyeColor.LIGHT_GRAY), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
+    public static final Item CYAN_PARCEL = register("cyan_parcel", properties -> new ParcelItem(properties, DyeColor.CYAN), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
+    public static final Item PURPLE_PARCEL = register("purple_parcel", properties -> new ParcelItem(properties, DyeColor.PURPLE), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
+    public static final Item BLUE_PARCEL = register("blue_parcel", properties -> new ParcelItem(properties, DyeColor.BLUE), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
+    public static final Item BROWN_PARCEL = register("brown_parcel", properties -> new ParcelItem(properties, DyeColor.BROWN), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
+    public static final Item GREEN_PARCEL = register("green_parcel", properties -> new ParcelItem(properties, DyeColor.GREEN), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
+    public static final Item RED_PARCEL = register("red_parcel", properties -> new ParcelItem(properties, DyeColor.RED), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
+    public static final Item BLACK_PARCEL = register("black_parcel", properties -> new ParcelItem(properties, DyeColor.BLACK), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
 
     public static void init() {
     }

@@ -2,7 +2,6 @@ package bee.post.mixin;
 
 import bee.post.block.PackageBlock;
 import net.minecraft.world.inventory.ShulkerBoxSlot;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
