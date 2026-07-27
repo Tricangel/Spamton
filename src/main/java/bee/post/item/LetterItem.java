@@ -27,13 +27,13 @@ public class LetterItem extends Item {
 
         ItemStack letter = player.getItemInHand(interactionHand);
         if (letter.has(DataComponents.WRITABLE_BOOK_CONTENT)) {
-            Minecraft.getInstance().setScreen(new LetterEditScreen(player, letter, interactionHand, letter.get(DataComponents.WRITABLE_BOOK_CONTENT)));
+            Minecraft.getInstance().gui.setScreen(new LetterEditScreen(player, letter, interactionHand, letter.get(DataComponents.WRITABLE_BOOK_CONTENT)));
         } else {
             WrittenBookContent content = letter.get(DataComponents.WRITTEN_BOOK_CONTENT);
             if (content != null){
-                Minecraft.getInstance().setScreen(new LetterViewScreen(LetterViewScreen.LetterAccess.fromItem(letter)));
+                Minecraft.getInstance().gui.setScreen(new LetterViewScreen(LetterViewScreen.LetterAccess.fromItem(letter)));
             } else {
-                Minecraft.getInstance().setScreen(new LetterEditScreen(player, letter, interactionHand, letter.getOrDefault(DataComponents.WRITABLE_BOOK_CONTENT, new WritableBookContent(List.of()))));
+                Minecraft.getInstance().gui.setScreen(new LetterEditScreen(player, letter, interactionHand, letter.getOrDefault(DataComponents.WRITABLE_BOOK_CONTENT, new WritableBookContent(List.of()))));
             }
         }
         return InteractionResult.SUCCESS;

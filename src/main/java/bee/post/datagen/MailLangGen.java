@@ -26,22 +26,23 @@ public class MailLangGen extends FabricLanguageProvider {
         translationBuilder.add(MailItems.CARDBOARD, "Cardboard");
         translationBuilder.add(MailItems.LETTER, "Letter");
 
-        translationBuilder.add(MailItems.WHITE_PARCEL, "White Parcel");
-        translationBuilder.add(MailItems.ORANGE_PARCEL, "Orange Parcel");
-        translationBuilder.add(MailItems.MAGENTA_PARCEL, "Magenta Parcel");
-        translationBuilder.add(MailItems.LIGHT_BLUE_PARCEL, "Light Blue Parcel");
-        translationBuilder.add(MailItems.YELLOW_PARCEL, "Yellow Parcel");
-        translationBuilder.add(MailItems.LIME_PARCEL, "Lime Parcel");
-        translationBuilder.add(MailItems.PINK_PARCEL, "Pink Parcel");
-        translationBuilder.add(MailItems.GRAY_PARCEL, "Gray Parcel");
-        translationBuilder.add(MailItems.LIGHT_GRAY_PARCEL, "Light Gray Parcel");
-        translationBuilder.add(MailItems.CYAN_PARCEL, "Cyan Parcel");
-        translationBuilder.add(MailItems.PURPLE_PARCEL, "Purple Parcel");
-        translationBuilder.add(MailItems.BLUE_PARCEL, "Blue Parcel");
-        translationBuilder.add(MailItems.BROWN_PARCEL, "Brown Parcel");
-        translationBuilder.add(MailItems.GREEN_PARCEL, "Green Parcel");
-        translationBuilder.add(MailItems.RED_PARCEL, "Red Parcel");
-        translationBuilder.add(MailItems.BLACK_PARCEL, "Black Parcel");
+        translationBuilder.add(MailItems.PARCEL.white(), "White Parcel");
+        translationBuilder.add(MailItems.PARCEL.orange(), "Orange Parcel");
+        translationBuilder.add(MailItems.PARCEL.magenta(), "Magenta Parcel");
+        translationBuilder.add(MailItems.PARCEL.lightBlue(), "Light Blue Parcel");
+        translationBuilder.add(MailItems.PARCEL.yellow(), "Yellow Parcel");
+        translationBuilder.add(MailItems.PARCEL.lime(), "Lime Parcel");
+        translationBuilder.add(MailItems.PARCEL.pink(), "Pink Parcel");
+        translationBuilder.add(MailItems.PARCEL.gray(), "Gray Parcel");
+        translationBuilder.add(MailItems.PARCEL.lightGray(), "Light Gray Parcel");
+        translationBuilder.add(MailItems.PARCEL.cyan(), "Cyan Parcel");
+        translationBuilder.add(MailItems.PARCEL.purple(), "Purple Parcel");
+        translationBuilder.add(MailItems.PARCEL.blue(), "Blue Parcel");
+        translationBuilder.add(MailItems.PARCEL.brown(), "Brown Parcel");
+        translationBuilder.add(MailItems.PARCEL.green(), "Green Parcel");
+        translationBuilder.add(MailItems.PARCEL.red(), "Red Parcel");
+        translationBuilder.add(MailItems.PARCEL.black(), "Black Parcel");
+
 
         translationBuilder.add("stamp.spamton.moon", "Moon Stamp");
         translationBuilder.add("stamp.spamton.sun", "Sun Stamp");

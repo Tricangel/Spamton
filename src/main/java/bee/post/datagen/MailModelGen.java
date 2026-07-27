@@ -26,23 +26,10 @@ public class MailModelGen extends FabricModelProvider {
         itemModelGenerators.generateFlatItem(MailItems.CARDBOARD, ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(MailItems.LETTER, ModelTemplates.FLAT_ITEM);
 
-        itemModelGenerators.generateFlatItem(MailItems.WHITE_PARCEL, ModelTemplates.FLAT_ITEM);
-        itemModelGenerators.generateFlatItem(MailItems.ORANGE_PARCEL, ModelTemplates.FLAT_ITEM);
-        itemModelGenerators.generateFlatItem(MailItems.MAGENTA_PARCEL, ModelTemplates.FLAT_ITEM);
-        itemModelGenerators.generateFlatItem(MailItems.LIGHT_BLUE_PARCEL, ModelTemplates.FLAT_ITEM);
-        itemModelGenerators.generateFlatItem(MailItems.YELLOW_PARCEL, ModelTemplates.FLAT_ITEM);
-        itemModelGenerators.generateFlatItem(MailItems.LIME_PARCEL, ModelTemplates.FLAT_ITEM);
-        itemModelGenerators.generateFlatItem(MailItems.PINK_PARCEL, ModelTemplates.FLAT_ITEM);
-        itemModelGenerators.generateFlatItem(MailItems.GRAY_PARCEL, ModelTemplates.FLAT_ITEM);
-        itemModelGenerators.generateFlatItem(MailItems.LIGHT_GRAY_PARCEL, ModelTemplates.FLAT_ITEM);
-        itemModelGenerators.generateFlatItem(MailItems.CYAN_PARCEL, ModelTemplates.FLAT_ITEM);
-        itemModelGenerators.generateFlatItem(MailItems.PURPLE_PARCEL, ModelTemplates.FLAT_ITEM);
-        itemModelGenerators.generateFlatItem(MailItems.BLUE_PARCEL, ModelTemplates.FLAT_ITEM);
-        itemModelGenerators.generateFlatItem(MailItems.BROWN_PARCEL, ModelTemplates.FLAT_ITEM);
-        itemModelGenerators.generateFlatItem(MailItems.GREEN_PARCEL, ModelTemplates.FLAT_ITEM);
-        itemModelGenerators.generateFlatItem(MailItems.RED_PARCEL, ModelTemplates.FLAT_ITEM);
-        itemModelGenerators.generateFlatItem(MailItems.BLACK_PARCEL, ModelTemplates.FLAT_ITEM);
 
+        MailItems.PARCEL.forEach(item -> {
+            itemModelGenerators.generateFlatItem(item, ModelTemplates.FLAT_ITEM);
+        });
     }
 
 

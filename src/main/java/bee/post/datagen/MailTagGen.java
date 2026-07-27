@@ -1,6 +1,7 @@
 package bee.post.datagen;
 
 import bee.post.Spamton;
+import bee.post.registry.MailItemIds;
 import bee.post.registry.MailItems;
 import bee.post.registry.MailTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
@@ -26,46 +27,33 @@ public class MailTagGen extends FabricTagsProvider.ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.@NonNull Provider provider) {
         builder(MailTags.STAMP)
-                .add(create("stamp"));
+                .add(MailItemIds.STAMP);
 
         builder(MailTags.LETTERS)
                 .add(ItemIds.FILLED_MAP)
                 .add(ItemIds.WRITTEN_BOOK)
                 .add(ItemIds.WRITABLE_BOOK)
-                .add(create("letter"));
+                .add(MailItemIds.STAMP);
 
-        valueLookupBuilder(MailTags.PARCELS)
-                .add(MailItems.WHITE_PARCEL)
-                .add(MailItems.ORANGE_PARCEL)
-                .add(MailItems.MAGENTA_PARCEL)
-                .add(MailItems.LIGHT_BLUE_PARCEL)
-                .add(MailItems.YELLOW_PARCEL)
-                .add(MailItems.LIME_PARCEL)
-                .add(MailItems.PINK_PARCEL)
-                .add(MailItems.GRAY_PARCEL)
-                .add(MailItems.LIGHT_GRAY_PARCEL)
-                .add(MailItems.CYAN_PARCEL)
-                .add(MailItems.PURPLE_PARCEL)
-                .add(MailItems.BLUE_PARCEL)
-                .add(MailItems.BROWN_PARCEL)
-                .add(MailItems.GREEN_PARCEL)
-                .add(MailItems.RED_PARCEL)
-                .add(MailItems.BLACK_PARCEL);
+        builder(MailTags.PARCELS)
+                .addAll(MailItemIds.PARCEL);
 
-        valueLookupBuilder(MailTags.TAPE)
-                .add(Items.HONEYCOMB)
-                .add(Items.HONEY_BOTTLE)
-                .add(MailItems.TAPE);
 
-        valueLookupBuilder(MailTags.SAFE_BOX_CUTTER)
-                .add(MailItems.BOX_CUTTER);
 
-        valueLookupBuilder(MailTags.BOX_CUTTER)
+        builder(MailTags.TAPE)
+                .add(ItemIds.HONEYCOMB)
+                .add(ItemIds.HONEY_BOTTLE)
+                .add(MailItemIds.TAPE);
+
+        builder(MailTags.SAFE_BOX_CUTTER)
+                .add(MailItemIds.BOX_CUTTER);
+
+        builder(MailTags.BOX_CUTTER)
                 .forceAddTag(MailTags.SAFE_BOX_CUTTER)
                 .forceAddTag(ItemTags.SWORDS)
                 .forceAddTag(ItemTags.SHARP_WEAPON_ENCHANTABLE);
 
-        valueLookupBuilder(MailTags.CANNOT_FIT_IN_PARCELS)
+        builder(MailTags.CANNOT_FIT_IN_PARCELS)
                 .forceAddTag(MailTags.PARCELS)
                 .forceAddTag(ItemTags.BUNDLES)
                 .forceAddTag(ItemTags.SHULKER_BOXES);

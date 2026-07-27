@@ -43,6 +43,7 @@ public class ParcelShelfSpecialRenderer implements SpecialModelRenderer<RenderTy
         name = name.replace(" ", "_");
         name = name.toLowerCase();
 
+
         return RenderTypes.armorTranslucent(Spamton.id("textures/shelf/" + name + ".png"));
     }
 

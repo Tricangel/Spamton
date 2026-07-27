@@ -27,24 +27,7 @@ public class MailItems {
 
     private static final ParcelContents DEFAULT_CONTENTS = new ParcelContents(Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
 
-    public static final ColorCollection<Item> PARCELS = ColorCollection.registerItems(MailItemIds.PARCELS, )
-
-    public static final Item WHITE_PARCEL = register("white_parcel", properties -> new ParcelItem(properties, DyeColor.WHITE), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
-    public static final Item ORANGE_PARCEL = register("orange_parcel", properties -> new ParcelItem(properties, DyeColor.ORANGE), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
-    public static final Item MAGENTA_PARCEL = register("magenta_parcel", properties -> new ParcelItem(properties, DyeColor.MAGENTA), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
-    public static final Item LIGHT_BLUE_PARCEL = register("light_blue_parcel", properties -> new ParcelItem(properties, DyeColor.LIGHT_BLUE ), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
-    public static final Item YELLOW_PARCEL = register("yellow_parcel", properties -> new ParcelItem(properties, DyeColor.YELLOW), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
-    public static final Item LIME_PARCEL = register("lime_parcel", properties -> new ParcelItem(properties, DyeColor.LIME), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
-    public static final Item PINK_PARCEL = register("pink_parcel", properties -> new ParcelItem(properties, DyeColor.PINK), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
-    public static final Item GRAY_PARCEL = register("gray_parcel", properties -> new ParcelItem(properties, DyeColor.GRAY), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
-    public static final Item LIGHT_GRAY_PARCEL = register("light_gray_parcel", properties -> new ParcelItem(properties, DyeColor.LIGHT_GRAY), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
-    public static final Item CYAN_PARCEL = register("cyan_parcel", properties -> new ParcelItem(properties, DyeColor.CYAN), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
-    public static final Item PURPLE_PARCEL = register("purple_parcel", properties -> new ParcelItem(properties, DyeColor.PURPLE), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
-    public static final Item BLUE_PARCEL = register("blue_parcel", properties -> new ParcelItem(properties, DyeColor.BLUE), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
-    public static final Item BROWN_PARCEL = register("brown_parcel", properties -> new ParcelItem(properties, DyeColor.BROWN), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
-    public static final Item GREEN_PARCEL = register("green_parcel", properties -> new ParcelItem(properties, DyeColor.GREEN), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
-    public static final Item RED_PARCEL = register("red_parcel", properties -> new ParcelItem(properties, DyeColor.RED), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
-    public static final Item BLACK_PARCEL = register("black_parcel", properties -> new ParcelItem(properties, DyeColor.BLACK), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
+    public static final ColorCollection<Item> PARCEL = ColorCollection.registerItems(MailItemIds.PARCEL, ((name, dyeColor) -> register(name, properties -> new ParcelItem(properties, dyeColor), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS))));
 
     public static void init() {
     }
@@ -53,6 +36,12 @@ public class MailItems {
         ResourceKey<Item> itemKey = ResourceKey.create(Registries.ITEM, Spamton.id(name));
         GenericItem item = itemFactory.apply(settings.setId(itemKey));
         Registry.register(BuiltInRegistries.ITEM, itemKey, item);
+        return item;
+    }
+
+    public static <GenericItem extends Item> GenericItem register(ResourceKey<Item> key, Function<Item.Properties, GenericItem> itemFactory, Item.Properties settings) {
+        GenericItem item = itemFactory.apply(settings.setId(key));
+        Registry.register(BuiltInRegistries.ITEM, key, item);
         return item;
     }
 
