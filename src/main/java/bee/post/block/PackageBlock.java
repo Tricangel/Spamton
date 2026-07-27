@@ -5,6 +5,7 @@ import bee.post.registry.MailItemComponents;
 import bee.post.registry.MailItems;
 import bee.post.registry.MailTags;
 import com.mojang.serialization.MapCodec;
+import net.fabricmc.loader.impl.lib.sat4j.core.Vec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -102,9 +103,9 @@ public class PackageBlock extends BaseEntityBlock {
 
         if (!(level.getBlockEntity(blockPos) instanceof PackageBlockEntity packageBlockEntity)) return super.useItemOn(itemStack, blockState, level, blockPos, player, interactionHand, blockHitResult);
 
-        Vec3 dist = blockHitResult.getLocation().subtract(blockHitResult.getBlockPos().getCenter());
+        Vec3 dist = blockHitResult.getLocation().subtract(new Vec3 (blockHitResult.getBlockPos().getX() + 0.5, blockHitResult.getBlockPos().getY() + 0.5, blockHitResult.getBlockPos().getZ() + 0.5));
 
-        Vec3 pos = blockPos.getCenter().add(dist);
+        Vec3 pos = new Vec3 (blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5).add(dist);
 
         List<Stamp> stamps = packageBlockEntity.getStamps();
 
@@ -139,7 +140,7 @@ public class PackageBlock extends BaseEntityBlock {
 
         if (player.isCrouching() && level.getBlockEntity(blockPos) instanceof PackageBlockEntity packageBlockEntity) {
             List<Stamp> stamps = packageBlockEntity.getStamps();
-            Vec3 dist = blockHitResult.getLocation().subtract(blockHitResult.getBlockPos().getCenter());
+            Vec3 dist = blockHitResult.getLocation().subtract(new Vec3(blockHitResult.getBlockPos().getX() + 0.5, blockHitResult.getBlockPos().getY() + 0.5, blockHitResult.getBlockPos().getZ() + 0.5));
 
             if (stamps.removeIf(stamp -> {
                 if (stamp.pos().distanceTo(dist) < 0.15f) {

@@ -35,7 +35,7 @@ public class ParcelShelfBlockEntityRenderer implements BlockEntityRenderer<Parce
         renderState.stacks = blockEntity.getItems();
         renderState.rotation = blockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
 
-        renderState.lightCoordsInFront = blockEntity.getLevel() != null ? LevelRenderer.getLightCoords(blockEntity.getLevel(), blockEntity.getBlockPos().relative(renderState.rotation)) : 15728880;
+        renderState.lightCoordsInFront = blockEntity.getLevel() != null ? blockEntity.getLevel().getLightEmission(blockEntity.getBlockPos().relative(renderState.rotation)) : 15728880;
 
     }
 

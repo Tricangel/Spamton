@@ -66,7 +66,7 @@ public class MailRecipeGen extends FabricRecipeProvider {
 
                 shapeless(RecipeCategory.TOOLS, MailItems.BOX_CUTTER)
                         .requires(Items.IRON_INGOT)
-                        .requires(Items.RED_DYE)
+                        .requires(Items.DYE.red())
                         .unlockedBy(getHasName(MailItems.BOX_CUTTER), has(Items.IRON_INGOT))
                         .save(output);
 
@@ -81,25 +81,8 @@ public class MailRecipeGen extends FabricRecipeProvider {
                         MailItems.YELLOW_PARCEL, MailItems.LIME_PARCEL, MailItems.PINK_PARCEL, MailItems.GRAY_PARCEL, MailItems.LIGHT_GRAY_PARCEL,
                         MailItems.CYAN_PARCEL, MailItems.PURPLE_PARCEL, MailItems.BLUE_PARCEL, MailItems.BROWN_PARCEL, MailItems.GREEN_PARCEL,
                         MailItems.RED_PARCEL, MailItems.BLACK_PARCEL);
-                List<Item> dyes = List.of(
-                        Items.WHITE_DYE,
-                        Items.ORANGE_DYE,
-                        Items.MAGENTA_DYE,
-                        Items.LIGHT_BLUE_DYE,
-                        Items.YELLOW_DYE,
-                        Items.LIME_DYE,
-                        Items.PINK_DYE,
-                        Items.GRAY_DYE,
-                        Items.LIGHT_GRAY_DYE,
-                        Items.CYAN_DYE,
-                        Items.PURPLE_DYE,
-                        Items.BLUE_DYE,
-                        Items.BROWN_DYE,
-                        Items.GREEN_DYE,
-                        Items.RED_DYE,
-                        Items.BLACK_DYE);
 
-                colorItemWithDye(dyes, items, "parcel", RecipeCategory.TOOLS);
+                colorItemWithDye(Items.DYE.asList(), items, "parcel", RecipeCategory.TOOLS);
                 parcels(items);
 
 

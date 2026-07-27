@@ -1,11 +1,17 @@
 package bee.post.datagen;
 
+import bee.post.Spamton;
 import bee.post.registry.MailItems;
 import bee.post.registry.MailTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.references.ItemIds;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -19,14 +25,14 @@ public class MailTagGen extends FabricTagsProvider.ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.@NonNull Provider provider) {
-        valueLookupBuilder(MailTags.STAMP)
-                .add(MailItems.STAMP);
+        builder(MailTags.STAMP)
+                .add(create("stamp"));
 
-        valueLookupBuilder(MailTags.LETTERS)
-                .add(Items.FILLED_MAP)
-                .add(Items.WRITTEN_BOOK)
-                .add(Items.WRITABLE_BOOK)
-                .add(MailItems.LETTER);
+        builder(MailTags.LETTERS)
+                .add(ItemIds.FILLED_MAP)
+                .add(ItemIds.WRITTEN_BOOK)
+                .add(ItemIds.WRITABLE_BOOK)
+                .add(create("letter"));
 
         valueLookupBuilder(MailTags.PARCELS)
                 .add(MailItems.WHITE_PARCEL)
@@ -65,4 +71,5 @@ public class MailTagGen extends FabricTagsProvider.ItemTagsProvider {
                 .forceAddTag(ItemTags.SHULKER_BOXES);
 
     }
+
 }

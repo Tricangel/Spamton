@@ -40,7 +40,7 @@ public class LetterSignScreen extends Screen {
     protected void init() {
         Button button = Button.builder(Component.translatable("book.finalizeButton"), (buttonx) -> {
             this.saveChanges();
-            this.minecraft.setScreen((Screen)null);
+            this.minecraft.gui.setScreen((Screen)null);
         }).bounds(this.width / 2 - 100, 196, 98, 20).build();
         button.active = false;
         this.titleBox = this.addRenderableWidget(new EditBox(this.minecraft.font, (this.width - 114) / 2 - 3, 50, 114, 20, TITLE_EDIT_BOX));
@@ -54,7 +54,7 @@ public class LetterSignScreen extends Screen {
         this.addRenderableWidget(button);
         this.addRenderableWidget(Button.builder(CommonComponents.GUI_CANCEL, (buttonx) -> {
             this.titleValue = this.titleBox.getValue();
-            this.minecraft.setScreen(this.letterEditScreen);
+            this.minecraft.gui.setScreen(this.letterEditScreen);
         }).bounds(this.width / 2 + 2, 196, 98, 20).build());
     }
 
@@ -80,7 +80,7 @@ public class LetterSignScreen extends Screen {
     public boolean keyPressed(KeyEvent keyEvent) {
         if (this.titleBox.isFocused() && !this.titleBox.getValue().isEmpty() && keyEvent.isConfirmation()) {
             this.saveChanges();
-            this.minecraft.setScreen((Screen)null);
+            this.minecraft.gui.setScreen(null);
             return true;
         } else {
             return super.keyPressed(keyEvent);

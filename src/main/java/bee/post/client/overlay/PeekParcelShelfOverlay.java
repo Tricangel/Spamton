@@ -31,7 +31,7 @@ public class PeekParcelShelfOverlay implements HudElement  {
 
         Minecraft minecraft = Minecraft.getInstance();
 
-        if (minecraft.screen != null) return;
+        if (minecraft.gui.screen() != null) return;
         if (!(minecraft.hitResult instanceof BlockHitResult hitResult)) return;
         if (minecraft.level == null) return;
         if (!(minecraft.level.getBlockEntity(hitResult.getBlockPos()) instanceof ParcelShelfBlockEntity blockEntity)) return;

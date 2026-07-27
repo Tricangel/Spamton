@@ -2,15 +2,13 @@ package bee.post.registry;
 
 import bee.post.Spamton;
 import bee.post.block.Stamp;
-import bee.post.item.LetterItem;
-import bee.post.item.ParcelContents;
-import bee.post.item.ParcelItem;
-import bee.post.item.StampItem;
+import bee.post.item.*;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.ColorCollection;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -28,7 +26,9 @@ public class MailItems {
     public static final Item LETTER = register("letter", LetterItem::new, new Item.Properties().stacksTo(1));
 
     private static final ParcelContents DEFAULT_CONTENTS = new ParcelContents(Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
-    
+
+    public static final ColorCollection<Item> PARCELS = ColorCollection.registerItems(MailItemIds.PARCELS, )
+
     public static final Item WHITE_PARCEL = register("white_parcel", properties -> new ParcelItem(properties, DyeColor.WHITE), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
     public static final Item ORANGE_PARCEL = register("orange_parcel", properties -> new ParcelItem(properties, DyeColor.ORANGE), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
     public static final Item MAGENTA_PARCEL = register("magenta_parcel", properties -> new ParcelItem(properties, DyeColor.MAGENTA), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
