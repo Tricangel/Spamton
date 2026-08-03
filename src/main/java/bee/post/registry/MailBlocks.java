@@ -11,13 +11,14 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import java.util.function.Function;
 
 public class MailBlocks {
 
-    public static final Block PACKAGE = register("package", PackageBlock::new, BlockBehaviour.Properties.of(), true);
+    public static final Block PACKAGE = register("package", PackageBlock::new, BlockBehaviour.Properties.of().strength(.15f).ignitedByLava().sound(SoundType.WOOD), true);
 
     public static final Block PARCEL_SHELF = register("parcel_shelf", ParcelShelfBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.CHISELED_BOOKSHELF), true);
 
