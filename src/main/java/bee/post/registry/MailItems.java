@@ -23,14 +23,14 @@ public class MailItems {
 
     public static final Item STAMP = register("stamp", StampItem::new, new Item.Properties().component(MailItemComponents.STAMP_TYPE, Stamp.StampType.SUN));
 
-    public static final Item TAPE = register("tape", Item::new, new Item.Properties().durability(128));
-    public static final Item BOX_CUTTER = register("box_cutter", Item::new, new Item.Properties().durability(128).sword(ToolMaterial.COPPER, 2.0F, -2.4F));
+    public static final Item TAPE = register("tape", Item::new, new Item.Properties());
+    public static final Item BOX_CUTTER = register("box_cutter", Item::new, new Item.Properties().sword(ToolMaterial.COPPER, 2.0F, -2.4F));
 
     public static final Item CARDBOARD = register("cardboard", Item::new, new Item.Properties());
 
     public static final Item LETTER = register("letter", LetterItem::new, new Item.Properties().stacksTo(1));
 
-    private static final ParcelContents DEFAULT_CONTENTS = new ParcelContents(Items.BEDROCK.getDefaultInstance(), Items.BEDROCK.getDefaultInstance(), Optional.empty(), Optional.empty());
+    private static final ParcelContents DEFAULT_CONTENTS = ParcelContents.EMPTY;
     
     public static final Item WHITE_PARCEL = register("white_parcel", properties -> new ParcelItem(properties, DyeColor.WHITE), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
     public static final Item ORANGE_PARCEL = register("orange_parcel", properties -> new ParcelItem(properties, DyeColor.ORANGE), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));

@@ -44,15 +44,15 @@ public class ClientParcelContentsTooltip implements ClientTooltipComponent {
         guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_HIGHLIGHT_BACK_SPRITE, x, y, 24, 24);
 
 
-        if (!actualContents.letter().isEmpty()) {
-            guiGraphics.renderItem(actualContents.letter(), x + 4, y + 4);
+        if (actualContents.letter().isPresent()) {
+            guiGraphics.renderItem(actualContents.letter().get(), x + 4, y + 4);
         } else guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_LETTER_SPRITE, x + 4, y + 4, 16, 16);
 
         guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_HIGHLIGHT_BACK_SPRITE, x + 24, y, 24, 24);
 
 
-        if (!actualContents.gift().isEmpty()) {
-            guiGraphics.renderItem(actualContents.gift(), x + 28, y + 4);
+        if (actualContents.gift().isPresent()) {
+            guiGraphics.renderItem(actualContents.gift().get(), x + 28, y + 4);
         } else guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_GIFT_SPRITE, x + 28, y + 4, 16, 16);
 
     }
@@ -63,8 +63,6 @@ public class ClientParcelContentsTooltip implements ClientTooltipComponent {
     }
 
     public ParcelContents loadContents(ParcelContents contents) {
-        if (contents.gift().is(Items.BEDROCK)) contents = new ParcelContents(contents.letter(), ItemStack.EMPTY, contents.ownerName(), contents.targetName());
-        if (contents.letter().is(Items.BEDROCK)) contents = new ParcelContents(ItemStack.EMPTY, ItemStack.EMPTY, contents.ownerName(), contents.targetName());
         return contents;
     }
 }
