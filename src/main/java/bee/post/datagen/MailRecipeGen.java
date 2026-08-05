@@ -79,10 +79,7 @@ public class MailRecipeGen extends FabricRecipeProvider {
                         .unlockedBy(getHasName(MailItems.LETTER), has(Items.PAPER))
                         .save(output);
 
-                List<Item> items = List.of(MailItems.WHITE_PARCEL, MailItems.ORANGE_PARCEL, MailItems.MAGENTA_PARCEL, MailItems.LIGHT_BLUE_PARCEL,
-                        MailItems.YELLOW_PARCEL, MailItems.LIME_PARCEL, MailItems.PINK_PARCEL, MailItems.GRAY_PARCEL, MailItems.LIGHT_GRAY_PARCEL,
-                        MailItems.CYAN_PARCEL, MailItems.PURPLE_PARCEL, MailItems.BLUE_PARCEL, MailItems.BROWN_PARCEL, MailItems.GREEN_PARCEL,
-                        MailItems.RED_PARCEL, MailItems.BLACK_PARCEL);
+
                 List<Item> dyes = List.of(
                         Items.WHITE_DYE,
                         Items.ORANGE_DYE,
@@ -101,8 +98,8 @@ public class MailRecipeGen extends FabricRecipeProvider {
                         Items.RED_DYE,
                         Items.BLACK_DYE);
 
-                colorItemWithDye(dyes, items, "parcel", RecipeCategory.TOOLS);
-                parcels(items);
+                colorItemWithDye(dyes, MailItems.PARCELS, "parcel", RecipeCategory.TOOLS);
+                parcels(MailItems.PARCELS);
 
 
 
