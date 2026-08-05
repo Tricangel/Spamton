@@ -44,7 +44,7 @@ public class Spamton implements ModInitializer {
 		MailLootTables.insertIntoTables();
 		MailItemGroups.init();
 
-		ComponentTooltipAppenderRegistry.addFirst(MailItemComponents.PARCEL_CONTENTS);
+
 
 		PayloadTypeRegistry.playC2S().register(ServerboundSignLetterPacket.TYPE, ServerboundSignLetterPacket.STREAM_CODEC);
 
@@ -70,9 +70,6 @@ public class Spamton implements ModInitializer {
 
 
 		Registry.register(BuiltInRegistries.DATA_COMPONENT_PREDICATE_TYPE, id("stamp"), new DataComponentPredicate.ConcreteType<StampPredicate>(StampPredicate.CODEC));
-		EntityModelLayerRegistry.registerModelLayer(PlayerStampModel.STAMP, PlayerStampModel::createBodyLayer);
-		EntityModelLayerRegistry.registerModelLayer(PlayerStampModel.STAMP_ITEM, PlayerStampModel::createItemLayer);
-		EntityModelLayerRegistry.registerModelLayer(ParcelModel.PARCEL, ParcelModel::createBodyLayer);
 
 		Registry.register(BuiltInRegistries.RECIPE_TYPE, id("stamp_duplicating"), StampRecipe.StampRecipeType.INSTANCE);
 		Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, id("stamp_duplicating"), new CustomRecipe.Serializer<StampRecipe>(StampRecipe::new));
