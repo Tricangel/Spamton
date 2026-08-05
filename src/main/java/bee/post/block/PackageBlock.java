@@ -76,7 +76,7 @@ public class PackageBlock extends BaseEntityBlock {
             }
         } else if (itemStack.is(MailTags.BOX_CUTTER)) {
 
-            player.playSound(SoundEvents.DECORATED_POT_BREAK);
+            player.playSound(SoundEvents.PAINTING_BREAK);
             blockState = blockState.setValue(TAPED, false);
             level.setBlock(blockPos, blockState, 0);
 

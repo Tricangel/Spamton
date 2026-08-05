@@ -41,6 +41,7 @@ public class 	Spamton implements ModInitializer {
 		MailTags.init();
 		MailLootFunctions.init();
 		MailLootTables.insertIntoTables();
+		MailItemGroups.init();
 
 		ItemComponentTooltipProviderRegistry.addFirst(MailItemComponents.PARCEL_CONTENTS);
 

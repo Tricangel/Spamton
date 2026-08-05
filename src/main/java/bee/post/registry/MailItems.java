@@ -12,6 +12,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -27,8 +28,9 @@ public class MailItems {
 
     public static final Item LETTER = register("letter", LetterItem::new, new Item.Properties().stacksTo(1));
 
-    private static final ParcelContents DEFAULT_CONTENTS = new ParcelContents(Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
-    
+    private static final ParcelContents DEFAULT_CONTENTS = ParcelContents.EMPTY;
+
+
     public static final Item WHITE_PARCEL = register("white_parcel", properties -> new ParcelItem(properties, DyeColor.WHITE), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
     public static final Item ORANGE_PARCEL = register("orange_parcel", properties -> new ParcelItem(properties, DyeColor.ORANGE), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
     public static final Item MAGENTA_PARCEL = register("magenta_parcel", properties -> new ParcelItem(properties, DyeColor.MAGENTA), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
@@ -46,6 +48,10 @@ public class MailItems {
     public static final Item RED_PARCEL = register("red_parcel", properties -> new ParcelItem(properties, DyeColor.RED), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
     public static final Item BLACK_PARCEL = register("black_parcel", properties -> new ParcelItem(properties, DyeColor.BLACK), new Item.Properties().stacksTo(1).component(MailItemComponents.PARCEL_CONTENTS, DEFAULT_CONTENTS));
 
+    public static final  List<Item> PARCELS = List.of(MailItems.WHITE_PARCEL, MailItems.ORANGE_PARCEL, MailItems.MAGENTA_PARCEL, MailItems.LIGHT_BLUE_PARCEL,
+            MailItems.YELLOW_PARCEL, MailItems.LIME_PARCEL, MailItems.PINK_PARCEL, MailItems.GRAY_PARCEL, MailItems.LIGHT_GRAY_PARCEL,
+            MailItems.CYAN_PARCEL, MailItems.PURPLE_PARCEL, MailItems.BLUE_PARCEL, MailItems.BROWN_PARCEL, MailItems.GREEN_PARCEL,
+            MailItems.RED_PARCEL, MailItems.BLACK_PARCEL);
     public static void init() {
     }
 
