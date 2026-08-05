@@ -66,5 +66,7 @@ public class MailLangGen extends FabricLanguageProvider {
         translationBuilder.add("hud.spamton.recipient", "To: ");
         translationBuilder.add("hud.spamton.sender", "From: ");
         translationBuilder.add("hud.spamton.unknown", "Unknown");
+
+        translationBuilder.add("itemgroup.spamton", "Spamton Items");
     }
 }

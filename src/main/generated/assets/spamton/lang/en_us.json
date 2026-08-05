@@ -25,6 +25,7 @@
   "item.spamton.tape": "Tape",
   "item.spamton.white_parcel": "White Parcel",
   "item.spamton.yellow_parcel": "Yellow Parcel",
+  "itemgroup.spamton": "Spamton Items",
   "letter.editTitle": "Enter Letter Title",
   "letter.finalizeWarning": "Note! When you sign the letter, it will no longer be editable.",
   "letter.sign.title": "Title",
