@@ -1,14 +1,12 @@
 package bee.post;
 
-import bee.post.client.model.ParcelModel;
-import bee.post.client.model.PlayerStampModel;
 import bee.post.client.networking.ServerboundSignLetterPacket;
 import bee.post.item.StampPredicate;
 import bee.post.item.StampRecipe;
+import bee.post.networking.ClientboundOpenWritableLetterPacket;
+import bee.post.networking.ClientboundOpenWrittenLetterPacket;
 import bee.post.registry.*;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
-import net.fabricmc.fabric.api.item.v1.ComponentTooltipAppenderRegistry;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.Registry;
@@ -47,6 +45,8 @@ public class Spamton implements ModInitializer {
 
 
 		PayloadTypeRegistry.playC2S().register(ServerboundSignLetterPacket.TYPE, ServerboundSignLetterPacket.STREAM_CODEC);
+		PayloadTypeRegistry.playS2C().register(ClientboundOpenWritableLetterPacket.TYPE, ClientboundOpenWritableLetterPacket.STREAM_CODEC);
+		PayloadTypeRegistry.playS2C().register(ClientboundOpenWrittenLetterPacket.TYPE, ClientboundOpenWrittenLetterPacket.STREAM_CODEC);
 
 		ServerPlayNetworking.registerGlobalReceiver(ServerboundSignLetterPacket.TYPE, ((packet, context) -> {
 

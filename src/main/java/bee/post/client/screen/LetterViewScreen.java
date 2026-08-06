@@ -198,5 +198,12 @@ public class LetterViewScreen extends Screen {
                 return new LetterAccess(pages);
             } else return null;
         }
+
+        public static @NonNull LetterAccess fromContent(WrittenBookContent content) {
+            boolean bl = Minecraft.getInstance().isTextFilteringEnabled();
+
+            return new LetterAccess(content.getPages(bl));
+
+        }
     }
 }
