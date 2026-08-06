@@ -24,7 +24,7 @@ public class LetterItem extends Item {
 
     @Override
     public @NonNull InteractionResult use(Level level, @NonNull Player player, @NonNull InteractionHand interactionHand) {
-        if (!(player instanceof ServerPlayer serverPlayer)) return InteractionResult.FAIL;
+        if (!(player instanceof ServerPlayer serverPlayer)) return InteractionResult.SUCCESS;
 
         ItemStack letter = player.getItemInHand(interactionHand);
         int hand = interactionHand == InteractionHand.MAIN_HAND ? 0 : 1;

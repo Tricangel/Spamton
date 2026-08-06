@@ -62,6 +62,4 @@ public class SpamtonClient implements ClientModInitializer {
 
     }
 
-
-
 }

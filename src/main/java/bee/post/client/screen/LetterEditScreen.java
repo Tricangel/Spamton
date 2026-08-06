@@ -1,6 +1,9 @@
 package bee.post.client.screen;
 
+import bee.post.client.networking.ServerboundSaveLetterPacket;
 import com.google.common.collect.Lists;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.impl.screenhandler.client.ClientNetworking;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ActiveTextCollector;
 import net.minecraft.client.gui.GuiGraphics;
@@ -156,9 +159,8 @@ public class LetterEditScreen extends Screen {
         this.eraseEmptyTrailingPages();
         this.updateLocalCopy();
         int i = this.hand == InteractionHand.MAIN_HAND ? this.owner.getInventory().getSelectedSlot() : 40;
-        if (this.minecraft.getConnection() != null) {
-            this.minecraft.getConnection().send(new ServerboundEditBookPacket(i, this.pages, Optional.empty()));
-        }
+
+        ClientPlayNetworking.send(new ServerboundSaveLetterPacket(this.pages, i));
 
     }
 

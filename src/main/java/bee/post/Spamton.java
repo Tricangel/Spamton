@@ -1,5 +1,6 @@
 package bee.post;
 
+import bee.post.client.networking.ServerboundSaveLetterPacket;
 import bee.post.client.networking.ServerboundSignLetterPacket;
 import bee.post.item.StampPredicate;
 import bee.post.item.StampRecipe;
@@ -18,6 +19,8 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.network.Filterable;
 import net.minecraft.server.network.FilteredText;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.WritableBookContent;
 import net.minecraft.world.item.component.WrittenBookContent;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import org.slf4j.Logger;
@@ -45,8 +48,18 @@ public class Spamton implements ModInitializer {
 
 
 		PayloadTypeRegistry.playC2S().register(ServerboundSignLetterPacket.TYPE, ServerboundSignLetterPacket.STREAM_CODEC);
+		PayloadTypeRegistry.playC2S().register(ServerboundSaveLetterPacket.TYPE, ServerboundSaveLetterPacket.STREAM_CODEC);
 		PayloadTypeRegistry.playS2C().register(ClientboundOpenWritableLetterPacket.TYPE, ClientboundOpenWritableLetterPacket.STREAM_CODEC);
 		PayloadTypeRegistry.playS2C().register(ClientboundOpenWrittenLetterPacket.TYPE, ClientboundOpenWrittenLetterPacket.STREAM_CODEC);
+
+		ServerPlayNetworking.registerGlobalReceiver(ServerboundSaveLetterPacket.TYPE, (packet, context) -> {
+
+			ItemStack stack = context.player().getInventory().getItem(packet.slot());
+
+			stack.set(DataComponents.WRITABLE_BOOK_CONTENT, new WritableBookContent(packet.pages().stream().map(Filterable::passThrough).toList()));
+
+			context.player().getInventory().setItem(packet.slot(), stack);
+		});
 
 		ServerPlayNetworking.registerGlobalReceiver(ServerboundSignLetterPacket.TYPE, ((packet, context) -> {
 
