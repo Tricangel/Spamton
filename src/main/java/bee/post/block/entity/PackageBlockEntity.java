@@ -3,6 +3,7 @@ package bee.post.block.entity;
 import bee.post.Spamton;
 import bee.post.block.PackageBlock;
 import bee.post.block.Stamp;
+import bee.post.item.component.PostalInfoComponent;
 import bee.post.registry.MailBlockEntities;
 import bee.post.registry.MailItemComponents;
 import bee.post.registry.MailItems;
@@ -36,10 +37,12 @@ public class PackageBlockEntity extends BaseContainerBlockEntity {
     public PackageBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(MailBlockEntities.PACKAGE_BLOCK_ENTITY, blockPos, blockState);
         this.itemStacks = NonNullList.withSize(9, ItemStack.EMPTY);
+        this.info = PostalInfoComponent.EMPTY;
     }
 
     private final List<Stamp> stamps = new ArrayList<>(50);
     public NonNullList<ItemStack> itemStacks;
+    public PostalInfoComponent info;
 
 
 
@@ -85,6 +88,8 @@ public class PackageBlockEntity extends BaseContainerBlockEntity {
     protected void applyImplicitComponents(@NonNull DataComponentGetter dataComponentGetter) {
         super.applyImplicitComponents(dataComponentGetter);
 
+        this.info = dataComponentGetter.getOrDefault(MailItemComponents.POSTAL_INFO, PostalInfoComponent.EMPTY);
+
         List<Stamp> stamps1 = dataComponentGetter.get(MailItemComponents.STAMPS);
         if (stamps1 != null) {
             stamps.addAll(stamps1);
@@ -98,6 +103,7 @@ public class PackageBlockEntity extends BaseContainerBlockEntity {
         try (ProblemReporter.ScopedCollector scopedCollector = new ProblemReporter.ScopedCollector(this.problemPath(), Spamton.LOGGER)) {
             TagValueOutput tagValueOutput = TagValueOutput.createWithContext(scopedCollector, provider);
             tagValueOutput.store("stamps", Stamp.CODEC.listOf(), stamps);
+            tagValueOutput.store("postal_info", PostalInfoComponent.CODEC, info);
             return tagValueOutput.buildResult();
         }
 
@@ -110,6 +116,7 @@ public class PackageBlockEntity extends BaseContainerBlockEntity {
             builder.set(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
         }
         builder.set(MailItemComponents.STAMPS, stamps);
+        builder.set(MailItemComponents.POSTAL_INFO, info);
 
         builder.set(MailItemComponents.TAPED, getBlockState().getValue(PackageBlock.TAPED));
         builder.set(MailItemComponents.DAMAGED, getBlockState().getValue(PackageBlock.DAMAGED));
@@ -120,6 +127,7 @@ public class PackageBlockEntity extends BaseContainerBlockEntity {
         super.loadAdditional(valueInput);
         valueInput.read("stamps", Stamp.CODEC.listOf()).ifPresent(stamps::addAll);
         this.itemStacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
+        valueInput.read("postal_info", PostalInfoComponent.CODEC).ifPresent(postalInfoComponent -> this.info = postalInfoComponent);
         ContainerHelper.loadAllItems(valueInput, itemStacks);
     }
 
@@ -127,6 +135,7 @@ public class PackageBlockEntity extends BaseContainerBlockEntity {
     protected void saveAdditional(@NonNull ValueOutput valueOutput) {
         super.saveAdditional(valueOutput);
         valueOutput.store("stamps", Stamp.CODEC.listOf(), stamps);
+        valueOutput.store("postal_info", PostalInfoComponent.CODEC, info);
         ContainerHelper.saveAllItems(valueOutput, itemStacks);
     }
 

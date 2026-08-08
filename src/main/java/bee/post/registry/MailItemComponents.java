@@ -2,7 +2,8 @@ package bee.post.registry;
 
 import bee.post.Spamton;
 import bee.post.block.Stamp;
-import bee.post.item.ParcelContents;
+import bee.post.item.component.ParcelContents;
+import bee.post.item.component.PostalInfoComponent;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
@@ -45,6 +46,12 @@ public class MailItemComponents {
             BuiltInRegistries.DATA_COMPONENT_TYPE,
             Spamton.id("parcel_contents"),
             DataComponentType.<ParcelContents>builder().persistent(ParcelContents.CODEC).build()
+    );
+
+    public static final DataComponentType<PostalInfoComponent> POSTAL_INFO = Registry.register(
+            BuiltInRegistries.DATA_COMPONENT_TYPE,
+            Spamton.id("postal_info"),
+            DataComponentType.<PostalInfoComponent>builder().persistent(PostalInfoComponent.CODEC).build()
     );
 
 }

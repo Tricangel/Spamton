@@ -2,8 +2,8 @@ package bee.post;
 
 import bee.post.client.networking.ServerboundSaveLetterPacket;
 import bee.post.client.networking.ServerboundSignLetterPacket;
-import bee.post.item.StampPredicate;
-import bee.post.item.StampRecipe;
+import bee.post.item.stamp.StampPredicate;
+import bee.post.item.stamp.StampRecipe;
 import bee.post.networking.ClientboundOpenWritableLetterPacket;
 import bee.post.networking.ClientboundOpenWrittenLetterPacket;
 import bee.post.registry.*;

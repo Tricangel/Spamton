@@ -27,6 +27,7 @@
                 "minecraft:lock",
                 "spamton:damaged",
                 "spamton:stamps",
+                "spamton:postal_info",
                 "spamton:taped"
               ],
               "source": "block_entity"

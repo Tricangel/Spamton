@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "HorseMixin",
+    "ItemContainerContentsMixin",
     "ShulkerSlotMixin",
     "SlotMixin"
   ],

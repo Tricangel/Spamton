@@ -43,6 +43,7 @@ public class MailLootGen extends FabricBlockLootTableProvider {
                                         .include(DataComponents.LOCK)
                                         .include(MailItemComponents.DAMAGED)
                                         .include(MailItemComponents.STAMPS)
+                                        .include(MailItemComponents.POSTAL_INFO)
                                         .include(MailItemComponents.TAPED))))
                         .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(MailBlocks.PACKAGE)
                         .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PackageBlock.TAPED, true))))

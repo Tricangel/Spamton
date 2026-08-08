@@ -1,6 +1,7 @@
 package bee.post.block;
 
 import bee.post.block.entity.PackageBlockEntity;
+import bee.post.item.component.PostalInfoComponent;
 import bee.post.registry.MailItemComponents;
 import bee.post.registry.MailItems;
 import bee.post.registry.MailTags;
@@ -18,6 +19,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ResolvableProfile;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
@@ -96,11 +98,24 @@ public class PackageBlock extends BaseEntityBlock {
             return InteractionResult.SUCCESS;
         }
 
+        if (!(level.getBlockEntity(blockPos) instanceof PackageBlockEntity packageBlockEntity)) return super.useItemOn(itemStack, blockState, level, blockPos, player, interactionHand, blockHitResult);
+
+        if (itemStack.is(Items.PAPER) && itemStack.has(DataComponents.CUSTOM_NAME)) {
+            PostalInfoComponent infoComponent = packageBlockEntity.info;
+
+            infoComponent = new PostalInfoComponent(infoComponent.ownerName(), Optional.of(itemStack.get(DataComponents.CUSTOM_NAME).getString()));
+
+            packageBlockEntity.info = infoComponent;
+            itemStack.consume(1, player);
+
+            player.playSound(SoundEvents.UI_CARTOGRAPHY_TABLE_TAKE_RESULT);
+            return InteractionResult.SUCCESS;
+
+        }
+
 
 
         if (!itemStack.is(MailTags.STAMP)) return super.useItemOn(itemStack, blockState, level, blockPos, player, interactionHand, blockHitResult);
-
-        if (!(level.getBlockEntity(blockPos) instanceof PackageBlockEntity packageBlockEntity)) return super.useItemOn(itemStack, blockState, level, blockPos, player, interactionHand, blockHitResult);
 
         Vec3 dist = blockHitResult.getLocation().subtract(blockHitResult.getBlockPos().getCenter());
 

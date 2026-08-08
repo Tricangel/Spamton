@@ -26,6 +26,8 @@ public class MailLangGen extends FabricLanguageProvider {
         translationBuilder.add(MailItems.CARDBOARD, "Cardboard");
         translationBuilder.add(MailItems.LETTER, "Letter");
 
+        translationBuilder.add(MailItems.PACKAGE, "Package");
+
         translationBuilder.add(MailItems.WHITE_PARCEL, "White Parcel");
         translationBuilder.add(MailItems.ORANGE_PARCEL, "Orange Parcel");
         translationBuilder.add(MailItems.MAGENTA_PARCEL, "Magenta Parcel");

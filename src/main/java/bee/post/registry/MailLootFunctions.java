@@ -1,14 +1,12 @@
 package bee.post.registry;
 
 import bee.post.Spamton;
-import bee.post.item.StampFunction;
+import bee.post.item.stamp.StampFunction;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
-import net.minecraft.world.level.storage.loot.functions.SetComponentsFunction;
 
 public class MailLootFunctions {
 

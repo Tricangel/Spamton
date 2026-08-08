@@ -1,10 +1,8 @@
-package bee.post.item;
+package bee.post.item.stamp;
 
 import bee.post.block.Stamp;
 import bee.post.registry.MailItemComponents;
 import bee.post.registry.MailLootFunctions;
-import bee.post.registry.MailLootTables;
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.RandomSource;

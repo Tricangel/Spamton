@@ -18,7 +18,7 @@ import java.util.function.Function;
 
 public class MailBlocks {
 
-    public static final Block PACKAGE = register("package", PackageBlock::new, BlockBehaviour.Properties.of().strength(.15f).ignitedByLava().sound(SoundType.WOOD), true);
+    public static final Block PACKAGE = register("package", PackageBlock::new, BlockBehaviour.Properties.of().strength(.15f).ignitedByLava().sound(SoundType.WOOD), false);
 
     public static final Block PARCEL_SHELF = register("parcel_shelf", ParcelShelfBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.CHISELED_BOOKSHELF), true);
 

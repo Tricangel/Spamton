@@ -1,4 +1,4 @@
-package bee.post.item;
+package bee.post.item.stamp;
 
 import bee.post.registry.MailItems;
 import bee.post.registry.MailTags;

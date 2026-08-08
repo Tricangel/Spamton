@@ -1,18 +1,11 @@
-package bee.post.item;
+package bee.post.item.component;
 
 import bee.post.Spamton;
-import com.mojang.math.Axis;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import org.joml.Quaternionf;
-import org.joml.Vector3f;
 
 public class ClientParcelContentsTooltip implements ClientTooltipComponent {
     private static final Identifier SLOT_HIGHLIGHT_BACK_SPRITE = Identifier.withDefaultNamespace("container/bundle/slot_background");

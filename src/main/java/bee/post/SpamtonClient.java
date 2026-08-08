@@ -4,12 +4,12 @@ import bee.post.block.entity.renderer.PackageBlockEntityRenderer;
 import bee.post.block.entity.renderer.ParcelShelfBlockEntityRenderer;
 import bee.post.client.model.ParcelModel;
 import bee.post.client.model.PlayerStampModel;
-import bee.post.client.overlay.PeekParcelShelfOverlay;
+import bee.post.client.overlay.PeekPostalInfoOverlay;
 import bee.post.client.renderer.PlayerStampSpecialRenderer;
 import bee.post.client.screen.LetterEditScreen;
 import bee.post.client.screen.LetterViewScreen;
-import bee.post.item.ClientParcelContentsTooltip;
-import bee.post.item.ParcelContents;
+import bee.post.item.component.ClientParcelContentsTooltip;
+import bee.post.item.component.ParcelContents;
 import bee.post.networking.ClientboundOpenWritableLetterPacket;
 import bee.post.networking.ClientboundOpenWrittenLetterPacket;
 import bee.post.registry.MailBlockEntities;
@@ -23,16 +23,15 @@ import net.fabricmc.fabric.api.item.v1.ComponentTooltipAppenderRegistry;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.special.SpecialModelRenderers;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.item.component.WrittenBookContent;
 
 public class SpamtonClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         BlockEntityRenderers.register(MailBlockEntities.PACKAGE_BLOCK_ENTITY, PackageBlockEntityRenderer::new);
-        ComponentTooltipAppenderRegistry.addFirst(MailItemComponents.PARCEL_CONTENTS);
+        ComponentTooltipAppenderRegistry.addFirst(MailItemComponents.POSTAL_INFO);
         BlockEntityRenderers.register(MailBlockEntities.PARCEL_SHELF_BLOCK_ENTITY, ParcelShelfBlockEntityRenderer::new);
 
-        HudElementRegistry.addFirst(Spamton.id("peek_parcel_shelf"), new PeekParcelShelfOverlay());
+        HudElementRegistry.addFirst(Spamton.id("peek_parcel_shelf"), new PeekPostalInfoOverlay());
         EntityModelLayerRegistry.registerModelLayer(PlayerStampModel.STAMP, PlayerStampModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(PlayerStampModel.STAMP_ITEM, PlayerStampModel::createItemLayer);
         EntityModelLayerRegistry.registerModelLayer(ParcelModel.PARCEL, ParcelModel::createBodyLayer);
