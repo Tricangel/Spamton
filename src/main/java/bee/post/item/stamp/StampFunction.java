@@ -9,7 +9,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
-import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import org.jspecify.annotations.NonNull;
 
@@ -29,9 +28,10 @@ public class StampFunction extends LootItemConditionalFunction {
         return simpleBuilder((list) -> new StampFunction(list, types));
     }
 
+
     @Override
-    public @NonNull LootItemFunctionType<? extends LootItemConditionalFunction> getType() {
-        return MailLootFunctions.STAMP_FUNCTION;
+    public MapCodec<? extends LootItemConditionalFunction> codec() {
+        return CODEC;
     }
 
     @Override

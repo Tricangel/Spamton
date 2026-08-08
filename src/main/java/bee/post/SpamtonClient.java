@@ -16,10 +16,10 @@ import bee.post.registry.MailBlockEntities;
 import bee.post.registry.MailItemComponents;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.ClientTooltipComponentCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
-import net.fabricmc.fabric.api.item.v1.ComponentTooltipAppenderRegistry;
+import net.fabricmc.fabric.api.item.v1.ItemComponentTooltipProviderRegistry;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.special.SpecialModelRenderers;
 import net.minecraft.world.InteractionHand;
@@ -28,17 +28,17 @@ public class SpamtonClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         BlockEntityRenderers.register(MailBlockEntities.PACKAGE_BLOCK_ENTITY, PackageBlockEntityRenderer::new);
-        ComponentTooltipAppenderRegistry.addFirst(MailItemComponents.POSTAL_INFO);
+        ItemComponentTooltipProviderRegistry.addFirst(MailItemComponents.POSTAL_INFO);
         BlockEntityRenderers.register(MailBlockEntities.PARCEL_SHELF_BLOCK_ENTITY, ParcelShelfBlockEntityRenderer::new);
 
         HudElementRegistry.addFirst(Spamton.id("peek_parcel_shelf"), new PeekPostalInfoOverlay());
-        EntityModelLayerRegistry.registerModelLayer(PlayerStampModel.STAMP, PlayerStampModel::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(PlayerStampModel.STAMP_ITEM, PlayerStampModel::createItemLayer);
-        EntityModelLayerRegistry.registerModelLayer(ParcelModel.PARCEL, ParcelModel::createBodyLayer);
+        ModelLayerRegistry.registerModelLayer(PlayerStampModel.STAMP, PlayerStampModel::createBodyLayer);
+        ModelLayerRegistry.registerModelLayer(PlayerStampModel.STAMP_ITEM, PlayerStampModel::createItemLayer);
+        ModelLayerRegistry.registerModelLayer(ParcelModel.PARCEL, ParcelModel::createBodyLayer);
 
         SpecialModelRenderers.ID_MAPPER.put(Spamton.id("player_stamp"), PlayerStampSpecialRenderer.Unbaked.MAP_CODEC);
 
-        TooltipComponentCallback.EVENT.register(component -> {
+        ClientTooltipComponentCallback.EVENT.register(component -> {
             if (component instanceof ParcelContents contents) {
                 return new ClientParcelContentsTooltip(contents);
             }
@@ -49,13 +49,13 @@ public class SpamtonClient implements ClientModInitializer {
 
                 InteractionHand hand = packet.hand() == 0 ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
 
-                context.client().setScreen(new LetterEditScreen(context.player(), context.player().getItemInHand(hand), hand, packet.writableBookContent()));
+                context.client().gui.setScreen(new LetterEditScreen(context.player(), context.player().getItemInHand(hand), hand, packet.writableBookContent()));
 
         }));
 
         ClientPlayNetworking.registerGlobalReceiver(ClientboundOpenWrittenLetterPacket.TYPE, ((packet, context) -> {
 
-            context.client().setScreen(new LetterViewScreen(LetterViewScreen.LetterAccess.fromContent(packet.writtenBookContent())));
+            context.client().gui.setScreen(new LetterViewScreen(LetterViewScreen.LetterAccess.fromContent(packet.writtenBookContent())));
 
         }));
 

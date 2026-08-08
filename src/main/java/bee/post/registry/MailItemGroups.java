@@ -2,11 +2,10 @@ package bee.post.registry;
 
 import bee.post.Spamton;
 import bee.post.block.Stamp;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -19,8 +18,8 @@ public class MailItemGroups {
             BuiltInRegistries.CREATIVE_MODE_TAB.key(), Spamton.id("creative_tab"));
 
 
-    public static final CreativeModeTab TAB = FabricItemGroup.builder()
-            .icon(MailItems.GREEN_PARCEL::getDefaultInstance)
+    public static final CreativeModeTab TAB = FabricCreativeModeTab.builder()
+            .icon(MailItems.PARCEL.green()::getDefaultInstance)
             .title(Component.translatable("itemgroup.spamton"))
             .displayItems(((itemDisplayParameters, output) -> {
                 output.accept(new ItemStack(MailItems.CARDBOARD));
@@ -35,7 +34,7 @@ public class MailItemGroups {
                 output.accept(new ItemStack(MailBlocks.PARCEL_SHELF));
                 output.accept(new ItemStack(MailItems.LETTER));
 
-                for (Item item : MailItems.PARCELS) {
+                for (Item item : MailItems.PARCEL.asList()) {
                     output.accept(item.getDefaultInstance());
                 }
 

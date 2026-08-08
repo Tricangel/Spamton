@@ -4,13 +4,13 @@ import bee.post.block.entity.ParcelShelfBlockEntity;
 import bee.post.client.renderer.ParcelShelfSpecialRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -36,7 +36,7 @@ public class ParcelShelfBlockEntityRenderer implements BlockEntityRenderer<Parce
         renderState.stacks = blockEntity.getItems();
         renderState.rotation = blockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
 
-        renderState.lightCoordsInFront = blockEntity.getLevel() != null ? LevelRenderer.getLightColor(blockEntity.getLevel(), blockEntity.getBlockPos().relative(renderState.rotation)) : 15728880;
+        renderState.lightCoordsInFront = blockEntity.getLevel() != null ? LightCoordsUtil.getLightCoords(blockEntity.getLevel(), blockEntity.getBlockPos().relative(renderState.rotation)) : 15728880;
 
     }
 
@@ -57,7 +57,7 @@ public class ParcelShelfBlockEntityRenderer implements BlockEntityRenderer<Parce
 
                 poseStack.translate(getTranslation(i + 1));
 
-                shelfSpecialRenderer.submit(shelfSpecialRenderer.extractArgument(stack), ItemDisplayContext.ON_SHELF, poseStack, submitNodeCollector, blockEntityRenderState.lightCoordsInFront, OverlayTexture.NO_OVERLAY, false, 0);
+                shelfSpecialRenderer.submit(shelfSpecialRenderer.extractArgument(stack), poseStack, submitNodeCollector, blockEntityRenderState.lightCoordsInFront, OverlayTexture.NO_OVERLAY, false, 0);
                 poseStack.popPose();
             }
         }

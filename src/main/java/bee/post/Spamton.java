@@ -47,10 +47,10 @@ public class Spamton implements ModInitializer {
 
 
 
-		PayloadTypeRegistry.playC2S().register(ServerboundSignLetterPacket.TYPE, ServerboundSignLetterPacket.STREAM_CODEC);
-		PayloadTypeRegistry.playC2S().register(ServerboundSaveLetterPacket.TYPE, ServerboundSaveLetterPacket.STREAM_CODEC);
-		PayloadTypeRegistry.playS2C().register(ClientboundOpenWritableLetterPacket.TYPE, ClientboundOpenWritableLetterPacket.STREAM_CODEC);
-		PayloadTypeRegistry.playS2C().register(ClientboundOpenWrittenLetterPacket.TYPE, ClientboundOpenWrittenLetterPacket.STREAM_CODEC);
+		PayloadTypeRegistry.serverboundPlay().register(ServerboundSignLetterPacket.TYPE, ServerboundSignLetterPacket.STREAM_CODEC);
+		PayloadTypeRegistry.serverboundPlay().register(ServerboundSaveLetterPacket.TYPE, ServerboundSaveLetterPacket.STREAM_CODEC);
+		PayloadTypeRegistry.clientboundPlay().register(ClientboundOpenWritableLetterPacket.TYPE, ClientboundOpenWritableLetterPacket.STREAM_CODEC);
+		PayloadTypeRegistry.clientboundPlay().register(ClientboundOpenWrittenLetterPacket.TYPE, ClientboundOpenWrittenLetterPacket.STREAM_CODEC);
 
 		ServerPlayNetworking.registerGlobalReceiver(ServerboundSaveLetterPacket.TYPE, (packet, context) -> {
 
@@ -85,7 +85,7 @@ public class Spamton implements ModInitializer {
 		Registry.register(BuiltInRegistries.DATA_COMPONENT_PREDICATE_TYPE, id("stamp"), new DataComponentPredicate.ConcreteType<StampPredicate>(StampPredicate.CODEC));
 
 		Registry.register(BuiltInRegistries.RECIPE_TYPE, id("stamp_duplicating"), StampRecipe.StampRecipeType.INSTANCE);
-		Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, id("stamp_duplicating"), new CustomRecipe.Serializer<StampRecipe>(StampRecipe::new));
+		Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, id("stamp_duplicating"), StampRecipe.SERIALIZER);
 
 	}
 

@@ -117,9 +117,9 @@ public class PackageBlock extends BaseEntityBlock {
 
         if (!itemStack.is(MailTags.STAMP)) return super.useItemOn(itemStack, blockState, level, blockPos, player, interactionHand, blockHitResult);
 
-        Vec3 dist = blockHitResult.getLocation().subtract(blockHitResult.getBlockPos().getCenter());
+        Vec3 dist = blockHitResult.getLocation().subtract(Vec3.atCenterOf(blockHitResult.getBlockPos()));
 
-        Vec3 pos = blockPos.getCenter().add(dist);
+        Vec3 pos = Vec3.atCenterOf(blockPos).add(dist);
 
         List<Stamp> stamps = packageBlockEntity.getStamps();
 
@@ -154,7 +154,7 @@ public class PackageBlock extends BaseEntityBlock {
 
         if (player.isCrouching() && level.getBlockEntity(blockPos) instanceof PackageBlockEntity packageBlockEntity) {
             List<Stamp> stamps = packageBlockEntity.getStamps();
-            Vec3 dist = blockHitResult.getLocation().subtract(blockHitResult.getBlockPos().getCenter());
+            Vec3 dist = blockHitResult.getLocation().subtract(Vec3.atCenterOf(blockHitResult.getBlockPos()));
 
             if (stamps.removeIf(stamp -> {
                 if (stamp.pos().distanceTo(dist) < 0.15f) {

@@ -9,8 +9,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.joml.Vector3fc;
 import org.jspecify.annotations.NonNull;
@@ -26,11 +24,13 @@ public class ParcelShelfSpecialRenderer implements SpecialModelRenderer<RenderTy
         this.modelBase = modelBase;
     }
 
-    @Override
-    public void submit(RenderType argument, @NonNull ItemDisplayContext itemDisplayContext, @NonNull PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, int j, boolean bl, int k) {
-        submitNodeCollector.submitModel(this.modelBase, new ParcelModel.State(), poseStack, argument, i, OverlayTexture.NO_OVERLAY, k, null);
-    }
 
+
+
+    @Override
+    public void submit(@Nullable RenderType argument, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int lightCoords, int overlayCoords, boolean hasFoil, int outlineColor) {
+        submitNodeCollector.submitModel(this.modelBase, new ParcelModel.State(), poseStack, argument, lightCoords, overlayCoords, outlineColor, null);
+    }
 
     @Override
     public void getExtents(Consumer<Vector3fc> consumer) {
@@ -41,7 +41,7 @@ public class ParcelShelfSpecialRenderer implements SpecialModelRenderer<RenderTy
     @Override
     public @Nullable RenderType extractArgument(ItemStack itemStack) {
 
-        String name = itemStack.getItem().getName().getString();
+        String name = itemStack.getItemName().getString();
 
         name = name.replace(" ", "_");
         name = name.toLowerCase();
@@ -50,11 +50,11 @@ public class ParcelShelfSpecialRenderer implements SpecialModelRenderer<RenderTy
     }
 
 
-    public record Unbaked() implements SpecialModelRenderer.Unbaked {
+    public record Unbaked() implements SpecialModelRenderer.Unbaked<RenderType> {
         public static final MapCodec<Unbaked> MAP_CODEC = MapCodec.unit(ParcelShelfSpecialRenderer.Unbaked::new);
 
         @Override
-        public @NonNull SpecialModelRenderer<?> bake(BakingContext bakingContext) {
+        public @NonNull SpecialModelRenderer<RenderType> bake(BakingContext bakingContext) {
             ParcelModel model = new ParcelModel(bakingContext.entityModelSet().bakeLayer(ParcelModel.PARCEL));
             return new ParcelShelfSpecialRenderer(model);
         }

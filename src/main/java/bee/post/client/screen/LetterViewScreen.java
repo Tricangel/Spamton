@@ -5,7 +5,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ActiveTextCollector;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.TextAlignment;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -127,9 +127,9 @@ public class LetterViewScreen extends Screen {
     }
 
     @Override
-    public void render(@NonNull GuiGraphics guiGraphics, int i, int j, float f) {
-        super.render(guiGraphics, i, j, f);
-        this.visitText(guiGraphics.textRenderer(GuiGraphics.HoveredTextEffects.TOOLTIP_AND_CURSOR), false);
+    public void extractRenderState(@NonNull GuiGraphicsExtractor guiGraphics, int i, int j, float f) {
+        super.extractRenderState(guiGraphics, i, j, f);
+        this.visitText(guiGraphics.textRenderer(GuiGraphicsExtractor.HoveredTextEffects.TOOLTIP_AND_CURSOR), false);
     }
 
     private void visitText(ActiveTextCollector activeTextCollector, boolean bl) {
@@ -160,8 +160,8 @@ public class LetterViewScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(GuiGraphics guiGraphics, int i, int j, float f) {
-        super.renderBackground(guiGraphics, i, j, f);
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int i, int j, float f) {
+        super.extractBackground(guiGraphics, i, j, f);
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BOOK_LOCATION, this.backgroundLeft(), this.backgroundTop(), 0.0F, 0.0F, 192, 192, 256, 256);
     }
 

@@ -2,7 +2,7 @@ package bee.post.item.component;
 
 import bee.post.Spamton;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
@@ -29,7 +29,7 @@ public class ClientParcelContentsTooltip implements ClientTooltipComponent {
     }
 
     @Override
-    public void renderImage(Font font, int x, int y, int w, int h, GuiGraphics guiGraphics) {
+    public void extractImage(Font font, int x, int y, int w, int h, GuiGraphicsExtractor guiGraphics) {
         ParcelContents actualContents = this.loadContents(contents);
 
         y -= 5;
@@ -38,14 +38,14 @@ public class ClientParcelContentsTooltip implements ClientTooltipComponent {
 
 
         if (actualContents.letter().isPresent()) {
-            guiGraphics.renderItem(actualContents.letter().get(), x + 4, y + 4);
+            guiGraphics.item(actualContents.letter().get(), x + 4, y + 4);
         } else guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_LETTER_SPRITE, x + 4, y + 4, 16, 16);
 
         guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_HIGHLIGHT_BACK_SPRITE, x + 24, y, 24, 24);
 
 
         if (actualContents.gift().isPresent()) {
-            guiGraphics.renderItem(actualContents.gift().get(), x + 28, y + 4);
+            guiGraphics.item(actualContents.gift().get(), x + 28, y + 4);
         } else guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_GIFT_SPRITE, x + 28, y + 4, 16, 16);
 
     }

@@ -2,11 +2,10 @@ package bee.post.client.screen;
 
 import bee.post.client.networking.ServerboundSignLetterPacket;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.inventory.BookViewScreen;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
@@ -41,7 +40,7 @@ public class LetterSignScreen extends Screen {
     protected void init() {
         Button button = Button.builder(Component.translatable("book.finalizeButton"), (buttonx) -> {
             this.saveChanges();
-            this.minecraft.setScreen((Screen)null);
+            this.minecraft.gui.setScreen((Screen)null);
         }).bounds(this.width / 2 - 100, 196, 98, 20).build();
         button.active = false;
         this.titleBox = this.addRenderableWidget(new EditBox(this.minecraft.font, (this.width - 114) / 2 - 3, 50, 114, 20, TITLE_EDIT_BOX));
@@ -55,7 +54,7 @@ public class LetterSignScreen extends Screen {
         this.addRenderableWidget(button);
         this.addRenderableWidget(Button.builder(CommonComponents.GUI_CANCEL, (buttonx) -> {
             this.titleValue = this.titleBox.getValue();
-            this.minecraft.setScreen(this.letterEditScreen);
+            this.minecraft.gui.setScreen(this.letterEditScreen);
         }).bounds(this.width / 2 + 2, 196, 98, 20).build());
     }
 
@@ -81,7 +80,7 @@ public class LetterSignScreen extends Screen {
     public boolean keyPressed(KeyEvent keyEvent) {
         if (this.titleBox.isFocused() && !this.titleBox.getValue().isEmpty() && keyEvent.isConfirmation()) {
             this.saveChanges();
-            this.minecraft.setScreen((Screen)null);
+            this.minecraft.gui.setScreen((Screen)null);
             return true;
         } else {
             return super.keyPressed(keyEvent);
@@ -89,18 +88,18 @@ public class LetterSignScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int i, int j, float f) {
-        super.render(guiGraphics, i, j, f);
+    public void extractRenderState(GuiGraphicsExtractor guiGraphics, int i, int j, float f) {
+        super.extractRenderState(guiGraphics, i, j, f);
         int xo = (this.width - 192) / 2;
         int yo = 2;
         int tw = this.font.width(EDIT_TITLE_LABEL);
-        guiGraphics.drawString(this.font, EDIT_TITLE_LABEL, xo + 36 + (114 - tw) / 2, 34, -16777216, false);
-        guiGraphics.drawWordWrap(this.font, FINALIZE_WARNING_LABEL, xo + 36, 82, 114, -16777216, false);
+        guiGraphics.text(this.font, EDIT_TITLE_LABEL, xo + 36 + (114 - tw) / 2, 34, -16777216, false);
+        guiGraphics.textWithWordWrap(this.font, FINALIZE_WARNING_LABEL, xo + 36, 82, 114, -16777216, false);
     }
 
     @Override
-    public void renderBackground(GuiGraphics guiGraphics, int i, int j, float f) {
-        super.renderBackground(guiGraphics, i, j, f);
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int i, int j, float f) {
+        super.extractBackground(guiGraphics, i, j, f);
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, LetterViewScreen.BOOK_LOCATION, (this.width - 192) / 2, 2, 0.0F, 0.0F, 192, 192, 256, 256);
     }
 }

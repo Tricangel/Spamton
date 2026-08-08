@@ -7,7 +7,7 @@ import bee.post.registry.MailItemComponents;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElement;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 import net.minecraft.core.component.DataComponents;
@@ -18,7 +18,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
@@ -29,12 +28,12 @@ import java.util.OptionalInt;
 public class PeekPostalInfoOverlay implements HudElement  {
 
     @Override
-    public void render(@NonNull GuiGraphics context, @NonNull DeltaTracker tickCounter) {
+    public void extractRenderState(@NonNull GuiGraphicsExtractor context, @NonNull DeltaTracker tickCounter) {
 
 
         Minecraft minecraft = Minecraft.getInstance();
 
-        if (minecraft.screen != null) return;
+        if (minecraft.gui.screen() != null) return;
         if (!(minecraft.hitResult instanceof BlockHitResult hitResult)) return;
         if (minecraft.level == null) return;
 
@@ -61,7 +60,7 @@ public class PeekPostalInfoOverlay implements HudElement  {
             });
 
 
-            context.renderTooltip(
+            context.tooltip(
                     minecraft.font,
                     clientTooltipComponents,
                     centerTooltip - textWidth / 2,
@@ -82,7 +81,7 @@ public class PeekPostalInfoOverlay implements HudElement  {
 
     }
 
-    public void renderParcelShelfOverlay(GuiGraphics context, BlockHitResult hitResult, ParcelShelfBlockEntity blockEntity, ParcelShelfBlock block) {
+    public void renderParcelShelfOverlay(GuiGraphicsExtractor context, BlockHitResult hitResult, ParcelShelfBlockEntity blockEntity, ParcelShelfBlock block) {
         Minecraft minecraft = Minecraft.getInstance();
 
         OptionalInt optionalInt = block.getHitSlot(hitResult, minecraft.level.getBlockState(hitResult.getBlockPos()).getValue(BlockStateProperties.HORIZONTAL_FACING));
@@ -118,7 +117,7 @@ public class PeekPostalInfoOverlay implements HudElement  {
         });
 
 
-        context.renderTooltip(
+        context.tooltip(
                 minecraft.font,
                 clientTooltipComponents,
                 centerTooltip - textWidth / 2,

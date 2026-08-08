@@ -9,7 +9,6 @@ import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ResolvableProfile;
 import org.joml.Vector3fc;
@@ -27,7 +26,7 @@ public class PlayerStampSpecialRenderer implements SpecialModelRenderer<PlayerSk
     }
 
     @Override
-    public void submit(PlayerSkinRenderCache.@Nullable RenderInfo argument, @NonNull ItemDisplayContext itemDisplayContext, @NonNull PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, int j, boolean bl, int k) {
+    public void submit(PlayerSkinRenderCache.@Nullable RenderInfo argument, @NonNull PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, int j, boolean bl, int k) {
         RenderType renderType = argument != null ? argument.renderType() : PlayerSkinRenderCache.DEFAULT_PLAYER_SKIN_RENDER_TYPE;
         submitNodeCollector.submitModel(this.modelBase, new PlayerStampModel.State(), poseStack, renderType, i, OverlayTexture.NO_OVERLAY, k, null);
     }
@@ -44,11 +43,11 @@ public class PlayerStampSpecialRenderer implements SpecialModelRenderer<PlayerSk
         return profile == null ? null : this.playerSkinRenderCache.getOrDefault(profile);
     }
 
-    public record Unbaked() implements net.minecraft.client.renderer.special.SpecialModelRenderer.Unbaked {
+    public record Unbaked() implements SpecialModelRenderer.Unbaked<PlayerSkinRenderCache.RenderInfo> {
         public static final MapCodec<Unbaked> MAP_CODEC = MapCodec.unit(PlayerStampSpecialRenderer.Unbaked::new);
 
         @Override
-        public @NonNull SpecialModelRenderer<?> bake(BakingContext bakingContext) {
+        public @NonNull SpecialModelRenderer<PlayerSkinRenderCache.RenderInfo> bake(BakingContext bakingContext) {
             PlayerStampModel model = new PlayerStampModel(bakingContext.entityModelSet().bakeLayer(PlayerStampModel.STAMP_ITEM));
             return new PlayerStampSpecialRenderer(bakingContext.playerSkinRenderCache(), model);
         }

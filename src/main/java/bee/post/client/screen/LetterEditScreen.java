@@ -3,22 +3,19 @@ package bee.post.client.screen;
 import bee.post.client.networking.ServerboundSaveLetterPacket;
 import com.google.common.collect.Lists;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.impl.screenhandler.client.ClientNetworking;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ActiveTextCollector;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.TextAlignment;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.MultiLineEditBox;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.inventory.BookViewScreen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.game.ServerboundEditBookPacket;
 import net.minecraft.server.network.Filterable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -29,7 +26,6 @@ import org.jspecify.annotations.NonNull;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 public class LetterEditScreen extends Screen {
@@ -78,9 +74,9 @@ public class LetterEditScreen extends Screen {
         this.numberOfPages = this.getPageNumberMessage();
         this.backButton = this.addRenderableWidget(new PageButton(i + 43, j + 157, false, (button) -> this.pageBack(), true));
         this.forwardButton = this.addRenderableWidget(new PageButton(i + 116, j + 157, true, (button) -> this.pageForward(), true));
-        this.addRenderableWidget(Button.builder(SIGN_LETTER_LABEL, (button) -> this.minecraft.setScreen(this.signScreen)).pos(this.width / 2 - 98 - 2, this.menuControlsTop()).width(98).build());
+        this.addRenderableWidget(Button.builder(SIGN_LETTER_LABEL, (button) -> this.minecraft.gui.setScreen(this.signScreen)).pos(this.width / 2 - 98 - 2, this.menuControlsTop()).width(98).build());
         this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, (button) -> {
-            this.minecraft.setScreen(null);
+            this.minecraft.gui.setScreen(null);
             this.saveChanges();
         }).pos(this.width / 2 + 2, this.menuControlsTop()).width(98).build());
         this.updateButtonVisibility();
@@ -201,8 +197,8 @@ public class LetterEditScreen extends Screen {
     }
 
     @Override
-    public void render(@NonNull GuiGraphics guiGraphics, int i, int j, float f) {
-        super.render(guiGraphics, i, j, f);
+    public void extractRenderState(@NonNull GuiGraphicsExtractor guiGraphics, int i, int j, float f) {
+        super.extractRenderState(guiGraphics, i, j, f);
         this.visitText(guiGraphics.textRenderer());
     }
 
@@ -213,8 +209,8 @@ public class LetterEditScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(@NonNull GuiGraphics guiGraphics, int i, int j, float f) {
-        super.renderBackground(guiGraphics, i, j, f);
+    public void extractBackground(@NonNull GuiGraphicsExtractor guiGraphics, int i, int j, float f) {
+        super.extractBackground(guiGraphics, i, j, f);
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, LetterViewScreen.BOOK_LOCATION, this.backgroundLeft(), this.backgroundTop(), 0.0F, 0.0F, 192, 192, 256, 256);
     }
 }

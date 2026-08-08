@@ -4,9 +4,9 @@ import bee.post.block.PackageBlock;
 import bee.post.registry.MailBlocks;
 import bee.post.registry.MailItemComponents;
 import bee.post.registry.MailItems;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
-import net.minecraft.advancements.criterion.StatePropertiesPredicate;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootSubProvider;
+import net.minecraft.advancements.predicates.StatePropertiesPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.Item;
@@ -21,15 +21,14 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 import java.util.concurrent.CompletableFuture;
 
-public class MailLootGen extends FabricBlockLootTableProvider {
-    public MailLootGen(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
-        super(dataOutput, registryLookup);
+public class MailLootGen extends FabricBlockLootSubProvider {
+    public MailLootGen(FabricPackOutput packOutput, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+        super(packOutput, registriesFuture);
     }
 
     @Override
     public void generate() {
         add(MailBlocks.PACKAGE, createPackageBoxDrop(MailBlocks.PACKAGE, MailItems.CARDBOARD));
-
     }
 
     public LootTable.Builder createPackageBoxDrop(Block block, Item item) {
@@ -55,6 +54,5 @@ public class MailLootGen extends FabricBlockLootTableProvider {
                         .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PackageBlock.TAPED, false  )))
                 );
     }
-
 
 }
