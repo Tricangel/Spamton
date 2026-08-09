@@ -6,16 +6,21 @@ import bee.post.registry.MailItemComponents;
 import bee.post.registry.MailItems;
 import bee.post.registry.MailTags;
 import com.mojang.serialization.MapCodec;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -31,12 +36,15 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -116,7 +124,7 @@ public class PackageBlock extends BaseEntityBlock {
 
 
         if (!itemStack.is(MailTags.STAMP)) return super.useItemOn(itemStack, blockState, level, blockPos, player, interactionHand, blockHitResult);
-
+        if (!(level instanceof ServerLevel serverLevel)) return super.useItemOn(itemStack, blockState, level, blockPos, player, interactionHand, blockHitResult);
         Vec3 dist = blockHitResult.getLocation().subtract(blockHitResult.getBlockPos().getCenter());
 
         Vec3 pos = blockPos.getCenter().add(dist);
@@ -131,12 +139,14 @@ public class PackageBlock extends BaseEntityBlock {
 
         if (packageBlockEntity.addStamp(new Stamp(dist, blockHitResult.getDirection(), RandomSource.create().nextInt(180), itemStack.getOrDefault(MailItemComponents.STAMP_TYPE, Stamp.StampType.MOON), profile))) {
             for (int i = 0; i < 5; i++) {
-                level.addParticle(ParticleTypes.DUST_PLUME, pos.x, pos.y, pos.z, 0, 0, 0);
+                serverLevel.addParticle(ParticleTypes.DUST_PLUME, pos.x, pos.y, pos.z, 0, 0, 0);
             }
-            player.playSound(SoundEvents.HONEY_BLOCK_PLACE);
+            serverLevel.playSound(null, blockPos, SoundEvents.HONEY_BLOCK_PLACE, SoundSource.BLOCKS);
             itemStack.consume(1, player);
-
-            return InteractionResult.SUCCESS;
+            serverLevel.gameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Context.of(player, blockState));
+            packageBlockEntity.setChanged();
+            serverLevel.sendBlockUpdated(blockPos, blockState, blockState, 3);
+            return InteractionResult.SUCCESS_SERVER;
         }
 
         return InteractionResult.FAIL;
@@ -153,22 +163,29 @@ public class PackageBlock extends BaseEntityBlock {
         }
 
         if (player.isCrouching() && level.getBlockEntity(blockPos) instanceof PackageBlockEntity packageBlockEntity) {
+            if (!(level instanceof ServerLevel serverLevel)) return super.useWithoutItem(blockState, level, blockPos, player, blockHitResult);
             List<Stamp> stamps = packageBlockEntity.getStamps();
             Vec3 dist = blockHitResult.getLocation().subtract(blockHitResult.getBlockPos().getCenter());
 
-            if (stamps.removeIf(stamp -> {
+            for (int i = 0; i < stamps.size(); i++) {
+                Stamp stamp = stamps.get(i);
+
                 if (stamp.pos().distanceTo(dist) < 0.15f) {
                     ItemStack stack = MailItems.STAMP.getDefaultInstance();
                     stack.set(MailItemComponents.STAMP_TYPE, stamp.stampType());
                     stamp.profile().ifPresent(resolvableProfile -> stack.set(DataComponents.PROFILE, resolvableProfile));
                     player.addItem(stack);
-                    player.playSound(SoundEvents.HONEY_BLOCK_BREAK);
-                    return true;
+                    serverLevel.playSound(null, blockPos, SoundEvents.HONEY_BLOCK_BREAK, SoundSource.BLOCKS);
+                    stamps.remove(i);
+
+                    serverLevel.gameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Context.of(player, blockState));
+                    packageBlockEntity.setChanged();
+                    serverLevel.sendBlockUpdated(blockPos, blockState, blockState, 3);
+                    return InteractionResult.SUCCESS_SERVER;
                 }
-                return false;
-            })) {
-                return InteractionResult.SUCCESS;
+
             }
+
 
         }
 

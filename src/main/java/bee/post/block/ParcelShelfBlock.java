@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -57,6 +58,9 @@ public class ParcelShelfBlock extends BaseEntityBlock implements SelectableSlotC
     private static InteractionResult addItem(ParcelShelfBlockEntity blockEntity, ItemStack stack, int slot, @Nullable LivingEntity livingEntity) {
         if (blockEntity.getItem(slot).isEmpty()) {
             blockEntity.setItem(slot, stack.copyWithCount(1));
+            blockEntity.getLevel().gameEvent(GameEvent.BLOCK_CHANGE, blockEntity.getBlockPos(), GameEvent.Context.of(livingEntity, blockEntity.getBlockState()));
+            blockEntity.setChanged();
+            blockEntity.getLevel().sendBlockUpdated(blockEntity.getBlockPos(), blockEntity.getBlockState(), blockEntity.getBlockState(), 3);
             stack.consume(1, livingEntity);
             if (livingEntity != null) livingEntity.playSound(SoundEvents.CHISELED_BOOKSHELF_PLACE);
             return InteractionResult.SUCCESS;
@@ -68,6 +72,9 @@ public class ParcelShelfBlock extends BaseEntityBlock implements SelectableSlotC
         if (!blockEntity.getItem(slot).isEmpty()) {
             player.addItem(blockEntity.getItem(slot).copyWithCount(1));
             blockEntity.setItem(slot, ItemStack.EMPTY);
+            blockEntity.getLevel().gameEvent(GameEvent.BLOCK_CHANGE, blockEntity.getBlockPos(), GameEvent.Context.of(player, blockEntity.getBlockState()));
+            blockEntity.setChanged();
+            blockEntity.getLevel().sendBlockUpdated(blockEntity.getBlockPos(), blockEntity.getBlockState(), blockEntity.getBlockState(), 3);
             player.playSound(SoundEvents.CHISELED_BOOKSHELF_PICKUP);
             return InteractionResult.SUCCESS;
         }

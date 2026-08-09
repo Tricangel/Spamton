@@ -15,6 +15,9 @@ import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
@@ -29,18 +32,21 @@ import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class PackageBlockEntity extends BaseContainerBlockEntity {
     public PackageBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(MailBlockEntities.PACKAGE_BLOCK_ENTITY, blockPos, blockState);
         this.itemStacks = NonNullList.withSize(9, ItemStack.EMPTY);
         this.info = PostalInfoComponent.EMPTY;
+        this.stamps = new ArrayList<>(50);
     }
 
-    private final List<Stamp> stamps = new ArrayList<>(50);
+    public ArrayList<Stamp> stamps;
     public NonNullList<ItemStack> itemStacks;
     public PostalInfoComponent info;
 
@@ -55,7 +61,8 @@ public class PackageBlockEntity extends BaseContainerBlockEntity {
         return false;
     }
 
-    public List<Stamp> getStamps() {
+
+    public ArrayList<Stamp> getStamps() {
         return stamps;
     }
 
@@ -99,9 +106,15 @@ public class PackageBlockEntity extends BaseContainerBlockEntity {
     }
 
     @Override
+    public @NonNull Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
     public @NonNull CompoundTag getUpdateTag(HolderLookup.@NonNull Provider provider) {
         try (ProblemReporter.ScopedCollector scopedCollector = new ProblemReporter.ScopedCollector(this.problemPath(), Spamton.LOGGER)) {
             TagValueOutput tagValueOutput = TagValueOutput.createWithContext(scopedCollector, provider);
+
             tagValueOutput.store("stamps", Stamp.CODEC.listOf(), stamps);
             tagValueOutput.store("postal_info", PostalInfoComponent.CODEC, info);
             return tagValueOutput.buildResult();

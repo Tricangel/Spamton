@@ -14,7 +14,6 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.packs.VanillaRecipeProvider;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
@@ -32,6 +31,7 @@ public class MailRecipeGen extends FabricRecipeProvider {
     protected @NonNull RecipeProvider createRecipeProvider(HolderLookup.@NonNull Provider provider, @NonNull RecipeOutput recipeOutput) {
         return new RecipeProvider(provider, recipeOutput) {
             final HolderLookup.RegistryLookup<Item> itemLookup = registries.lookupOrThrow(Registries.ITEM);
+
             @Override
             public void buildRecipes() {
 
@@ -102,7 +102,6 @@ public class MailRecipeGen extends FabricRecipeProvider {
                 parcels(MailItems.PARCELS);
 
 
-
             }
 
 
@@ -111,13 +110,13 @@ public class MailRecipeGen extends FabricRecipeProvider {
                     if (!(item instanceof ParcelItem parcelItem)) continue;
                     Item color = DyeItem.byColor(parcelItem.color);
 
-                        shapeless(RecipeCategory.TOOLS, parcelItem)
-                                .requires(MailItems.CARDBOARD)
-                                .requires(Items.PAPER)
-                                .requires(MailItems.CARDBOARD)
-                                .requires(color)
-                                .unlockedBy(getHasName(parcelItem), has(Items.PAPER))
-                                .save(output);
+                    shapeless(RecipeCategory.TOOLS, parcelItem)
+                            .requires(MailItems.CARDBOARD)
+                            .requires(Items.PAPER)
+                            .requires(MailItems.CARDBOARD)
+                            .requires(color)
+                            .unlockedBy(getHasName(parcelItem), has(Items.PAPER))
+                            .save(output);
 
                 }
             }
