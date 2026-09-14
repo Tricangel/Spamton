@@ -55,19 +55,19 @@ public class StampItem extends Item {
 
         if (player.isCrouching() && livingEntity instanceof Player target) {
             ItemStack newStack = itemStack.copyWithCount(1);
-            itemStack.consume(1, player);
             if (target.getStringUUID().equals("99559de5-392e-443b-9bc5-0a4b60560cbf")) {
                 newStack.set(MailItemComponents.STAMP_TYPE, Stamp.StampType.ALIEN);
             } else newStack.set(DataComponents.PROFILE, ResolvableProfile.createResolved(target.getGameProfile()));
             player.addItem(newStack);
+            itemStack.consume(1, player);
             return InteractionResult.SUCCESS;
         }
 
         if (player.isCrouching() && livingEntity instanceof Horse) {
             ItemStack newStack = itemStack.copyWithCount(1);
-            itemStack.consume(1, player);
             newStack.set(MailItemComponents.STAMP_TYPE, Stamp.StampType.HORSE);
             player.addItem(newStack);
+            itemStack.consume(1, player);
             return InteractionResult.SUCCESS;
         }
 
