@@ -209,10 +209,6 @@ public class PackageBlock extends BaseEntityBlock {
         return super.getDrops(blockState, builder);
     }
 
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(PackageBlock::new);
-    }
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {

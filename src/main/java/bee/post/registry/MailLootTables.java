@@ -10,7 +10,7 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class MailLootTables {
                 LootItemFunction appleFunction = StampFunction.setStampTypes(types).build();
 
                 LootPool pool = LootPool.lootPool()
-                        .add(LootItem.lootTableItem(MailItems.STAMP).setWeight(15)).apply(appleFunction).setRolls(new ConstantValue(3))
+                        .add(LootItem.lootTableItem(MailItems.STAMP).setWeight(15)).apply(appleFunction).setRolls(ContextIntProviders.exactly(3))
                         .build();
 
                 builder.pool(pool);

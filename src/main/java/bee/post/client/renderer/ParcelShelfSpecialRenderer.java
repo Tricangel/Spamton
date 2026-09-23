@@ -29,7 +29,7 @@ public class ParcelShelfSpecialRenderer implements SpecialModelRenderer<RenderTy
 
     @Override
     public void submit(@Nullable RenderType argument, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int lightCoords, int overlayCoords, boolean hasFoil, int outlineColor) {
-        submitNodeCollector.submitModel(this.modelBase, new ParcelModel.State(), poseStack, argument, lightCoords, overlayCoords, outlineColor, null);
+        submitNodeCollector.submitModel(this.modelBase, new ParcelModel.State(), poseStack, argument, lightCoords, overlayCoords, outlineColor);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ParcelShelfSpecialRenderer implements SpecialModelRenderer<RenderTy
         name = name.replace(" ", "_");
         name = name.toLowerCase();
 
-        return RenderTypes.armorTranslucent(Spamton.id("textures/shelf/" + name + ".png"));
+        return RenderTypes.armorCutoutNoCullGlint(Spamton.id("textures/shelf/" + name + ".png"));
     }
 
 

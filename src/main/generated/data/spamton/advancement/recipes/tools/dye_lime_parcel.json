@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "spamton:dye_lime_parcel"
+        "recipes": "spamton:dye_lime_parcel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

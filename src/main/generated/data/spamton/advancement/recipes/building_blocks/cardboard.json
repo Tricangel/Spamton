@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "spamton:cardboard"
+        "recipes": "spamton:cardboard"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

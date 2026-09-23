@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "spamton:brown_parcel"
+        "recipes": "spamton:brown_parcel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "spamton:white_parcel"
+        "recipes": "spamton:white_parcel"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "spamton:parcel_shelf"
+        "recipes": "spamton:parcel_shelf"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

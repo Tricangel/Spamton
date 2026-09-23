@@ -15,6 +15,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix4fc;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
@@ -50,8 +51,8 @@ public class ParcelShelfBlockEntityRenderer implements BlockEntityRenderer<Parce
                 poseStack.pushPose();
                 ParcelShelfSpecialRenderer shelfSpecialRenderer = new ParcelShelfSpecialRenderer.Unbaked().bake(context);
                 poseStack.translate(0.5f, 1.5f, 0.5f);
-                poseStack.mulPose(blockEntityRenderState.rotation.getRotation());
-                poseStack.mulPose(Axis.XP.rotation(1.57f));
+                poseStack.rotate( blockEntityRenderState.rotation.getRotation());
+                poseStack.rotate( Axis.XP.rotation(1.57f));
                 poseStack.translate(0, 0, -0.01);
 
 

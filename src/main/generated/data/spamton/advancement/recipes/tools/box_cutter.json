@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "spamton:box_cutter"
+        "recipes": "spamton:box_cutter"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

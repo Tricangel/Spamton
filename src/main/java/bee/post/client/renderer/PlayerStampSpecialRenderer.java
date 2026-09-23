@@ -28,7 +28,7 @@ public class PlayerStampSpecialRenderer implements SpecialModelRenderer<PlayerSk
     @Override
     public void submit(PlayerSkinRenderCache.@Nullable RenderInfo argument, @NonNull PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, int j, boolean bl, int k) {
         RenderType renderType = argument != null ? argument.renderType() : PlayerSkinRenderCache.DEFAULT_PLAYER_SKIN_RENDER_TYPE;
-        submitNodeCollector.submitModel(this.modelBase, new PlayerStampModel.State(), poseStack, renderType, i, OverlayTexture.NO_OVERLAY, k, null);
+        submitNodeCollector.submitModel(this.modelBase, new PlayerStampModel.State(), poseStack, renderType, i, OverlayTexture.NO_OVERLAY, k);
     }
 
     @Override

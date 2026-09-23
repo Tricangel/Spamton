@@ -33,9 +33,6 @@ public class ParcelShelfBlockEntity extends BaseContainerBlockEntity {
         return saveWithoutMetadata(provider);
     }
 
-
-
-
     public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }

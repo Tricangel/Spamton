@@ -66,7 +66,8 @@ public class PeekPostalInfoOverlay implements HudElement  {
                     centerTooltip - textWidth / 2,
                     y - 15,
                     DefaultTooltipPositioner.INSTANCE,
-                    stack.get(DataComponents.TOOLTIP_STYLE)
+                    stack.get(DataComponents.TOOLTIP_STYLE),
+                    false
             );
             return;
 
@@ -123,7 +124,8 @@ public class PeekPostalInfoOverlay implements HudElement  {
                 centerTooltip - textWidth / 2,
                 y - 15,
                 DefaultTooltipPositioner.INSTANCE,
-                stack.get(DataComponents.TOOLTIP_STYLE)
+                stack.get(DataComponents.TOOLTIP_STYLE),
+                false
         );
 
     }

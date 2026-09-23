@@ -22,6 +22,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix4fc;
 import org.jspecify.annotations.Nullable;
 
 public class PackageBlockEntityRenderer implements BlockEntityRenderer<PackageBlockEntity, PackageBlockEntityRenderState> {
@@ -56,15 +57,15 @@ public class PackageBlockEntityRenderer implements BlockEntityRenderer<PackageBl
             poseStack.pushPose();
             poseStack.translate(.5, .5, .5);
             poseStack.translate(stamp.pos());
-            poseStack.mulPose(stamp.direction().getRotation());
+            poseStack.rotate(stamp.direction().getRotation());
 
             if (stamp.profile().isEmpty()) {
                 poseStack.scale(.25f, .25f, .25f);
                 if (stamp.direction().equals(Direction.WEST) || stamp.direction().equals(Direction.EAST)) {
-                    poseStack.mulPose(Direction.EAST.getRotation());
-                } else poseStack.mulPose(Direction.NORTH.getRotation());
+                    poseStack.rotate( Direction.EAST.getRotation());
+                } else poseStack.rotate( Direction.NORTH.getRotation());
 
-                poseStack.mulPose(Axis.ZP.rotation((float) (stamp.rotation())));
+                poseStack.rotate( Axis.ZP.rotation((float) (stamp.rotation())));
                 ItemStackRenderState state = new ItemStackRenderState();
                 ItemStack stack = MailItems.STAMP.getDefaultInstance();
                 stack.set(MailItemComponents.STAMP_TYPE, stamp.stampType());
@@ -75,12 +76,12 @@ public class PackageBlockEntityRenderer implements BlockEntityRenderer<PackageBl
                 poseStack.scale(.5f, .5f, .5f);
 
                 poseStack.translate(0, -.5f, 0f);
-                poseStack.mulPose(Axis.YP.rotation((float) (stamp.rotation())));
+                poseStack.rotate( Axis.YP.rotation((float) (stamp.rotation())));
                 PlayerSkinRenderCache cache = new PlayerSkinRenderCache(Minecraft.getInstance().getTextureManager(), Minecraft.getInstance().getSkinManager(), Minecraft.getInstance().services().profileResolver());
                 PlayerSkinRenderCache.RenderInfo renderInfo = cache.getOrDefault(stamp.profile().get());
                 PlayerStampModel stampModel = new PlayerStampModel(context.entityModelSet().bakeLayer(PlayerStampModel.STAMP));
 
-                submitNodeCollector.submitModel(stampModel, new PlayerStampModel.State(), poseStack, renderInfo.renderType(), 15728880, OverlayTexture.NO_OVERLAY, 0, null);
+                submitNodeCollector.submitModel(stampModel, new PlayerStampModel.State(), poseStack, renderInfo.renderType(), 15728880, OverlayTexture.NO_OVERLAY, 0);
 
 
             }

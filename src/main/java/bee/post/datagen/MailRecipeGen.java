@@ -5,15 +5,18 @@ import bee.post.registry.MailBlocks;
 import bee.post.registry.MailItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Recipe;
 import org.jspecify.annotations.NonNull;
 
 import java.util.List;
@@ -25,9 +28,8 @@ public class MailRecipeGen extends FabricRecipeProvider {
     }
 
     @Override
-    protected @NonNull RecipeProvider createRecipeProvider(HolderLookup.@NonNull Provider provider, @NonNull RecipeOutput recipeOutput) {
-        return new RecipeProvider(provider, recipeOutput) {
-            final HolderLookup.RegistryLookup<Item> itemLookup = registries.lookupOrThrow(Registries.ITEM);
+    protected RecipeProvider createRecipeProvider(HolderLookup.Provider registries, BootstrapContext<Recipe<?>> recipes, BootstrapContext<Advancement> advancements) {
+        return new RecipeProvider(recipes, advancements) {
             @Override
             public void buildRecipes() {
 
@@ -89,19 +91,21 @@ public class MailRecipeGen extends FabricRecipeProvider {
                     if (!(item instanceof ParcelItem parcelItem)) continue;
                     Item color = Items.DYE.pick(parcelItem.color);
 
-                        shapeless(RecipeCategory.TOOLS, parcelItem)
-                                .requires(MailItems.CARDBOARD)
-                                .requires(Items.PAPER)
-                                .requires(MailItems.CARDBOARD)
-                                .requires(color)
-                                .unlockedBy(getHasName(parcelItem), has(Items.PAPER))
-                                .save(output);
+                    shapeless(RecipeCategory.TOOLS, parcelItem)
+                            .requires(MailItems.CARDBOARD)
+                            .requires(Items.PAPER)
+                            .requires(MailItems.CARDBOARD)
+                            .requires(color)
+                            .unlockedBy(getHasName(parcelItem), has(Items.PAPER))
+                            .save(output);
 
                 }
             }
 
         };
     }
+
+
 
     @Override
     public @NonNull String getName() {

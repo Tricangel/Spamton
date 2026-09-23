@@ -6,6 +6,7 @@ import bee.post.registry.MailItemComponents;
 import bee.post.registry.MailTags;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.SlotAccess;
@@ -48,13 +49,13 @@ public class ParcelItem extends Item {
 
 
             if (contents.gift().isPresent()) {
-                player.drop(contents.gift().get(), true);
+                player.drop(contents.gift().get(), true, Prediction.PREDICTED);
                 ParcelContents newContents = new ParcelContents(contents.letter(), Optional.empty());
                 saveContents(stack, newContents);
                 player.playSound(SoundEvents.BUNDLE_DROP_CONTENTS);
                 return InteractionResult.SUCCESS;
             } else if (contents.letter().isPresent()) {
-                player.drop(contents.letter().get(), true);
+                player.drop(contents.letter().get(), true, Prediction.PREDICTED);
                 ParcelContents newContents = new ParcelContents(Optional.empty(), Optional.empty());
                 saveContents(stack, newContents);
                 player.playSound(SoundEvents.BUNDLE_DROP_CONTENTS);

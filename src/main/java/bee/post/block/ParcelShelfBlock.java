@@ -74,10 +74,6 @@ public class ParcelShelfBlock extends BaseEntityBlock implements SelectableSlotC
         return InteractionResult.FAIL;
     }
 
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(ParcelShelfBlock::new);
-    }
 
     @Override
     public @Nullable BlockState getStateForPlacement(@NonNull BlockPlaceContext blockPlaceContext) {

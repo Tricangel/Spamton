@@ -2,61 +2,65 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        },
-        {
-          "block": "spamton:package",
-          "condition": "minecraft:block_state_property",
-          "properties": {
-            "taped": "true"
+      "condition": {
+        "type": "minecraft:all_of",
+        "terms": [
+          {
+            "type": "minecraft:survives_explosion"
+          },
+          {
+            "type": "minecraft:match_block",
+            "blocks": "spamton:package",
+            "state": {
+              "taped": "true"
+            }
           }
-        }
-      ],
+        ]
+      },
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:copy_components",
-              "include": [
-                "minecraft:custom_name",
-                "minecraft:container",
-                "minecraft:lock",
-                "spamton:damaged",
-                "spamton:stamps",
-                "spamton:postal_info",
-                "spamton:taped"
-              ],
-              "source": "block_entity"
-            }
-          ],
+          "modifier": {
+            "type": "minecraft:copy_components",
+            "include": [
+              "minecraft:custom_name",
+              "minecraft:container",
+              "minecraft:lock",
+              "spamton:damaged",
+              "spamton:stamps",
+              "spamton:postal_info",
+              "spamton:taped"
+            ],
+            "source": "block_entity"
+          },
           "name": "spamton:package"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     },
     {
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        },
-        {
-          "block": "spamton:package",
-          "condition": "minecraft:block_state_property",
-          "properties": {
-            "taped": "false"
+      "condition": {
+        "type": "minecraft:all_of",
+        "terms": [
+          {
+            "type": "minecraft:survives_explosion"
+          },
+          {
+            "type": "minecraft:match_block",
+            "blocks": "spamton:package",
+            "state": {
+              "taped": "false"
+            }
           }
-        }
-      ],
+        ]
+      },
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "spamton:cardboard"
+          "name": "spamton:package"
         }
       ],
-      "rolls": 4.0
+      "rolls": 1
     }
   ]
 }
