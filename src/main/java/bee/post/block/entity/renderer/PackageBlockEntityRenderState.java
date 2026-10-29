@@ -1,6 +1,5 @@
 package bee.post.block.entity.renderer;
 
-import bee.post.block.PackageBlock;
 import bee.post.block.Stamp;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.core.Direction;

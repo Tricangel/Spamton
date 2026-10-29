@@ -1,6 +1,5 @@
 package bee.post.block.entity.renderer;
 
-import bee.post.block.PackageBlock;
 import bee.post.block.Stamp;
 import bee.post.block.entity.PackageBlockEntity;
 import bee.post.client.model.PlayerStampModel;

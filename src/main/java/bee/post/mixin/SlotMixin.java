@@ -1,18 +1,12 @@
 package bee.post.mixin;
 
-import bee.post.block.PackageBlock;
 import bee.post.block.entity.PackageBlockEntity;
-import bee.post.item.PackageBlockItem;
-import bee.post.registry.MailBlocks;
 import bee.post.registry.MailItemComponents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
-import net.minecraft.world.level.block.entity.DispenserBlockEntity;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

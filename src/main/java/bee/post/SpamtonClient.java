@@ -9,13 +9,11 @@ import bee.post.client.overlay.PeekPostalInfoOverlay;
 import bee.post.client.renderer.PlayerStampSpecialRenderer;
 import bee.post.client.screen.LetterEditScreen;
 import bee.post.client.screen.LetterViewScreen;
-import bee.post.entity.renderer.PackageEntityRenderer;
 import bee.post.item.component.ClientParcelContentsTooltip;
 import bee.post.item.component.ParcelContents;
 import bee.post.networking.ClientboundOpenWritableLetterPacket;
 import bee.post.networking.ClientboundOpenWrittenLetterPacket;
 import bee.post.registry.MailBlockEntities;
-import bee.post.registry.MailEntityTypes;
 import bee.post.registry.MailItemComponents;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -24,7 +22,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.item.v1.ComponentTooltipAppenderRegistry;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.special.SpecialModelRenderers;
 import net.minecraft.world.InteractionHand;
 
@@ -41,7 +38,6 @@ public class SpamtonClient implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(PlayerStampModel.STAMP_ITEM, PlayerStampModel::createItemLayer);
         EntityModelLayerRegistry.registerModelLayer(ParcelModel.PARCEL, ParcelModel::createBodyLayer);
 
-        EntityRenderers.register(MailEntityTypes.PACKAGE, PackageEntityRenderer::new);
 
         SpecialModelRenderers.ID_MAPPER.put(Spamton.id("player_stamp"), PlayerStampSpecialRenderer.Unbaked.MAP_CODEC);
 

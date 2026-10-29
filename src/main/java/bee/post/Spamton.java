@@ -3,7 +3,6 @@ package bee.post;
 import bee.post.block.PackageBlock;
 import bee.post.client.networking.ServerboundSaveLetterPacket;
 import bee.post.client.networking.ServerboundSignLetterPacket;
-import bee.post.entity.PackageEntity;
 import bee.post.item.PackageBlockItem;
 import bee.post.item.stamp.StampPredicate;
 import bee.post.item.stamp.StampRecipe;
@@ -18,19 +17,15 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.component.predicates.DataComponentPredicate;
-import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.network.Filterable;
 import net.minecraft.server.network.FilteredText;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.WritableBookContent;
 import net.minecraft.world.item.component.WrittenBookContent;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -57,7 +52,6 @@ public class Spamton implements ModInitializer {
 		MailLootFunctions.init();
 		MailLootTables.insertIntoTables();
 		MailItemGroups.init();
-		MailEntityTypes.init();
 
 		DispenserBlock.registerBehavior(MailBlocks.PACKAGE, (blockSource, itemStack) -> {
 			Level level = blockSource.level();
@@ -67,13 +61,29 @@ public class Spamton implements ModInitializer {
 			if (!(itemStack.getItem() instanceof PackageBlockItem packageBlockItem)) return itemStack;
 
 			if (level.getBlockState(pos.relative(direction)).isAir()) {
-				PackageEntity entity = new PackageEntity(level, itemStack);
-				entity.setPos(pos.getCenter().relative(direction, 1));
-				level.addFreshEntity(entity);
+				BlockState state = packageBlockItem.getBlock().defaultBlockState().setValue(PackageBlock.FACING, direction)
+						.setValue(PackageBlock.DAMAGED, itemStack.getOrDefault(MailItemComponents.DAMAGED, false))
+						.setValue(PackageBlock.TAPED, itemStack.getOrDefault(MailItemComponents.TAPED, false));
+
+				level.setBlockAndUpdate(pos.relative(direction), state);
+				itemStack.shrink(1);
+				return itemStack;
 			}
 
             return itemStack;
         });
+
+		DispenserBlock.registerBehavior(MailItems.TAPE, ((blockSource, itemStack) -> {
+			Level level = blockSource.level();
+			BlockPos pos = blockSource.pos();
+			Direction direction = blockSource.state().getValue(BlockStateProperties.FACING);
+			BlockState state = level.getBlockState(pos.relative(direction));
+
+			if (state.is(MailBlocks.PACKAGE) && !state.getValue(PackageBlock.TAPED)) {
+				level.setBlockAndUpdate(pos.relative(direction), state.setValue(PackageBlock.TAPED, true));
+			}
+			return itemStack;
+		}));
 
 
 		PayloadTypeRegistry.playC2S().register(ServerboundSignLetterPacket.TYPE, ServerboundSignLetterPacket.STREAM_CODEC);
