@@ -29,6 +29,11 @@ public class SlotMixin {
 		if (container instanceof BaseContainerBlockEntity) {
 			boolean hasPackage = false;
 			boolean isEmpty = true;
+
+			//if empty allow taped packages
+			//if contains taped packages do not allow items
+			//allow untaped packages
+
 			for (int i = 0; i < container.getContainerSize(); i++) {
 				ItemStack stack = container.getItem(i);
 				if (!stack.getOrDefault(MailItemComponents.TAPED, false)) {
@@ -38,10 +43,14 @@ public class SlotMixin {
 					isEmpty = false;
 				}
 			}
-			if (!itemStack.getOrDefault(MailItemComponents.TAPED, false)) {
-				cir.setReturnValue(isEmpty);	
+
+			if (!isEmpty) {
+				boolean itemTaped = itemStack.getOrDefault(MailItemComponents.TAPED, false);
+				if (itemTaped || hasPackage) {
+					cir.setReturnValue(false);
+				}
 			}
-			cir.setReturnValue(!hasPackage);
+
 		}
 		if (this.container instanceof PackageBlockEntity && itemStack.is(ItemTags.SHULKER_BOXES)) {
 			cir.setReturnValue(!itemStack.getOrDefault(MailItemComponents.TAPED, false));

@@ -51,8 +51,7 @@ public class MailLootGen extends FabricBlockLootTableProvider {
                         .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PackageBlock.TAPED, true))))
                 .withPool(
                         this.applyExplosionCondition(block, LootPool.lootPool()
-                        .setRolls(ConstantValue.exactly(4.0F))
-                        .add(LootItem.lootTableItem(item).apply(SetComponentsFunction.setComponent(DataComponents.MAX_STACK_SIZE, 16))))
+                        .setRolls(ConstantValue.exactly(4.0F)))
                                 .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(MailBlocks.PACKAGE)
                         .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PackageBlock.TAPED, false  )))
                 );
