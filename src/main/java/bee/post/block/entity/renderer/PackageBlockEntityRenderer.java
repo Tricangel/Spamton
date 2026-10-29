@@ -25,6 +25,9 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PackageBlockEntityRenderer implements BlockEntityRenderer<PackageBlockEntity, PackageBlockEntityRenderState> {
     private final ItemModelResolver itemRenderer;
     private final BlockEntityRendererProvider.Context context;
@@ -44,14 +47,19 @@ public class PackageBlockEntityRenderer implements BlockEntityRenderer<PackageBl
     public void extractRenderState(PackageBlockEntity blockEntity, PackageBlockEntityRenderState blockEntityRenderState, float f, Vec3 vec3, ModelFeatureRenderer.@Nullable CrumblingOverlay crumblingOverlay) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, blockEntityRenderState, f, vec3, crumblingOverlay);
 
-        blockEntityRenderState.stamps = blockEntity.getStamps();
+        List<Stamp> stamps = new ArrayList<>();
+
+        for (Stamp stamp : blockEntity.getStamps()) {
+            if (!stamp.isEmpty()) stamps.add(stamp);
+        }
+
+        blockEntityRenderState.stamps = stamps;
         blockEntityRenderState.boxDirection = blockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
 
     }
 
     @Override
     public void submit(PackageBlockEntityRenderState blockEntityRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
-
 
         for (Stamp stamp : blockEntityRenderState.stamps) {
             poseStack.pushPose();

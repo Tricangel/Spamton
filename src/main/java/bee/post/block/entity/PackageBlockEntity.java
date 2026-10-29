@@ -115,6 +115,10 @@ public class PackageBlockEntity extends BaseContainerBlockEntity {
         try (ProblemReporter.ScopedCollector scopedCollector = new ProblemReporter.ScopedCollector(this.problemPath(), Spamton.LOGGER)) {
             TagValueOutput tagValueOutput = TagValueOutput.createWithContext(scopedCollector, provider);
 
+            NonNullList<Stamp> stamps1 = NonNullList.withSize(50, Stamp.EMPTY);
+
+            //stamps1.addAll(stamps);
+
             tagValueOutput.store("stamps", Stamp.CODEC.listOf(), stamps);
             tagValueOutput.store("postal_info", PostalInfoComponent.CODEC, info);
             return tagValueOutput.buildResult();
@@ -138,7 +142,11 @@ public class PackageBlockEntity extends BaseContainerBlockEntity {
     @Override
     protected void loadAdditional(@NonNull ValueInput valueInput) {
         super.loadAdditional(valueInput);
-        valueInput.read("stamps", Stamp.CODEC.listOf()).ifPresent(stamps::addAll);
+        valueInput.read("stamps", Stamp.CODEC.listOf()).ifPresent(s -> {
+            if (!stamps.isEmpty()) {
+                stamps.addAll(s);
+            }
+        });
         this.itemStacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         valueInput.read("postal_info", PostalInfoComponent.CODEC).ifPresent(postalInfoComponent -> this.info = postalInfoComponent);
         ContainerHelper.loadAllItems(valueInput, itemStacks);
@@ -147,6 +155,7 @@ public class PackageBlockEntity extends BaseContainerBlockEntity {
     @Override
     protected void saveAdditional(@NonNull ValueOutput valueOutput) {
         super.saveAdditional(valueOutput);
+
         valueOutput.store("stamps", Stamp.CODEC.listOf(), stamps);
         valueOutput.store("postal_info", PostalInfoComponent.CODEC, info);
         ContainerHelper.saveAllItems(valueOutput, itemStacks);

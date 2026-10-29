@@ -1,7 +1,10 @@
 package bee.post;
 
+import bee.post.block.PackageBlock;
 import bee.post.client.networking.ServerboundSaveLetterPacket;
 import bee.post.client.networking.ServerboundSignLetterPacket;
+import bee.post.entity.PackageEntity;
+import bee.post.item.PackageBlockItem;
 import bee.post.item.stamp.StampPredicate;
 import bee.post.item.stamp.StampRecipe;
 import bee.post.networking.ClientboundOpenWritableLetterPacket;
@@ -10,19 +13,29 @@ import bee.post.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.component.predicates.DataComponentPredicate;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.network.Filterable;
 import net.minecraft.server.network.FilteredText;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.WritableBookContent;
 import net.minecraft.world.item.component.WrittenBookContent;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.crafting.CustomRecipe;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +57,23 @@ public class Spamton implements ModInitializer {
 		MailLootFunctions.init();
 		MailLootTables.insertIntoTables();
 		MailItemGroups.init();
+		MailEntityTypes.init();
 
+		DispenserBlock.registerBehavior(MailBlocks.PACKAGE, (blockSource, itemStack) -> {
+			Level level = blockSource.level();
+			BlockPos pos = blockSource.pos();
+			Direction direction = blockSource.state().getValue(BlockStateProperties.FACING);
+
+			if (!(itemStack.getItem() instanceof PackageBlockItem packageBlockItem)) return itemStack;
+
+			if (level.getBlockState(pos.relative(direction)).isAir()) {
+				PackageEntity entity = new PackageEntity(level, itemStack);
+				entity.setPos(pos.getCenter().relative(direction, 1));
+				level.addFreshEntity(entity);
+			}
+
+            return itemStack;
+        });
 
 
 		PayloadTypeRegistry.playC2S().register(ServerboundSignLetterPacket.TYPE, ServerboundSignLetterPacket.STREAM_CODEC);

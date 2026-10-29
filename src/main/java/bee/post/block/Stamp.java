@@ -2,6 +2,7 @@ package bee.post.block;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -21,7 +22,7 @@ public record Stamp(Vec3 pos, Direction direction, Integer rotation, StampType s
             ResolvableProfile.CODEC.optionalFieldOf("profile").forGetter(Stamp::profile)
     ).apply(instance, Stamp::new));
 
-    public static final Stamp EMPTY = new Stamp( null, null, null, null, Optional.empty());
+    public static final Stamp EMPTY = new Stamp(null, null, null, null, Optional.empty());
             
 
     public boolean isEmpty() {

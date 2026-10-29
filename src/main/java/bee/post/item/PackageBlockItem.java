@@ -36,4 +36,5 @@ public class PackageBlockItem extends BlockItem {
 
         return super.use(level, player, interactionHand);
     }
+
 }

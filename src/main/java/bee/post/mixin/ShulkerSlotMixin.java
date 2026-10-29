@@ -1,6 +1,7 @@
 package bee.post.mixin;
 
 import bee.post.block.PackageBlock;
+import bee.post.registry.MailItemComponents;
 import net.minecraft.world.inventory.ShulkerBoxSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -16,7 +17,7 @@ public class ShulkerSlotMixin {
 	@Inject(at = @At("HEAD"), method = "mayPlace", cancellable = true)
 	private void init(ItemStack itemStack, CallbackInfoReturnable<Boolean> cir) {
 		if (itemStack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof PackageBlock) {
-			cir.setReturnValue(false);
+			cir.setReturnValue(!itemStack.getOrDefault(MailItemComponents.TAPED, false));
 		}
 	}
 }

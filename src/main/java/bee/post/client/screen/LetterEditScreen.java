@@ -142,7 +142,7 @@ public class LetterEditScreen extends Screen {
 
     private void updateButtonVisibility() {
         this.backButton.visible = this.currentPage > 0;
-        this.forwardButton.visible = this.currentPage < 2;
+        this.forwardButton.visible = false;
     }
 
 

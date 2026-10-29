@@ -79,9 +79,6 @@ public class PackageBlock extends BaseEntityBlock {
             if (itemStack.is(MailTags.TAPE)) {
                 level.setBlock(blockPos, blockState.setValue(TAPED, true), 0);
                 player.playSound(SoundEvents.HONEY_BLOCK_HIT);
-                itemStack.hurtAndBreak(1, player, interactionHand);
-
-
                 return InteractionResult.SUCCESS;
             }
         } else if (itemStack.is(MailTags.BOX_CUTTER)) {
@@ -124,7 +121,6 @@ public class PackageBlock extends BaseEntityBlock {
 
 
         if (!itemStack.is(MailTags.STAMP)) return super.useItemOn(itemStack, blockState, level, blockPos, player, interactionHand, blockHitResult);
-        if (!(level instanceof ServerLevel serverLevel)) return super.useItemOn(itemStack, blockState, level, blockPos, player, interactionHand, blockHitResult);
         Vec3 dist = blockHitResult.getLocation().subtract(blockHitResult.getBlockPos().getCenter());
 
         Vec3 pos = blockPos.getCenter().add(dist);
@@ -132,21 +128,22 @@ public class PackageBlock extends BaseEntityBlock {
         List<Stamp> stamps = packageBlockEntity.getStamps();
 
         for (Stamp stamp : stamps) {
+            if (stamp.isEmpty()) continue;
             if (stamp.pos().distanceTo(dist) < 0.20) return InteractionResult.FAIL;
         }
 
         Optional<ResolvableProfile> profile = itemStack.has(DataComponents.PROFILE) ? Optional.of(itemStack.get(DataComponents.PROFILE)) :Optional.empty();
 
         if (packageBlockEntity.addStamp(new Stamp(dist, blockHitResult.getDirection(), RandomSource.create().nextInt(180), itemStack.getOrDefault(MailItemComponents.STAMP_TYPE, Stamp.StampType.MOON), profile))) {
-            for (int i = 0; i < 5; i++) {
-                serverLevel.addParticle(ParticleTypes.DUST_PLUME, pos.x, pos.y, pos.z, 0, 0, 0);
+            if (level instanceof ServerLevel serverLevel) {
+                for (int i = 0; i < 5; i++) {
+                    serverLevel.addParticle(ParticleTypes.DUST_PLUME, pos.x, pos.y, pos.z, 0, 0, 0);
+                }
+                serverLevel.playSound(null, blockPos, SoundEvents.HONEY_BLOCK_PLACE, SoundSource.BLOCKS);
             }
-            serverLevel.playSound(null, blockPos, SoundEvents.HONEY_BLOCK_PLACE, SoundSource.BLOCKS);
             itemStack.consume(1, player);
-            serverLevel.gameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Context.of(player, blockState));
             packageBlockEntity.setChanged();
-            serverLevel.sendBlockUpdated(blockPos, blockState, blockState, 3);
-            return InteractionResult.SUCCESS_SERVER;
+            return InteractionResult.SUCCESS;
         }
 
         return InteractionResult.FAIL;
@@ -163,24 +160,24 @@ public class PackageBlock extends BaseEntityBlock {
         }
 
         if (player.isCrouching() && level.getBlockEntity(blockPos) instanceof PackageBlockEntity packageBlockEntity) {
-            if (!(level instanceof ServerLevel serverLevel)) return super.useWithoutItem(blockState, level, blockPos, player, blockHitResult);
             List<Stamp> stamps = packageBlockEntity.getStamps();
             Vec3 dist = blockHitResult.getLocation().subtract(blockHitResult.getBlockPos().getCenter());
 
             for (int i = 0; i < stamps.size(); i++) {
                 Stamp stamp = stamps.get(i);
+                if (stamp.isEmpty()) continue;
 
                 if (stamp.pos().distanceTo(dist) < 0.15f) {
                     ItemStack stack = MailItems.STAMP.getDefaultInstance();
                     stack.set(MailItemComponents.STAMP_TYPE, stamp.stampType());
                     stamp.profile().ifPresent(resolvableProfile -> stack.set(DataComponents.PROFILE, resolvableProfile));
                     player.addItem(stack);
-                    serverLevel.playSound(null, blockPos, SoundEvents.HONEY_BLOCK_BREAK, SoundSource.BLOCKS);
-                    stamps.remove(i);
+                    if (level instanceof ServerLevel serverLevel) {
+                        serverLevel.playSound(null, blockPos, SoundEvents.HONEY_BLOCK_BREAK, SoundSource.BLOCKS);
+                    }
 
-                    serverLevel.gameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Context.of(player, blockState));
+                    stamps.remove(i);
                     packageBlockEntity.setChanged();
-                    serverLevel.sendBlockUpdated(blockPos, blockState, blockState, 3);
                     return InteractionResult.SUCCESS_SERVER;
                 }
 
