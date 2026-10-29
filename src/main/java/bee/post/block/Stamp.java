@@ -28,6 +28,10 @@ public record Stamp(Vec3 pos, Direction direction, Integer rotation, StampType s
     public boolean isEmpty() {
         return this.pos == null && this.direction == null && this.rotation == null && this.stampType == null && this.profile.isEmpty();
     }
+
+    public record StampHolder(Optional<Stamp> stamp) {
+        public static final Codec<StampHolder> CODEC = RecordCodecBuilder.create(i -> i.group(Stamp.CODEC.optionalFieldOf("stamp").forGetter(StampHolder::stamp)).apply(i, StampHolder::new));
+    }
     
     public enum StampType implements StringRepresentable {
         SUN("sun", Component.translatable("stamp.spamton.sun")),

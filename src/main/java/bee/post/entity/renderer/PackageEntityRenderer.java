@@ -46,8 +46,10 @@ public class PackageEntityRenderer extends EntityRenderer<PackageEntity, Package
     @Override
     public void submit(PackageEntityRenderState entityRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
 
+        poseStack.pushPose();
+        poseStack.translate(-0.5, 0, -0.5);
         submitNodeCollector.submitBlock(poseStack, entityRenderState.state, entityRenderState.lightCoords, OverlayTexture.NO_OVERLAY, entityRenderState.outlineColor);
-
+        poseStack.popPose();
         for (Stamp stamp : entityRenderState.stamps) {
             poseStack.pushPose();
             poseStack.translate(.5, .5, .5);

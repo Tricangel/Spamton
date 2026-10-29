@@ -36,6 +36,7 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Stack;
 
 public class PackageBlockEntity extends BaseContainerBlockEntity {
@@ -115,11 +116,13 @@ public class PackageBlockEntity extends BaseContainerBlockEntity {
         try (ProblemReporter.ScopedCollector scopedCollector = new ProblemReporter.ScopedCollector(this.problemPath(), Spamton.LOGGER)) {
             TagValueOutput tagValueOutput = TagValueOutput.createWithContext(scopedCollector, provider);
 
-            NonNullList<Stamp> stamps1 = NonNullList.withSize(50, Stamp.EMPTY);
+            NonNullList<Stamp.StampHolder> stamps1 = NonNullList.withSize(50, new Stamp.StampHolder(Optional.empty()));
 
-            //stamps1.addAll(stamps);
+            for (Stamp stamp : stamps) {
+                stamps1.add(new Stamp.StampHolder(Optional.of(stamp)));
+            }
 
-            tagValueOutput.store("stamps", Stamp.CODEC.listOf(), stamps);
+            tagValueOutput.store("stamp_holders", Stamp.StampHolder.CODEC.listOf(), stamps1);
             tagValueOutput.store("postal_info", PostalInfoComponent.CODEC, info);
             return tagValueOutput.buildResult();
         }
@@ -145,6 +148,12 @@ public class PackageBlockEntity extends BaseContainerBlockEntity {
         valueInput.read("stamps", Stamp.CODEC.listOf()).ifPresent(s -> {
             if (!stamps.isEmpty()) {
                 stamps.addAll(s);
+            }
+        });
+        valueInput.read("stamp_holders", Stamp.StampHolder.CODEC.listOf()).ifPresent(stampHolders -> {
+            stamps.clear();
+            for (Stamp.StampHolder stampHolder : stampHolders) {
+                stampHolder.stamp().ifPresent(stamp -> stamps.add(stamp));
             }
         });
         this.itemStacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);

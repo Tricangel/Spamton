@@ -128,7 +128,6 @@ public class PackageBlock extends BaseEntityBlock {
         List<Stamp> stamps = packageBlockEntity.getStamps();
 
         for (Stamp stamp : stamps) {
-            if (stamp.isEmpty()) continue;
             if (stamp.pos().distanceTo(dist) < 0.20) return InteractionResult.FAIL;
         }
 
@@ -165,7 +164,6 @@ public class PackageBlock extends BaseEntityBlock {
 
             for (int i = 0; i < stamps.size(); i++) {
                 Stamp stamp = stamps.get(i);
-                if (stamp.isEmpty()) continue;
 
                 if (stamp.pos().distanceTo(dist) < 0.15f) {
                     ItemStack stack = MailItems.STAMP.getDefaultInstance();
