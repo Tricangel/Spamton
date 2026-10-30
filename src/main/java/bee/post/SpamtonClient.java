@@ -4,7 +4,6 @@ import bee.post.block.entity.renderer.PackageBlockEntityRenderer;
 import bee.post.block.entity.renderer.ParcelShelfBlockEntityRenderer;
 import bee.post.client.model.ParcelModel;
 import bee.post.client.model.PlayerStampModel;
-import bee.post.client.overlay.DispenserOverlay;
 import bee.post.client.overlay.PeekPostalInfoOverlay;
 import bee.post.client.renderer.PlayerStampSpecialRenderer;
 import bee.post.client.screen.LetterEditScreen;
@@ -33,7 +32,6 @@ public class SpamtonClient implements ClientModInitializer {
         BlockEntityRenderers.register(MailBlockEntities.PARCEL_SHELF_BLOCK_ENTITY, ParcelShelfBlockEntityRenderer::new);
 
         HudElementRegistry.addFirst(Spamton.id("peek_parcel_shelf"), new PeekPostalInfoOverlay());
-        HudElementRegistry.addFirst(Spamton.id("dispenser_overlay"), new DispenserOverlay());
         EntityModelLayerRegistry.registerModelLayer(PlayerStampModel.STAMP, PlayerStampModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(PlayerStampModel.STAMP_ITEM, PlayerStampModel::createItemLayer);
         EntityModelLayerRegistry.registerModelLayer(ParcelModel.PARCEL, ParcelModel::createBodyLayer);

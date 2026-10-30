@@ -37,42 +37,46 @@ public class HopperBlockEntityMixin {
     @WrapMethod(method = "tryTakeInItemFromSlot")
     private static boolean tryTakeInItemFromSlot(Hopper hopper, Container container, int x, Direction direction, Operation<Boolean> original) {
         ItemStack stack = container.getItem(x);
-        if (!stack.getOrDefault(MailItemComponents.TAPED, false)) {
-            return original.call(hopper, container, x, direction);
-        }
 
+        if (stack.isEmpty()) return false;
+
+        boolean hasPackage = false;
         boolean isEmpty = true;
 
-        for (int i = 0; i < container.getContainerSize(); i++) {
-            ItemStack stack1 = container.getItem(i);
-            if (!stack1.isEmpty()) {
+        for (int i = 0; i < hopper.getContainerSize(); i++) {
+            ItemStack itemStack = hopper.getItem(i);
+            if (itemStack.getOrDefault(MailItemComponents.TAPED, false)) {
+                hasPackage = true;
+            }
+            if (!itemStack.isEmpty()) {
                 isEmpty = false;
             }
         }
 
-        if (isEmpty) return original.call(hopper, container, x, direction);
+        if (hasPackage || (stack.getOrDefault(MailItemComponents.TAPED, false) && !isEmpty)) return false;
 
-        return false;
+        return original.call(hopper, container, x, direction);
     }
 
     @WrapMethod(method = "addItem(Lnet/minecraft/world/Container;Lnet/minecraft/world/Container;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/core/Direction;)Lnet/minecraft/world/item/ItemStack;")
     private static ItemStack addItem$container(Container container, Container container2, ItemStack stack, Direction direction, Operation<ItemStack> original) {
-        if (stack.getOrDefault(MailItemComponents.TAPED, false)) {
-            return stack;
-        }
-
+        if (stack.isEmpty()) return stack;
+        boolean hasPackage = false;
         boolean isEmpty = true;
 
         for (int i = 0; i < container2.getContainerSize(); i++) {
-            ItemStack stack1 = container2.getItem(i);
-            if (!stack1.isEmpty()) {
+            ItemStack itemStack = container2.getItem(i);
+            if (itemStack.getOrDefault(MailItemComponents.TAPED, false)) {
+                hasPackage = true;
+            }
+            if (!itemStack.isEmpty()) {
                 isEmpty = false;
             }
         }
+        //System.out.println(stack + " taped: " + stack.getOrDefault(MailItemComponents.TAPED, false) + " empty: " + isEmpty);
+        if (hasPackage || (stack.getOrDefault(MailItemComponents.TAPED, false) && !isEmpty)) return stack;
 
-        if (isEmpty) return original.call(container, container2, stack, direction);
-
-        return stack;
+        return original.call(container, container2, stack, direction);
     }
 
 }

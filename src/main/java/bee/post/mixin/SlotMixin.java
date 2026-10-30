@@ -36,7 +36,7 @@ public class SlotMixin {
 
 			for (int i = 0; i < container.getContainerSize(); i++) {
 				ItemStack stack = container.getItem(i);
-				if (!stack.getOrDefault(MailItemComponents.TAPED, false)) {
+				if (stack.getOrDefault(MailItemComponents.TAPED, false)) {
 					hasPackage = true;
 				}
 				if (!stack.isEmpty()) {
