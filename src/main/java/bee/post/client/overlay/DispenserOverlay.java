@@ -21,7 +21,7 @@ public class DispenserOverlay implements HudElement {
             }
 
             if (hasPackage) {
-                guiGraphics.fill(0, 0, 100, 100, ARGB.white(100));
+                guiGraphics.fill(300, 300, 400, 400, ARGB.white(150));
             }
         }
     }
